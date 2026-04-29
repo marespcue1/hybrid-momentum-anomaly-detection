@@ -1,0 +1,851 @@
+% Options for packages loaded elsewhere
+\PassOptionsToPackage{unicode}{hyperref}
+\PassOptionsToPackage{hyphens}{url}
+\documentclass[
+]{article}
+\usepackage{xcolor}
+\usepackage{amsmath,amssymb}
+\setcounter{secnumdepth}{5}
+\usepackage{iftex}
+\ifPDFTeX
+  \usepackage[T1]{fontenc}
+  \usepackage[utf8]{inputenc}
+  \usepackage{textcomp} % provide euro and other symbols
+\else % if luatex or xetex
+  \usepackage{unicode-math} % this also loads fontspec
+  \defaultfontfeatures{Scale=MatchLowercase}
+  \defaultfontfeatures[\rmfamily]{Ligatures=TeX,Scale=1}
+\fi
+\usepackage{lmodern}
+\ifPDFTeX\else
+  % xetex/luatex font selection
+\fi
+% Use upquote if available, for straight quotes in verbatim environments
+\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
+\IfFileExists{microtype.sty}{% use microtype if available
+  \usepackage[]{microtype}
+  \UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
+}{}
+\makeatletter
+\@ifundefined{KOMAClassName}{% if non-KOMA class
+  \IfFileExists{parskip.sty}{%
+    \usepackage{parskip}
+  }{% else
+    \setlength{\parindent}{0pt}
+    \setlength{\parskip}{6pt plus 2pt minus 1pt}}
+}{% if KOMA class
+  \KOMAoptions{parskip=half}}
+\makeatother
+\usepackage{longtable,booktabs,array}
+\newcounter{none} % for unnumbered tables
+\usepackage{calc} % for calculating minipage widths
+% Correct order of tables after \paragraph or \subparagraph
+\usepackage{etoolbox}
+\makeatletter
+\patchcmd\longtable{\par}{\if@noskipsec\mbox{}\fi\par}{}{}
+\makeatother
+% Allow footnotes in longtable head/foot
+\IfFileExists{footnotehyper.sty}{\usepackage{footnotehyper}}{\usepackage{footnote}}
+\makesavenoteenv{longtable}
+\usepackage{graphicx}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{% scales image to fit in text height/width
+  \sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi% select the smaller of both
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}%
+  \else\usebox{\pandoc@box}%
+  \fi%
+}
+% Set default figure placement to htbp
+\def\fps@figure{htbp}
+\makeatother
+\setlength{\emergencystretch}{3em} % prevent overfull lines
+\providecommand{\tightlist}{%
+  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\usepackage{bookmark}
+\IfFileExists{xurl.sty}{\usepackage{xurl}}{} % add URL line breaks if available
+\urlstyle{same}
+\hypersetup{
+  hidelinks,
+  pdfcreator={LaTeX via pandoc}}
+
+\author{}
+\date{}
+
+\begin{document}
+
+\includegraphics[width=4.2031in,height=0.94625in]{media/image1.png}
+
+Universidad Internacional de La Rioja
+
+Escuela Superior de Ingeniería y Tecnología
+
+Máster Universitario en Ingeniería Matemática y Computación
+
+Sistema híbrido de detección de anomalías y Momentum Trading con
+algoritmos de clustering (K-Means/DBSCAN)
+
+{\def\LTcaptype{none} % do not increment counter
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4532}}
+  >{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4864}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+Trabajo fin de estudio presentado por:
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+Espejo Cuenca, Marcel
+
+Gómez Hernández, Raúl
+
+Martínez Díez, Diego
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+Tipo de trabajo: & Desarrollo Práctico \\
+Director/a: & Martínez Cerdá, Juan Francisco \\
+Fecha: & 15/04/2026 \\
+\end{longtable}
+}
+
+Índice de contenidos
+
+\hyperref[contexto-y-estado-del-arte]{1. Contexto y estado del arte
+\hyperref[contexto-y-estado-del-arte]{7}}
+
+\hyperref[el-momentum-en-los-mercados-financieros-y-el-riesgo-de-anomaluxedas]{1.1.
+El Momentum en los mercados financieros y el riesgo de anomalías
+\hyperref[el-momentum-en-los-mercados-financieros-y-el-riesgo-de-anomaluxedas]{7}}
+
+\hyperref[fundamentaciuxf3n-matemuxe1tica-del-momentum]{1.1.1.
+Fundamentación matemática del Momentum
+\hyperref[fundamentaciuxf3n-matemuxe1tica-del-momentum]{7}}
+
+\hyperref[asimetruxeda-de-riesgo-y-el-concepto-de-momentum-crashes]{1.1.2.
+Asimetría de riesgo y el concepto de Momentum Crashes
+\hyperref[asimetruxeda-de-riesgo-y-el-concepto-de-momentum-crashes]{9}}
+
+\hyperref[ruido-estructural-anomaluxedas-y-la-necesidad-de-filtrado-topoluxf3gico]{1.1.3.
+Ruido estructural, anomalías y la necesidad de filtrado topológico
+\hyperref[ruido-estructural-anomaluxedas-y-la-necesidad-de-filtrado-topoluxf3gico]{11}}
+
+\hyperref[fundamentos-de-machine-learning-no-supervisado]{1.2.
+Fundamentos de Machine Learning no supervisado
+\hyperref[fundamentos-de-machine-learning-no-supervisado]{12}}
+
+\hyperref[algoritmo-de-agrupamiento-k-means]{1.2.1. Algoritmo de
+Agrupamiento K-Means \hyperref[algoritmo-de-agrupamiento-k-means]{12}}
+
+\hyperref[filtro-de-densidad-topoluxf3gica-dbscan]{1.2.2. Filtro de
+densidad topológica DBSCAN
+\hyperref[filtro-de-densidad-topoluxf3gica-dbscan]{14}}
+
+\hyperref[estado-del-arte-y-justificaciuxf3n-de-la-arquitectura-propuesta]{1.3.
+Estado del arte y justificación de la arquitectura propuesta
+\hyperref[estado-del-arte-y-justificaciuxf3n-de-la-arquitectura-propuesta]{15}}
+
+\hyperref[el-problema-del-momentum-tradicional-en-entornos-voluxe1tiles]{1.3.1.
+El problema del Momentum tradicional en entornos volátiles
+\hyperref[el-problema-del-momentum-tradicional-en-entornos-voluxe1tiles]{16}}
+
+\hyperref[el-intento-de-soluciuxf3n-mediante-k-means-y-sus-limitaciones]{1.3.2.
+El intento de solución mediante K-Means y sus limitaciones
+\hyperref[el-intento-de-soluciuxf3n-mediante-k-means-y-sus-limitaciones]{16}}
+
+\hyperref[propuesta-de-soluciuxf3n-arquitectura-huxedbrida-y-marco-de-evaluaciuxf3n]{1.3.3.
+Propuesta de Solución: Arquitectura Híbrida y Marco de Evaluación
+\hyperref[propuesta-de-soluciuxf3n-arquitectura-huxedbrida-y-marco-de-evaluaciuxf3n]{17}}
+
+\hyperref[objetivos-concretos-y-metodologuxeda-de-trabajo]{2. Objetivos
+concretos y metodología de trabajo
+\hyperref[objetivos-concretos-y-metodologuxeda-de-trabajo]{18}}
+
+\hyperref[objetivo-general]{2.1. Objetivo general
+\hyperref[objetivo-general]{18}}
+
+\hyperref[objetivos-especuxedficos]{2.2. Objetivos específicos
+\hyperref[objetivos-especuxedficos]{18}}
+
+\hyperref[metodologuxeda-del-trabajo]{2.3. Metodología del trabajo
+\hyperref[metodologuxeda-del-trabajo]{19}}
+
+\hyperref[obtenciuxf3n-de-datos]{2.3.1. Obtención de datos
+\hyperref[obtenciuxf3n-de-datos]{19}}
+
+\hyperref[procesamiento-y-preparaciuxf3n-de-datos]{2.3.2. Procesamiento
+y preparación de datos
+\hyperref[procesamiento-y-preparaciuxf3n-de-datos]{20}}
+
+\hyperref[anuxe1lisis-exploratorio-de-datos-eda]{2.3.3. Análisis
+exploratorio de datos (EDA)
+\hyperref[anuxe1lisis-exploratorio-de-datos-eda]{20}}
+
+\hyperref[implementaciuxf3n-de-la-arquitectura-huxedbrida]{2.3.4.
+Implementación de la arquitectura híbrida
+\hyperref[implementaciuxf3n-de-la-arquitectura-huxedbrida]{20}}
+
+\hyperref[estrategia-de-momentum-y-detecciuxf3n-de-anomaluxedas]{2.3.5.
+Estrategia de momentum y detección de anomalías
+\hyperref[estrategia-de-momentum-y-detecciuxf3n-de-anomaluxedas]{21}}
+
+\hyperref[evaluaciuxf3n-del-sistema]{2.3.6. Evaluación del sistema
+\hyperref[evaluaciuxf3n-del-sistema]{21}}
+
+\hyperref[entorno-de-desarrollo-y-herramientas]{2.3.7. Entorno de
+desarrollo y herramientas
+\hyperref[entorno-de-desarrollo-y-herramientas]{21}}
+
+\hyperref[_Toc227174287]{3. Referencias bibliográficas
+\hyperref[_Toc227174287]{22}}
+
+Índice de figuras
+
+\hyperref[_Toc227174288]{Figura 1. Evolución de las caídas catastróficas
+en estrategias de momentum. El desplome en (Panel A) se explica por el
+rebote explosivo de los activos con peor rendimiento previo mostrado en
+(Panel B). Fuente: Daniel y Moskowitz (2016).
+\hyperref[_Toc227174288]{10}}
+
+\hyperref[_Toc227174289]{Figura 2: Clasificación de activos en el
+espacio riesgo-rentabilidad mediante el algoritmo KMeans. Los puntos
+sólidos representan los centroides µi calculados según la Ecuación 2,
+mientras que las regiones sombreadas delimitan las fronteras de decisión
+de cada clúster. Fuente: Elaboración propia.
+\hyperref[_Toc227174289]{13}}
+
+\hyperref[_Toc227174290]{Figura 3: Clasificación topológica en DBSCAN:
+Identificación de puntos núcleo, frontera y ruido en función del radio ϵ
+y MinPts. Fuente: Elaboración propia. \hyperref[_Toc227174290]{15}}
+
+Índice de tablas
+
+\hyperref[_Toc227174291]{Tabla 1 Rendimientos de las carteras
+superpuestas J\textbackslash/K de momentum. Fuente: Jegadeesh y Titman
+(1993). \hyperref[_Toc227174291]{8}}
+
+\textbf{\hfill\break
+}
+
+Índice de ecuaciones
+
+\hyperref[_Toc227174292]{Ecuación 1. Minimización de la suma de los
+errores cuadráticos \hyperref[_Toc227174292]{12}}
+
+\hyperref[_Ref227165937]{Ecuación 2. Media aritmética de los puntos del
+clúster \hyperref[_Ref227165937]{12}}
+
+\hyperref[_Toc227174294]{Ecuación 3. Distancia euclídea
+\hyperref[_Toc227174294]{13}}
+
+\hyperref[_Toc227174295]{Ecuación 4. Vecindad
+\hyperref[_Toc227174295]{14}}
+
+\section{Contexto y estado del arte}\label{contexto-y-estado-del-arte}
+
+El presente capítulo trata los fundamentos teóricos y matemáticos que
+sustentan la investigación, así como la revisión de la literatura
+contemporánea. En primer lugar, se analiza la naturaleza del
+\emph{momentum} y su vulnerabilidad ante regímenes de alta volatilidad.
+Posteriormente, se muestran las herramientas de \emph{Machine Learning}
+no supervisado propuestas (K-Means y DBSCAN), para finalizar con un
+análisis del estado del arte que justifica la arquitectura algorítmica
+híbrida de este trabajo.
+
+\subsection{El Momentum en los mercados financieros y el riesgo de
+anomalías}\label{el-momentum-en-los-mercados-financieros-y-el-riesgo-de-anomaluxedas}
+
+La persistencia de los rendimientos en los mercados de renta variable ha
+sido objeto de profundo debate en la literatura financiera. La Hipótesis
+del Mercado Eficiente (EMH) establece que los precios reflejan
+instantáneamente toda la información disponible, imposibilitando la
+obtención sistemática de rendimientos anormales. Sin embargo, la
+evidencia empírica ha demostrado que los inversores tienden a reaccionar
+de forma ineficiente (por sobrerreacción o infrarreacción) ante la nueva
+información, generando tendencias explotables matemáticamente. A la
+captura sistemática de estas tendencias se le conoce como inversión de
+\emph{momentum}.
+
+\subsubsection{\texorpdfstring{Fundamentación matemática del Momentum
+}{Fundamentación matemática del Momentum }}\label{fundamentaciuxf3n-matemuxe1tica-del-momentum}
+
+El \emph{momentum} se fundamenta en la premisa de que los activos que
+han obtenido un rendimiento superior en el pasado reciente continuarán
+haciéndolo en el futuro cercano, mientras que aquellos con un
+rendimiento deficiente seguirán una trayectoria bajista. La
+formalización académica de esta estrategia fue establecida de forma
+pionera por (Jegadeesh, 1993), quienes demostraron que comprar acciones
+ganadoras y vender acciones perdedoras genera rendimientos anormales
+positivos y estadísticamente significativos.
+
+La arquitectura matemática del modelo clásico de (Jegadeesh, 1993) se
+define mediante una estrategia de \(J\) meses de formación y \(K\) meses
+de mantenimiento (estrategia \(J\text{/}K\) ) . En el instante \(t\), el
+universo de activos se clasifica en orden ascendente en función de sus
+rendimientos acumulados durante los pasados \(J\) meses. Basándose en
+este ranking, se forman diez carteras (deciles) equiponderadas. El decil
+superior se define como la cartera de "Ganadores" (Winners) y el decil
+inferior como la cartera de "Perdedores" (Losers).
+
+La estrategia consiste en construir una cartera de inversión de coste
+cero (autofinanciada), tomando una posición larga en el decil de
+ganadores y una posición corta en el decil de perdedores, mantenida
+durante \(K\) periodos. Para maximizar el poder estadístico y evitar el
+sesgo de un único punto de entrada, se propone el uso de carteras
+superpuestas (overlapping portfolios). En cualquier mes \(t\), la
+estrategia mantiene una serie de carteras seleccionadas en el mes actual
+y en los \(K - 1\ \)meses anteriores, rebalanceando mensualmente una
+fracción \(1\text{/}K\) de los pesos del hiperespacio de activos.
+
+\begin{figure}
+\centering
+\includegraphics[width=6.29931in,height=4.74653in]{media/image2.PNG}
+\caption{\protect\phantomsection\label{_Toc227174291}{}Tabla
+Rendimientos de las carteras superpuestas J\textbackslash/K de momentum.
+Fuente: Jegadeesh y Titman (1993).}
+\end{figure}
+
+Esta formulación lineal clásica ha demostrado ser rentable, pero asume
+implícitamente una distribución estacionaria del riesgo, una suposición
+que resulta matemáticamente inestable en la práctica.
+
+\subsubsection{Asimetría de riesgo y el concepto de Momentum
+Crashes}\label{asimetruxeda-de-riesgo-y-el-concepto-de-momentum-crashes}
+
+A pesar de sus altos rendimientos promedio y ratios de Sharpe
+atractivos, la estrategia de momentum presenta un riesgo de cola. La
+distribución de sus rendimientos está fuertemente sesgada hacia la
+izquierda, lo que significa que el modelo experimenta pérdidas
+infrecuentes pero devastadoras, conocidas en la literatura como Momentum
+Crashes (Daniel, 2016).
+
+Daniel y Moskowitz (Daniel, 2016) demuestran que estos colapsos no son
+eventos aleatorios (saltos de Poisson), sino que son parcialmente
+predecibles al concentrarse en "estados de pánico" del mercado; es
+decir, tras caídas prolongadas (bear markets) combinadas con picos
+extremos de volatilidad esperada. La anatomía de un crash tiene una
+forma contraintuitiva: el colapso de la estrategia no ocurre cuando el
+mercado sigue cayendo, sino exactamente cuando rebota de forma abrupta.
+
+La justificación matemática radica en la variación dinámica de la beta (
+\(\beta\) ) de las carteras extremas. Tras un declive severo, las
+acciones del decil de "Perdedores" han sufrido grandes caídas, quedando
+a menudo en situaciones de estrés financiero. En este punto, el capital
+de estas empresas actúa matemáticamente como una call option (opción de
+compra) fuera del dinero sobre los activos de la empresa. Mediante la
+introducción de variables indicadoras de mercado bajista ( \(I_{B}\) ) y
+alcista ( \(I_{U}\) ), Daniel y Moskowitz (Daniel, 2016) demuestran que
+en estados de pánico, la cartera de perdedores presenta una asimetría
+extrema: su beta a la baja es moderada, pero su beta al alza se dispara
+ante cualquier rebote positivo.
+
+Dado que el algoritmo de momentum obliga a mantener una posición corta
+sobre estos perdedores, la estrategia se encuentra efectivamente "corta
+en una opción de compra" sobre el índice del mercado. Cuando ocurre un
+rebote (ej. marzo-mayo de 2009), la cartera de perdedores sube
+destruyendo el margen de la posición corta, mientras que la cartera de
+ganadores apenas sube, generando un elevado drawdown en la estrategia.
+
+\includegraphics[width=6.29931in,height=3.76736in]{media/image3.PNG}\includegraphics[width=6.29931in,height=3.70417in]{media/image4.PNG}
+
+\protect\phantomsection\label{_Toc227174288}{}Figura . Evolución de las
+caídas catastróficas en estrategias de momentum. El desplome en (Panel
+A) se explica por el rebote explosivo de los activos con peor
+rendimiento previo mostrado en (Panel B). Fuente: Daniel y Moskowitz
+(2016).
+
+\subsubsection{Ruido estructural, anomalías y la necesidad de filtrado
+topológico}\label{ruido-estructural-anomaluxedas-y-la-necesidad-de-filtrado-topoluxf3gico}
+
+La evidencia de los \emph{Momentum Crashes} y la inestabilidad de los
+modelos lineales subraya un desafío en la econometría financiera: el
+bajo \emph{signal-to-noise ratio} de las series temporales. Como expone
+(López de Prado, 2018), los datos financieros están contaminados de
+forma continua por eventos de microestructura y anomalías
+idiosincrásicas que no representan la dinámica real del mercado.
+
+En este contexto, es crucial distinguir entre un cambio de régimen
+sistémico (donde la mayoría de los activos se desplazan conjuntamente,
+formando estructuras densas) y el ruido estructural o valores atípicos
+individuales (\emph{outliers}). Los algoritmos de partición
+tradicionales, como K-Means, presentan una alta sensibilidad a estos
+últimos; la presencia de una sola acción con una rentabilidad extrema e
+injustificada puede desplazar significativamente los centroides,
+distorsionando la clasificación de todo el universo de activos.
+
+Para solucionar esta limitación, la literatura técnica más reciente
+propone el uso de algoritmos basados en densidad. Específicamente, el
+algoritmo DBSCAN (\emph{Density-Based Spatial Clustering of Applications
+with Noise}) permite una aproximación topológica al filtrado de datos. A
+diferencia de los métodos de exclusión manuales o estáticos propuestos
+por autores como (Aslam, 2025), DBSCAN automatiza la identificación de
+anomalías basándose en la proximidad espacial de las observaciones
+(Shiraj, y otros, 2024). Aquellos activos que presenten movimientos de
+precio extremos, \emph{flash crashes} o patrones de volatilidad anómalos
+que no cuenten con una densidad mínima de ``vecinos'' con comportamiento
+similar, son etiquetados matemáticamente como ruido (\emph{noise}).
+
+Por consiguiente, se justifica la implementación de una arquitectura
+híbrida en este Trabajo. El uso de DBSCAN actúa como un paso de
+preprocesamiento para purgar las anomalías individuales y ``cisnes
+negros'' puntuales. Una vez eliminada esta contaminación estadística, el
+algoritmo K-Means puede clasificar los activos en regímenes de mercado
+robustos, garantizando que los centroides representen tendencias reales
+y no se vean afectados por el ruido estructural del mercado.
+
+\subsection{Fundamentos de Machine Learning no
+supervisado}\label{fundamentos-de-machine-learning-no-supervisado}
+
+Para abordar la naturaleza no lineal y ruidosa de los mercados
+financieros descrita en la sección anterior, esta investigación propone
+un sistema híbrido basado en dos de los algoritmos de aprendizaje no
+supervisado (\emph{Unsupervised Learning}) más robustos: K-Means y
+DBSCAN. A diferencia del aprendizaje supervisado, estas técnicas no
+requieren datos etiquetados previamente, lo cual es idóneo para el
+descubrimiento de regímenes de mercado ocultos en series temporales
+multidimensionales. A continuación, se detallan sus fundamentos
+matemáticos.
+
+\subsubsection{Algoritmo de Agrupamiento
+K-Means}\label{algoritmo-de-agrupamiento-k-means}
+
+El algoritmo K-Means es un método de iterativo que busca dividir un
+conjunto de \(n\) observaciones en un número predefinido de \(k\)
+clústeres disjuntos, de forma que cada observación pertenezca al clúster
+con el centroide (media) más cercano. Matemáticamente, dado un conjunto
+de vectores de características
+\(X = \text{\{}x_{1},x_{2},\ldots,x_{n}\text{\}}\ \) donde cada
+\(x_{i} \in \mathbb{R}^{\mathbb{d}}\) (siendo \(d\) el número de
+variables o indicadores financieros), el algoritmo tiene como objetivo
+minimizar la varianza intra-clúster. Esto se formula como la
+minimización de la suma de los errores cuadráticos (\emph{Within-Cluster
+Sum of Squares}, WCSS):
+
+\[\arg{\min_{C}{\sum_{i = 1}^{k}{\sum_{x \in C_{i}}^{}\left| \left| x - \mu_{i} \right| \right|^{2}}}}\]
+
+\protect\phantomsection\label{_Toc227174292}{}Ecuación . Minimización de
+la suma de los errores cuadráticos
+
+Donde \(C = \text{\{}C_{1},C_{2},\ldots,C_{k}\text{\}}\) representa el
+conjunto de clústeres y \(\mu_{i}\) es el centroide del clúster
+\(C_{i}\), calculado como la media aritmética de los puntos asignados a
+dicho clúster:
+
+\[\mu_{i} = \frac{1}{\left| C_{i} \right|}\sum_{x \in C_{i}}^{}x\]
+
+\protect\phantomsection\label{_Ref227165937}{}Ecuación . Media
+aritmética de los puntos del clúster
+
+El proceso de optimización utiliza comúnmente la distancia euclídea como
+métrica de similitud en el hiperespacio \(d -\)dimensional:
+
+\[d(x,y) = \sqrt{\sum_{j = 1}^{d}\left( x_{j} - y_{j} \right)^{2}}\]
+
+\protect\phantomsection\label{_Toc227174294}{}Ecuación . Distancia
+euclídea
+
+\begin{figure}
+\centering
+\includegraphics[width=5.76667in,height=4.01906in]{media/image5.PNG}
+\caption{\protect\phantomsection\label{_Toc227174289}{}Figura :
+Clasificación de activos en el espacio riesgo-rentabilidad mediante el
+algoritmo KMeans. Los puntos sólidos representan los centroides µi
+calculados según la \hyperref[_Ref227165937]{Ecuación 2}, mientras que
+las regiones sombreadas delimitan las fronteras de decisión de cada
+clúster. Fuente: Elaboración propia.}
+\end{figure}
+
+A pesar de su eficiencia computacional \(\mathcal{O}(nki)\) , el
+algoritmo clásico presenta dos limitaciones críticas en finanzas: asume
+que los clústeres tienen forma esférica (convergencia isométrica) y, al
+carecer de un concepto de densidad, se ve forzado a asignar todos los
+puntos a un clúster. Como indica la \hyperref[_Ref227165937]{Ecuación
+2}, un valor atípico extremo alterará el sumatorio, desplazando el
+centroide \(\mu_{i}\) y sesgando la identificación del régimen de
+mercado.
+
+\subsubsection{Filtro de densidad topológica
+DBSCAN}\label{filtro-de-densidad-topoluxf3gica-dbscan}
+
+Para mitigar la fragilidad del K-Means ante valores extremos, se
+implementa el algoritmo DBSCAN (\emph{Density-Based Spatial Clustering
+of Applications with Noise}). A diferencia de los métodos de partición,
+DBSCAN define los clústeres como regiones continuas de alta densidad de
+puntos separadas por regiones de baja densidad.
+
+La topología de DBSCAN se rige fundamentalmente por dos hiperparámetros
+espaciales:
+
+\begin{itemize}
+\item
+  \(\epsilon\) (\emph{Epsilon}): El radio máximo de vecindad alrededor
+  de un punto.
+\item
+  \(MinPts\): El número mínimo de puntos requeridos dentro de la
+  vecindad \(\epsilon\) para considerar que existe una región densa.
+\end{itemize}
+
+Para cualquier punto \(p\), su \(\epsilon\) - vecindad se define
+matemáticamente como el subconjunto de puntos \(q\) en la base de datos
+\(D\) cuya distancia a \(p\) es menor o igual a \(\epsilon\):
+
+\[N_{\epsilon}(p) = \text{\{}q \in D \mid dist(p,q) \leq \epsilon\text{\}}\]
+
+\protect\phantomsection\label{_Toc227174295}{}Ecuación . Vecindad
+
+En base a esta vecindad, el algoritmo clasifica todas las observaciones
+del hiperespacio en tres categorías topológicas distintas:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Puntos Núcleo (\emph{Core Points}): Un punto \(p\) es un núcleo si
+  \(\left| N_{\epsilon}(p) \right| \geq MinPts\). Estos puntos conforman
+  el interior (esqueleto) de un régimen de mercado.
+\item
+  Puntos Frontera (\emph{Border Points}): Un punto \(q\) es frontera si
+  \(\left| N_{\epsilon}(q) \right| < MinPts,\) pero pertenece a la
+  \(\epsilon\) - vecindad de un punto núcleo.
+\item
+  Ruido (\emph{Noise} / \emph{Outliers}): Cualquier punto \(o\) que no
+  es ni núcleo ni frontera. Matemáticamente, son puntos aislados que no
+  alcanzan la densidad crítica.
+\end{enumerate}
+
+\begin{figure}
+\centering
+\includegraphics[width=4.43701in,height=3.72824in]{media/image6.png}
+\caption{\protect\phantomsection\label{_Toc227174290}{}Figura :
+Clasificación topológica en DBSCAN: Identificación de puntos núcleo,
+frontera y ruido en función del radio ϵ y MinPts. Fuente: Elaboración
+propia.}
+\end{figure}
+
+En el marco de esta investigación, el objetivo primario de DBSCAN no es
+la clasificación final de los regímenes, sino la capacidad para detectar
+los puntos clasificados como "Ruido". Al asignar matemáticamente la
+etiqueta \(- 1\) a las anomalías idiosincrásicas (como el \emph{Flash
+Crash} previamente ilustrado), el algoritmo permite purgar el
+hiperespacio de características antes de someterlo a la minimización de
+la varianza del K-Means.
+
+\subsection{Estado del arte y justificación de la arquitectura
+propuesta}\label{estado-del-arte-y-justificaciuxf3n-de-la-arquitectura-propuesta}
+
+La aplicación de técnicas de \emph{Machine Learning} no supervisado en
+la optimización de carteras ha experimentado un crecimiento exponencial.
+Sin embargo, la comunidad científica aún debate cómo gestionar la
+disrupción que generan las anomalías del mercado sobre los algoritmos
+clásicos. A continuación, se articula el estado de la cuestión siguiendo
+la evolución desde el problema tradicional hasta la propuesta
+arquitectónica de esta investigación.
+
+\subsubsection{El problema del Momentum tradicional en entornos
+volátiles}\label{el-problema-del-momentum-tradicional-en-entornos-voluxe1tiles}
+
+La selección de activos para conformar carteras de \emph{momentum} ha
+incrementado su complejidad metodológica. Según advierte (Aslam, 2025),
+esta toma de decisiones representa en la actualidad un desafío mayúsculo
+debido a la alta volatilidad inherente a los mercados. El autor sugiere
+que el \emph{momentum} transversal estándar es a menudo insuficiente en
+estos entornos de estrés, lo que justifica de manera imperativa la
+aplicación de algoritmos de \emph{Machine Learning} para el desarrollo
+de una "estrategia de \emph{momentum} gestionada por riesgo".
+
+En paralelo, (Shiraj, y otros, 2024) exponen en su análisis que los
+mercados financieros están expuestos de forma recurrente a movimientos
+extremos de precios repentinos. Estos eventos anómalos o \emph{crashes},
+si no son detectados y aislados a tiempo, actúan como un factor de
+contaminación estadística capaz de invalidar por completo los modelos
+predictivos y de clasificación subyacentes.
+
+\subsubsection{El intento de solución mediante K-Means y sus
+limitaciones}\label{el-intento-de-soluciuxf3n-mediante-k-means-y-sus-limitaciones}
+
+Como respuesta a esta necesidad de adaptación dinámica, la literatura
+reciente ha explorado modelos de agrupamiento basados en partición.
+(Aslam, 2025) propone la utilización del algoritmo K-Means para
+clasificar el universo de activos basándose en características
+multidimensionales de riesgo y retorno. Su enfoque permite la
+identificación algorítmica de clústeres compuestos por las denominadas
+"acciones optimistas", superando los resultados de los deciles
+tradicionales.
+
+Adicionalmente, otros trabajos contemporáneos como el de (Luan \& Hamp,
+2025) evidencian la necesidad de automatizar la clasificación de
+regímenes en series temporales multidimensionales, proponiendo variantes
+avanzadas del K-Means (como el \emph{Sliced Wasserstein K-Means}) para
+tratar de lidiar con la complejidad de las distribuciones financieras.
+
+No obstante, esta línea de solución presenta una limitación técnica
+crítica advertida por (Nyffeler, 2024): el algoritmo K-Means tradicional
+posee una sensibilidad matemática inherente a los valores atípicos
+(\emph{outliers}). Dado que minimiza la suma de los errores cuadráticos
+global, la presencia de anomalías genera una severa inestabilidad en la
+asignación de los clústeres y una distorsión artificial en la ubicación
+de los centroides. Esta vulnerabilidad es ejemplificada de manera
+concluyente por (Bin, 2020), quien documenta cómo la caída extrema de
+una sola empresa (Apache Corp, -70\%) es capaz de desplazar los
+centroides y comprometer el rendimiento de toda una cartera K-Means.
+
+\subsubsection{Propuesta de Solución: Arquitectura Híbrida y Marco de
+Evaluación}\label{propuesta-de-soluciuxf3n-arquitectura-huxedbrida-y-marco-de-evaluaciuxf3n}
+
+La revisión del estado del arte evidencia una brecha: los algoritmos
+particionales (K-Means) agrupan eficientemente el riesgo, pero son
+incapaces de discriminar eventos irracionales, mientras que los
+algoritmos de densidad (DBSCAN) identifican las anomalías, pero no
+segmentan el mercado direccionalmente.
+
+Para resolver esta problemática, el presente Trabajo propone una
+solución híbrida. Integrando las advertencias de (Shiraj, y otros, 2024)
+y la necesidad de gestión de riesgo de (Aslam, 2025), se establece una
+arquitectura secuencial: el algoritmo DBSCAN actuará como preprocesador
+para detectar y aislar matemáticamente las anomalías, protegiendo así al
+modelo. Posteriormente, K-Means clasificará el espacio de datos ya
+purgado, asegurando que los centroides representen los verdaderos
+regímenes de "acciones optimistas" sin la distorsión del ruido
+estructural.
+
+Para validar de forma empírica la superioridad de esta arquitectura y
+mitigar el riesgo de sobreajuste (\emph{overfitting}) advertido por
+(López de Prado, 2018), los hiperparámetros se optimizarán en una
+ventana de entrenamiento (\emph{in-sample}) y se evaluarán en un periodo
+cronológico estrictamente posterior (\emph{out-of-sample}). La
+investigación contrastará tres escenarios de inversión:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  Benchmark (Referencia): Rentabilidad pasiva del índice S\&P 500
+  (Comprar y mantener).
+\item
+  Modelo Base: Estrategia algorítmica utilizando K-Means aislado.
+\item
+  Modelo Híbrido (Propuesta): Implementación secuencial de DBSCAN
+  seguido de K-Means.
+\end{enumerate}
+
+La robustez de los modelos se medirá a través de métricas
+institucionales clave: el \emph{Ratio de Sharpe} (rendimiento ajustado
+al riesgo) y el \emph{Maximum Drawdown} (riesgo de caída máxima). El
+objetivo final de la experimentación será demostrar matemáticamente que
+el filtrado previo de anomalías reduce de forma efectiva las pérdidas de
+la cartera durante los escenarios de estrés del mercado.
+
+\section{Objetivos concretos y metodología de
+trabajo}\label{objetivos-concretos-y-metodologuxeda-de-trabajo}
+
+En este capítulo se definen los objetivos del trabajo y la metodología
+que se seguirá para su desarrollo. Este apartado actúa como nexo entre
+el estudio del contexto y estado del arte presentado anteriormente y la
+implementación práctica de la propuesta planteada.
+
+El trabajo se enmarca en el ámbito del análisis de datos financieros
+mediante técnicas de \emph{Machine Learning}, con el objetivo de
+desarrollar y evaluar una arquitectura algorítmica híbrida capaz de
+identificar patrones de comportamiento en activos financieros y reducir
+el impacto de anomalías en entornos de alta volatilidad.
+
+En primer lugar, se establece el objetivo general del trabajo, que
+define el propósito principal de la investigación. A continuación, se
+desglosa dicho objetivo en una serie de objetivos específicos que
+permiten estructurar el desarrollo del proyecto en tareas concretas.
+Finalmente, se describe la metodología de trabajo, detallando las fases,
+técnicas y herramientas que se emplearán para alcanzar los objetivos
+definidos.
+
+\subsection{Objetivo general}\label{objetivo-general}
+
+El objetivo general de este trabajo es diseñar, implementar y evaluar
+una arquitectura híbrida basada en técnicas de \emph{clustering} (DBSCAN
+y K-Means) que permita identificar patrones de comportamiento en activos
+financieros y mejorar la robustez de las estrategias de \emph{momentum}
+mediante el filtrado previo de anomalías.
+
+Para ello, se desarrollará un sistema capaz de agrupar activos con
+dinámicas similares tras un proceso de depuración del ruido estructural,
+generando señales indicativas de posibles oportunidades de inversión o
+eventos atípicos.
+
+El sistema propuesto será evaluado con el fin de analizar su utilidad en
+la interpretación del comportamiento del mercado y en la toma de
+decisiones basada en datos.
+
+\subsection{Objetivos específicos}\label{objetivos-especuxedficos}
+
+Para alcanzar el objetivo general, se plantean los siguientes objetivos
+específicos:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \textbf{Recopilar datos históricos} de precios de activos financieros
+  a partir de fuentes públicas.
+\item
+  \textbf{Analizar la estructura y características de los datos}
+  obtenidos, incluyendo variables como precios de apertura, cierre,
+  máximos, mínimos y volumen.
+\item
+  \textbf{Preprocesar y limpiar el conjunto de datos}, tratando valores
+  nulos y datos inconsistentes.
+\item
+  \textbf{Transformar las series temporales en variables relevantes},
+  como retornos o medidas de volatilidad.
+\item
+  \textbf{Implementar una arquitectura secuencial} basada en DBSCAN y
+  K-Means para el análisis del comportamiento de los activos.
+\item
+  \textbf{Aplicar DBSCAN} como técnica de filtrado para identificar y
+  eliminar observaciones anómalas (outliers).
+\item
+  \textbf{Aplicar K-Means} sobre el conjunto de datos depurado para
+  identificar clústeres representativos de regímenes de mercado.
+\item
+  \textbf{Analizar los clusters obtenidos e interpretar su significado}
+  en términos financieros.
+\item
+  \textbf{Integrar una estrategia de momentum} como marco de evaluación
+  del sistema propuesto.
+\item
+  \textbf{Comparar el rendimiento} del modelo híbrido frente a un modelo
+  basado únicamente en K-Means.
+\item
+  \textbf{Evaluar el rendimiento del sistema} utilizando datos no vistos
+  previamente.
+\item
+  \textbf{Validar la utilidad del modelo} en un contexto experimental.
+\end{enumerate}
+
+\subsection{Metodología del trabajo}\label{metodologuxeda-del-trabajo}
+
+La metodología del presente trabajo se estructura como un proceso
+iterativo de análisis, modelado y evaluación de datos financieros, con
+el objetivo de desarrollar un sistema capaz de identificar patrones de
+comportamiento en activos y evaluar el impacto del filtrado de anomalías
+en la robustez de estrategias de inversión basadas en \emph{momentum}.
+
+\subsubsection{Obtención de datos}\label{obtenciuxf3n-de-datos}
+
+En una primera fase, se realiza la obtención de datos históricos de
+mercados financieros a partir de fuentes públicas en línea. Estos datos
+incluyen información temporal de los activos, como precios de apertura,
+cierre, máximos, mínimos y volumen de negociación.
+
+La elección de este tipo de datos se fundamenta en su uso habitual
+dentro del análisis cuantitativo de mercados, así como en su capacidad
+para reflejar dinámicas reales de comportamiento en los precios.
+
+\subsubsection{Procesamiento y preparación de
+datos}\label{procesamiento-y-preparaciuxf3n-de-datos}
+
+Una vez recopilados los datos, se lleva a cabo un proceso de preparación
+cuyo objetivo es garantizar su calidad y adecuación para los modelos de
+aprendizaje automático.
+
+En esta fase se realiza la limpieza del conjunto de datos, incluyendo la
+gestión de valores nulos, la corrección de inconsistencias y la
+eliminación de registros incompletos. Posteriormente, se aplican
+transformaciones sobre las series temporales con el fin de generar
+variables más informativas, como retornos porcentuales o medidas de
+volatilidad.
+
+Este proceso resulta fundamental para adaptar los datos en bruto a un
+formato adecuado para su posterior análisis.
+
+\subsubsection{Análisis exploratorio de datos
+(EDA)}\label{anuxe1lisis-exploratorio-de-datos-eda}
+
+A continuación, se realiza un análisis exploratorio de los datos con el
+objetivo de comprender su estructura interna, identificar patrones
+iniciales y detectar posibles anomalías o comportamientos relevantes.
+
+Este análisis incluye el estudio de la evolución temporal de los
+activos, la relación entre variables y la comparación de comportamientos
+entre distintos activos financieros. Los resultados obtenidos en esta
+fase permiten orientar la selección de los modelos de \emph{clustering}
+y la definición de la estrategia de análisis posterior.
+
+\subsubsection{Implementación de la arquitectura
+híbrida}\label{implementaciuxf3n-de-la-arquitectura-huxedbrida}
+
+Sobre los datos ya procesados, se implementa una arquitectura secuencial
+en dos etapas:
+
+En primer lugar, se aplica el algoritmo DBSCAN como mecanismo de
+filtrado topológico, con el objetivo de identificar observaciones
+anómalas y clasificarlas como ruido. Posteriormente, se elimina dicho
+ruido del conjunto de datos y se aplica el algoritmo K-Means sobre el
+espacio depurado, con el fin de identificar clústeres representativos de
+distintos regímenes de mercado.
+
+Esta aproximación permite reducir la influencia de valores atípicos en
+la estimación de los centroides, mejorando la estabilidad y coherencia
+de los clústeres obtenidos.
+
+\subsubsection{Estrategia de momentum y detección de
+anomalías}\label{estrategia-de-momentum-y-detecciuxf3n-de-anomaluxedas}
+
+A partir de los \emph{clusters} obtenidos, se desarrolla una estrategia
+de \emph{momentum} que actúa como marco de evaluación del sistema
+propuesto.
+
+En particular, se analizan transiciones entre distintos \emph{clusters}
+y desviaciones significativas respecto a patrones establecidos, lo que
+permite identificar posibles señales de inversión o situaciones anómalas
+en el mercado.
+
+\subsubsection{Evaluación del sistema}\label{evaluaciuxf3n-del-sistema}
+
+Finalmente, el sistema se evalúa utilizando datos históricos no
+empleados durante la fase de construcción de los modelos, con el
+objetivo de analizar su capacidad de generalización.
+
+La evaluación se centra en la coherencia de las señales generadas, así
+como en la estabilidad del modelo en distintos escenarios de mercado.
+
+\subsubsection{Entorno de desarrollo y
+herramientas}\label{entorno-de-desarrollo-y-herramientas}
+
+El desarrollo del sistema se lleva a cabo en entorno \emph{Python},
+utilizando \emph{JupyterLab} como entorno principal de trabajo, junto
+con bibliotecas especializadas en análisis de datos y \emph{Machine
+Learning} como \emph{pandas}, \emph{numpy} y \emph{scikit-learn}.
+
+\section{Referencias
+bibliográficas}\label{referencias-bibliogruxe1ficas}
+
+Aslam, B. (2025). Identifying optimistic stocks with K-means clustering
+algorithm. \emph{International Review of Economics \& Finance}, 104579.
+
+Bin, S. (2020). K-means stock clustering analysis based on historical
+price movements and financial ratios (Senior thesis). \emph{Claremont
+McKenna College}.
+
+Daniel, K. M. (2016). Momentum crashes. \emph{Journal of Financial
+Economics}, 221-247.
+
+Jegadeesh, N. T. (1993). Returns to Buying Winners and Selling Losers:
+Implications for Stock Market Efficiency. \emph{The Journal of Finance},
+65--91.
+
+López de Prado, M. (2018). \emph{Advances in Financial Machine
+Learning.} Wiley.
+
+Luan, Q., \& Hamp, J. (2025). Automated regime classification in
+multidimensional time series data using sliced Wasserstein k-means
+clustering. \emph{Data Science in Finance and Economics}, 387--418.
+
+Nyffeler, L. (2024). K-means clustering with Mahalanobis distance for
+stock classification into value and growth portfolios (Bachelor's
+thesis). \emph{Zurich University of Applied Sciences (ZHAW)}.
+
+Shiraj, M., Rahman, M., Al-Imran, M., Liza, M., Murshed, M., \& Akhter,
+N. (2024). Anomaly detection in financial time series data via mapper
+algorithm and DBSCAN clustering. \emph{World Journal of Advanced
+Engineering Technology and Sciences}, 70-84.
+
+\end{document}

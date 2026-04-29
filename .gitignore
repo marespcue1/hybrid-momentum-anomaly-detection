@@ -1,0 +1,6 @@
+# datos grandes
+data/raw/
+data/processed/
+
+# csv
+*.csv
