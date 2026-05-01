@@ -7,6 +7,8 @@
 \usepackage{amsmath,amssymb}
 \setcounter{secnumdepth}{5}
 \usepackage{iftex}
+\usepackage[style=apa]{biblatex}
+\addbibresource{referencias.bib}
 \ifPDFTeX
   \usepackage[T1]{fontenc}
   \usepackage[utf8]{inputenc}
@@ -77,7 +79,7 @@
 
 \begin{document}
 
-\includegraphics[width=4.2031in,height=0.94625in]{media/image1.png}
+\includegraphics[width=4.2031in,height=0.94625in]{media/image001.png}
 
 Universidad Internacional de La Rioja
 
@@ -302,7 +304,11 @@ fracción \(1\text{/}K\) de los pesos del hiperespacio de activos.
 
 \begin{figure}
 \centering
-\includegraphics[width=6.29931in,height=4.74653in]{media/image2.PNG}
+\includegraphics[width=6.29931in,height=4.74653in]{media/image004.png}
+\end{figure}
+\begin{figure}
+\centering
+\includegraphics[width=6.29931in,height=4.74653in]{media/image002.png}
 \caption{\protect\phantomsection\label{_Toc227174291}{}Tabla
 Rendimientos de las carteras superpuestas J\textbackslash/K de momentum.
 Fuente: Jegadeesh y Titman (1993).}
@@ -349,7 +355,7 @@ rebote (ej. marzo-mayo de 2009), la cartera de perdedores sube
 destruyendo el margen de la posición corta, mientras que la cartera de
 ganadores apenas sube, generando un elevado drawdown en la estrategia.
 
-\includegraphics[width=6.29931in,height=3.76736in]{media/image3.PNG}\includegraphics[width=6.29931in,height=3.70417in]{media/image4.PNG}
+\includegraphics[width=6.29931in,height=3.76736in]{media/image003.png}\includegraphics[width=6.29931in,height=3.70417in]{media/image004.png}
 
 \protect\phantomsection\label{_Toc227174288}{}Figura . Evolución de las
 caídas catastróficas en estrategias de momentum. El desplome en (Panel
@@ -449,7 +455,7 @@ euclídea
 
 \begin{figure}
 \centering
-\includegraphics[width=5.76667in,height=4.01906in]{media/image5.PNG}
+\includegraphics[width=5.76667in,height=4.01906in]{media/image005.png}
 \caption{\protect\phantomsection\label{_Toc227174289}{}Figura :
 Clasificación de activos en el espacio riesgo-rentabilidad mediante el
 algoritmo KMeans. Los puntos sólidos representan los centroides µi
@@ -517,7 +523,7 @@ del hiperespacio en tres categorías topológicas distintas:
 
 \begin{figure}
 \centering
-\includegraphics[width=4.43701in,height=3.72824in]{media/image6.png}
+\includegraphics[width=4.43701in,height=3.72824in]{media/image006.png}
 \caption{\protect\phantomsection\label{_Toc227174290}{}Figura :
 Clasificación topológica en DBSCAN: Identificación de puntos núcleo,
 frontera y ruido en función del radio ϵ y MinPts. Fuente: Elaboración
@@ -636,29 +642,60 @@ objetivo final de la experimentación será demostrar matemáticamente que
 el filtrado previo de anomalías reduce de forma efectiva las pérdidas de
 la cartera durante los escenarios de estrés del mercado.
 
-\section{Objetivos concretos y metodología de
-trabajo}\label{objetivos-concretos-y-metodologuxeda-de-trabajo}
+\section{Objetivos concretos y metodología de trabajo}
+\label{metodologuxeda-del-trabajo}
 
 En este capítulo se definen los objetivos del trabajo y la metodología
-que se seguirá para su desarrollo. Este apartado actúa como nexo entre
-el estudio del contexto y estado del arte presentado anteriormente y la
-implementación práctica de la propuesta planteada.
+seguida para su desarrollo. Este apartado actúa como nexo entre el estudio
+del contexto y estado del arte presentado anteriormente y la implementación
+práctica de la propuesta planteada.
 
 El trabajo se enmarca en el ámbito del análisis de datos financieros
-mediante técnicas de \emph{Machine Learning}, con el objetivo de
-desarrollar y evaluar una arquitectura algorítmica híbrida capaz de
-identificar patrones de comportamiento en activos financieros y reducir
-el impacto de anomalías en entornos de alta volatilidad.
+mediante técnicas de \emph{Machine Learning}, con el objetivo de desarrollar
+y evaluar una arquitectura algorítmica híbrida capaz de identificar patrones
+de comportamiento en activos financieros y reducir el impacto de anomalías en
+entornos de alta volatilidad.
 
-En primer lugar, se establece el objetivo general del trabajo, que
-define el propósito principal de la investigación. A continuación, se
-desglosa dicho objetivo en una serie de objetivos específicos que
-permiten estructurar el desarrollo del proyecto en tareas concretas.
-Finalmente, se describe la metodología de trabajo, detallando las fases,
-técnicas y herramientas que se emplearán para alcanzar los objetivos
-definidos.
+\subsection{Marco metodológico: CRISP-DM}
 
-\subsection{Objetivo general}\label{objetivo-general}
+La metodología adoptada en este trabajo se basa en el estándar
+\emph{CRISP-DM} (\emph{Cross Industry Standard Process for Data Mining}),
+traducido como \emph{Proceso Estándar Intersectorial para Minería de Datos}.
+Este marco fue desarrollado por un consorcio de empresas tecnológicas
+europeas, entre ellas \emph{SPSS}, \emph{Daimler-Benz} y \emph{NCR}, como
+respuesta a la necesidad de estandarizar los procesos de proyectos de
+\emph{minería de datos} en distintos dominios industriales
+\parencite{Chapman2000CRISPDM1S}.
+
+CRISP-DM se ha consolidado como una de las metodologías más utilizadas en
+proyectos de ciencia de datos debido a su carácter iterativo, flexible y
+centrado en el problema de negocio \parencite{wirth2000crisp}. Su estructura
+permite adaptar el ciclo de vida del proyecto a entornos complejos como los
+mercados financieros, caracterizados por ruido, no estacionariedad e
+incertidumbre.
+
+El modelo CRISP-DM se compone de seis fases:
+(1) comprensión del negocio,
+(2) comprensión de los datos,
+(3) preparación de los datos,
+(4) modelado,
+(5) evaluación y
+(6) despliegue.
+
+En este trabajo, estas fases se utilizan como marco de referencia para
+estructurar el desarrollo del sistema propuesto, adaptándolas al contexto
+del análisis de datos financieros.
+
+En la Figura~\ref{fig:crispdm} se presenta una representación del ciclo CRISP-DM, el cual sirve como guía metodológica en el desarrollo del presente trabajo.
+
+\begin{figure}[h]
+\centering
+\includegraphics[width=0.85\textwidth]{media/crispdm_es.png}
+\caption{Diagrama del proceso CRISP-DM adaptado al español. Fuente: elaboración propia a partir de \parencite{jensen2012crispdm} bajo licencia CC BY-SA 3.0.}
+\label{fig:crispdm}
+\end{figure}
+
+\subsection{Objetivo general}
 
 El objetivo general de este trabajo es diseñar, implementar y evaluar
 una arquitectura híbrida basada en técnicas de \emph{clustering} (DBSCAN
@@ -675,145 +712,89 @@ El sistema propuesto será evaluado con el fin de analizar su utilidad en
 la interpretación del comportamiento del mercado y en la toma de
 decisiones basada en datos.
 
-\subsection{Objetivos específicos}\label{objetivos-especuxedficos}
+\subsection{Objetivos específicos}
 
-Para alcanzar el objetivo general, se plantean los siguientes objetivos
-específicos:
+Los objetivos específicos del trabajo se derivan del planteamiento general
+y se encuentran alineados de forma indirecta con las fases del modelo
+CRISP-DM, que se utiliza como marco metodológico de referencia:
 
 \begin{enumerate}
-\def\labelenumi{\arabic{enumi}.}
-\item
-  \textbf{Recopilar datos históricos} de precios de activos financieros
-  a partir de fuentes públicas.
-\item
-  \textbf{Analizar la estructura y características de los datos}
-  obtenidos, incluyendo variables como precios de apertura, cierre,
-  máximos, mínimos y volumen.
-\item
-  \textbf{Preprocesar y limpiar el conjunto de datos}, tratando valores
-  nulos y datos inconsistentes.
-\item
-  \textbf{Transformar las series temporales en variables relevantes},
-  como retornos o medidas de volatilidad.
-\item
-  \textbf{Implementar una arquitectura secuencial} basada en DBSCAN y
-  K-Means para el análisis del comportamiento de los activos.
-\item
-  \textbf{Aplicar DBSCAN} como técnica de filtrado para identificar y
-  eliminar observaciones anómalas (outliers).
-\item
-  \textbf{Aplicar K-Means} sobre el conjunto de datos depurado para
-  identificar clústeres representativos de regímenes de mercado.
-\item
-  \textbf{Analizar los clusters obtenidos e interpretar su significado}
-  en términos financieros.
-\item
-  \textbf{Integrar una estrategia de momentum} como marco de evaluación
-  del sistema propuesto.
-\item
-  \textbf{Comparar el rendimiento} del modelo híbrido frente a un modelo
-  basado únicamente en K-Means.
-\item
-  \textbf{Evaluar el rendimiento del sistema} utilizando datos no vistos
-  previamente.
-\item
-  \textbf{Validar la utilidad del modelo} en un contexto experimental.
+\item \textbf{Recopilar} datos históricos de precios de activos financieros.
+\item \textbf{Analizar} la estructura de los datos y realizar análisis exploratorio.
+\item \textbf{Preprocesar} y \textbf{limpiar} el conjunto de datos.
+\item \textbf{Transformar} series temporales en variables relevantes.
+\item \textbf{Implementar} una arquitectura secuencial basada en DBSCAN y K-Means.
+\item \textbf{Aplicar} DBSCAN para detección de anomalías.
+\item \textbf{Aplicar} K-Means sobre datos depurados.
+\item \textbf{Analizar} e interpretar los clústeres obtenidos.
+\item \textbf{Integrar} una estrategia de \emph{momentum} como marco de evaluación.
+\item \textbf{Comparar} el modelo híbrido frente a un modelo base.
+\item \textbf{Evaluar} el rendimiento con datos no vistos.
+\item \textbf{Validar} la utilidad del modelo en entorno experimental.
 \end{enumerate}
 
-\subsection{Metodología del trabajo}\label{metodologuxeda-del-trabajo}
+\subsection{Metodología del trabajo}
 
-La metodología del presente trabajo se estructura como un proceso
-iterativo de análisis, modelado y evaluación de datos financieros, con
-el objetivo de desarrollar un sistema capaz de identificar patrones de
-comportamiento en activos y evaluar el impacto del filtrado de anomalías
-en la robustez de estrategias de inversión basadas en \emph{momentum}.
+La metodología del presente trabajo se basa en la aplicación práctica del
+marco CRISP-DM al desarrollo del sistema propuesto, estructurando el proceso
+en fases iterativas que permiten la retroalimentación continua entre
+obtención de datos, modelado y evaluación.
 
-\subsubsection{Obtención de datos}\label{obtenciuxf3n-de-datos}
+El proceso global se organiza en cuatro bloques principales:
+obtención y comprensión de datos, preparación de datos, modelado y evaluación.
 
-En una primera fase, se realiza la obtención de datos históricos de
-mercados financieros a partir de fuentes públicas en línea. Estos datos
-incluyen información temporal de los activos, como precios de apertura,
-cierre, máximos, mínimos y volumen de negociación.
+\subsubsection{Obtención y comprensión de datos}
 
-La elección de este tipo de datos se fundamenta en su uso habitual
-dentro del análisis cuantitativo de mercados, así como en su capacidad
-para reflejar dinámicas reales de comportamiento en los precios.
+Se recopilan series temporales de activos financieros (precios de apertura,
+cierre, máximos, mínimos y volumen) a partir de fuentes públicas. Posteriormente,
+se realiza un análisis exploratorio de datos (\emph{EDA}) para identificar
+patrones, distribuciones y posibles anomalías.
 
-\subsubsection{Procesamiento y preparación de
-datos}\label{procesamiento-y-preparaciuxf3n-de-datos}
+\subsubsection{Preparación de datos}
 
-Una vez recopilados los datos, se lleva a cabo un proceso de preparación
-cuyo objetivo es garantizar su calidad y adecuación para los modelos de
-aprendizaje automático.
+Se realiza la limpieza del conjunto de datos mediante la eliminación de
+valores nulos, normalización de variables y transformación de precios en
+retornos y medidas de volatilidad.
 
-En esta fase se realiza la limpieza del conjunto de datos, incluyendo la
-gestión de valores nulos, la corrección de inconsistencias y la
-eliminación de registros incompletos. Posteriormente, se aplican
-transformaciones sobre las series temporales con el fin de generar
-variables más informativas, como retornos porcentuales o medidas de
-volatilidad.
+\subsubsection{Modelado}
 
-Este proceso resulta fundamental para adaptar los datos en bruto a un
-formato adecuado para su posterior análisis.
+Se implementa una arquitectura híbrida en dos etapas:
+DBSCAN como filtro de anomalías y K-Means como algoritmo de segmentación
+de regímenes de mercado.
 
-\subsubsection{Análisis exploratorio de datos
-(EDA)}\label{anuxe1lisis-exploratorio-de-datos-eda}
+\subsubsection{Evaluación}
 
-A continuación, se realiza un análisis exploratorio de los datos con el
-objetivo de comprender su estructura interna, identificar patrones
-iniciales y detectar posibles anomalías o comportamientos relevantes.
+Se evalúa el sistema mediante comparación con un modelo base y una estrategia
+tradicional de \emph{momentum}, utilizando métricas financieras como
+rentabilidad y estabilidad.
 
-Este análisis incluye el estudio de la evolución temporal de los
-activos, la relación entre variables y la comparación de comportamientos
-entre distintos activos financieros. Los resultados obtenidos en esta
-fase permiten orientar la selección de los modelos de \emph{clustering}
-y la definición de la estrategia de análisis posterior.
+\subsection{Organización del equipo de trabajo}
 
-\subsubsection{Implementación de la arquitectura
-híbrida}\label{implementaciuxf3n-de-la-arquitectura-huxedbrida}
+El desarrollo del proyecto se ha realizado de forma colaborativa entre los tres integrantes del equipo, estableciendo una distribución de responsabilidades orientada a facilitar la coordinación, aunque con participación transversal en todas las fases del proyecto.
 
-Sobre los datos ya procesados, se implementa una arquitectura secuencial
-en dos etapas:
+\begin{itemize}
+\item \textbf{Alumno 1}: diseño e implementación de la arquitectura de \emph{machine learning}, incluyendo los algoritmos de clustering (DBSCAN y K-Means) y la construcción del sistema híbrido.
+\item \textbf{Alumno 2}: obtención, limpieza y transformación de los datos financieros, así como el diseño del pipeline de preprocesamiento.
+\item \textbf{Alumno 3}: análisis exploratorio de datos, revisión bibliográfica, apoyo en la interpretación de resultados y redacción de la memoria.
+\end{itemize}
 
-En primer lugar, se aplica el algoritmo DBSCAN como mecanismo de
-filtrado topológico, con el objetivo de identificar observaciones
-anómalas y clasificarlas como ruido. Posteriormente, se elimina dicho
-ruido del conjunto de datos y se aplica el algoritmo K-Means sobre el
-espacio depurado, con el fin de identificar clústeres representativos de
-distintos regímenes de mercado.
+A pesar de esta distribución inicial, el trabajo ha sido completamente colaborativo, participando los tres integrantes en el diseño, validación y toma de decisiones técnicas del proyecto.
 
-Esta aproximación permite reducir la influencia de valores atípicos en
-la estimación de los centroides, mejorando la estabilidad y coherencia
-de los clústeres obtenidos.
+\subsection{Planificación y coordinación}
 
-\subsubsection{Estrategia de momentum y detección de
-anomalías}\label{estrategia-de-momentum-y-detecciuxf3n-de-anomaluxedas}
+El equipo mantiene un sistema de reuniones periódicas:
 
-A partir de los \emph{clusters} obtenidos, se desarrolla una estrategia
-de \emph{momentum} que actúa como marco de evaluación del sistema
-propuesto.
+\begin{itemize}
+\item Reuniones semanales de seguimiento del estado del proyecto.
+\item Reuniones adicionales en fases críticas (preprocesamiento, modelado y evaluación).
+\end{itemize}
 
-En particular, se analizan transiciones entre distintos \emph{clusters}
-y desviaciones significativas respecto a patrones establecidos, lo que
-permite identificar posibles señales de inversión o situaciones anómalas
-en el mercado.
+Estas reuniones permiten revisar avances, resolver problemas técnicos y
+alinear decisiones metodológicas bajo el marco de CRISP-DM.
 
-\subsubsection{Evaluación del sistema}\label{evaluaciuxf3n-del-sistema}
+Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo.
 
-Finalmente, el sistema se evalúa utilizando datos históricos no
-empleados durante la fase de construcción de los modelos, con el
-objetivo de analizar su capacidad de generalización.
-
-La evaluación se centra en la coherencia de las señales generadas, así
-como en la estabilidad del modelo en distintos escenarios de mercado.
-
-\subsubsection{Entorno de desarrollo y
-herramientas}\label{entorno-de-desarrollo-y-herramientas}
-
-El desarrollo del sistema se lleva a cabo en entorno \emph{Python},
-utilizando \emph{JupyterLab} como entorno principal de trabajo, junto
-con bibliotecas especializadas en análisis de datos y \emph{Machine
-Learning} como \emph{pandas}, \emph{numpy} y \emph{scikit-learn}.
+Estas herramientas han permitido gestionar el desarrollo de forma estructurada, mantener un historial de cambios y facilitar la integración de las distintas partes del sistema implementado.
 
 \section{Referencias
 bibliográficas}\label{referencias-bibliogruxe1ficas}
@@ -848,4 +829,5 @@ N. (2024). Anomaly detection in financial time series data via mapper
 algorithm and DBSCAN clustering. \emph{World Journal of Advanced
 Engineering Technology and Sciences}, 70-84.
 
+\printbibliography
 \end{document}
