@@ -119,6 +119,18 @@
 	\hyperref[introduccion]{1. Introducción
 		\hyperref[introduccion]{7}}
 	
+	\hyperref[motivacion]{1.1 Motivación
+		\hyperref[motivacion]{7}}
+	
+	\hyperref[fundamentos-conceptuales]{1.2 Fundamentos conceptuales
+		\hyperref[fundamentos-conceptuales]{7}}
+	
+	\hyperref[planteamiento-del-trabajo]{1.3 Planteamiento del trabajo
+		\hyperref[planteamiento-del-trabajo]{7}}
+	
+	\hyperref[estructura-del-trabajo]{1.4 Estructura del trabajo
+		\hyperref[estructura-del-trabajo]{7}}
+	
 	\hyperref[contexto-y-estado-del-arte]{2. Contexto y estado del arte
 		\hyperref[contexto-y-estado-del-arte]{7}}
 	
@@ -249,25 +261,55 @@
 	\hyperref[_Toc227174295]{Ecuación 4. Vecindad
 		\hyperref[_Toc227174295]{14}}
 	
+	\newpage
 	\section{Introducción}\label{introduccion}
 	
-	En las últimas décadas, los mercados financieros han experimentado un crecimiento exponencial en la cantidad y complejidad de los datos disponibles, lo que ha impulsado el desarrollo de metodologías cuantitativas avanzadas para la toma de decisiones de inversión. En este contexto, la compraventa de activos \textit{(trading)} se define como la actividad de comprar y vender instrumentos financieros —como acciones, bonos o derivados— con el objetivo de obtener beneficio económico. En su vertiente moderna, el \textit{trading} se apoya cada vez más en modelos matemáticos y computacionales, dando lugar al denominado \textit{trading} cuantitativo (López de Prado, 2018).
+	\subsection{Motivación}\label{motivacion}
 	
-	Dentro de este ámbito, una de las estrategias más relevantes es el impulso o inercia \textit{(momentum)}, que puede definirse como la persistencia temporal en los rendimientos de los activos financieros. Este fenómeno implica que los activos que han tenido buen comportamiento en el pasado tienden a seguir mostrando rendimientos positivos en el corto plazo, mientras que los activos con mal rendimiento tienden a continuar su tendencia negativa. Esta anomalía fue documentada empíricamente por Narendra Jegadeesh y Sheridan Titman (1993), y posteriormente reinterpretada desde una perspectiva de riesgo dinámico por Kent Daniel y Tobias Moskowitz (2016), quienes destacan su relación con cambios en el estado del mercado y episodios de alta volatilidad.
+	En las últimas décadas, los mercados financieros han experimentado una transformación estructural impulsada por la globalización, la digitalización y el crecimiento exponencial de los datos disponibles. Este nuevo paradigma ha dado lugar a un entorno altamente complejo, dinámico y competitivo, en el que la toma de decisiones de inversión requiere el uso de herramientas cuantitativas avanzadas. En este contexto, la compraventa de activos financieros \emph{(trading)} se define como la actividad de compra y venta de instrumentos financieros —como acciones, bonos, divisas o derivados— con el objetivo de obtener un beneficio económico. En su evolución más reciente, el \emph{trading} ha incorporado metodologías matemáticas y computacionales, dando lugar al denominado \emph{trading} cuantitativo, que se apoya en modelos estadísticos y algoritmos para la generación de señales de inversión (López de Prado, 2018).
 	
-	No obstante, las estrategias de \textit{momentum} presentan limitaciones importantes, especialmente en presencia de ruido estructural y valores atípicos \textit{(outliers)}. Como señala Marcos López de Prado (2018), los datos financieros están altamente contaminados por fenómenos que no reflejan la dinámica real del mercado, lo que dificulta la identificación de patrones fiables. En este contexto, el uso de técnicas de aprendizaje automático \textit{(machine learning)} se ha consolidado como una herramienta fundamental para el análisis de datos complejos.
+	Uno de los enfoques más relevantes dentro del \emph{trading} cuantitativo es el basado en el impulso o inercia \emph{(momentum)}, que puede definirse como la persistencia temporal en los rendimientos de los activos financieros. Este fenómeno implica que los activos que han mostrado un buen comportamiento en el pasado reciente tienden a continuar dicha tendencia en el corto plazo, mientras que aquellos con rendimientos negativos tienden a seguir comportándose de forma desfavorable. Esta anomalía fue documentada empíricamente por Jegadeesh y Titman (1993) y posteriormente incorporada en modelos multifactoriales como el de Carhart (1997). Desde una perspectiva más reciente, el \emph{momentum} también puede interpretarse como una manifestación de dinámicas de riesgo dependientes del estado del mercado (Daniel y Moskowitz, 2016).
 	
-	En particular, el agrupamiento  \textit{(clustering)} es una técnica de aprendizaje no supervisado que consiste en organizar un conjunto de datos en grupos o clústeres, de forma que los elementos dentro de un mismo grupo sean más similares entre sí que con los de otros grupos. Este tipo de técnicas permite descubrir estructuras ocultas en los datos sin necesidad de información etiquetada previamente (Bishop, 2006).
+	A pesar de su robustez empírica, las estrategias de \emph{momentum} presentan limitaciones significativas cuando se aplican en entornos reales de mercado. En particular, estas estrategias son altamente vulnerables a episodios de alta volatilidad y a eventos extremos, conocidos como caídas de inercia \emph{(momentum crashes)}, que pueden generar pérdidas severas en periodos cortos de tiempo (Daniel y Moskowitz, 2016). Este comportamiento pone de manifiesto un problema fundamental: los modelos tradicionales de \emph{momentum} asumen implícitamente condiciones de estabilidad en la distribución de los rendimientos, una hipótesis que no se cumple en la práctica debido a la naturaleza no estacionaria de los mercados financieros.
 	
-	Entre los algoritmos de agrupamiento \textit{(clustering)} más utilizados destaca K-Medias \textit{(K-Means)}, un método que divide un conjunto de datos en un número predefinido de grupos, asignando cada observación al clúster cuyo centroide (media) es más cercano. El objetivo del algoritmo es minimizar la varianza interna de los clústeres, es decir, la distancia entre los puntos y su centroide. Este método fue formalizado por MacQueen (1967) y ha sido ampliamente utilizado en aplicaciones financieras, aunque presenta limitaciones importantes debido a su sensibilidad a valores atípicos.
+	Las causas de esta problemática son diversas. En primer lugar, los mercados financieros presentan un alto nivel de ruido estructural, es decir, variaciones en los precios que no responden a información fundamental, sino a factores aleatorios o transitorios (López de Prado, 2018). En segundo lugar, la presencia de valores atípicos \emph{(outliers)}, como caídas abruptas o subidas extremas, puede distorsionar significativamente los resultados de los modelos cuantitativos. En tercer lugar, los mercados están sujetos a `cambios de régimen´, que implican transiciones entre diferentes estados del mercado (por ejemplo, mercados alcistas y bajistas), afectando de forma no lineal al comportamiento de los activos (Hamilton, 1989).
 	
-	Para abordar esta limitación, se emplean algoritmos más robustos como agrupamiento espacial basado en densidad con ruido \textit{DBSCAN (Density-Based Spatial Clustering of Applications with Noise}. Este algoritmo, propuesto por Ester (1996), define los clústeres como regiones de alta densidad de puntos separadas por regiones de baja densidad, permitiendo además identificar automáticamente observaciones anómalas (ruido). A diferencia de \textit{K-Means}, \textit{DBSCAN} no requiere especificar el número de clústeres y es capaz de detectar estructuras de forma arbitraria, lo que lo hace especialmente adecuado para datos financieros complejos.
+	La relevancia de este problema es evidente tanto desde una perspectiva académica como práctica. Desde el punto de vista teórico, cuestiona la validez de modelos ampliamente aceptados en la literatura financiera. Desde el punto de vista práctico, tiene implicaciones directas en la gestión de carteras y en la toma de decisiones de inversión, donde la capacidad de gestionar el riesgo es fundamental. En un entorno caracterizado por la incertidumbre y la volatilidad, desarrollar estrategias robustas frente a anomalías se convierte en una necesidad.
 	
-	En este contexto, el presente Trabajo Fin de Máster propone la integración de estas técnicas en una arquitectura híbrida orientada al análisis de mercados financieros. En particular, se plantea el uso de \textit{DBSCAN} como mecanismo de filtrado de anomalías, seguido de la aplicación de \textit{K-Means} para la identificación de patrones o regímenes de mercado. Esta aproximación permite mejorar la robustez de las estrategias de \textit{momentum}, reduciendo el impacto del ruido y de los eventos extremos en la toma de decisiones.
+	En este contexto, el  aprendizaje automático \emph{(machine learning)} ha emergido como una herramienta clave para el análisis de datos complejos. En particular, las técnicas de aprendizaje no supervisado permiten identificar patrones ocultos en los datos sin necesidad de etiquetas previas. Entre estas técnicas, el agrupamiento \emph{(clustering)}  se define como el proceso de organizar un conjunto de datos en grupos o clústeres, de forma que los elementos dentro de un mismo grupo sean más similares entre sí que con los de otros grupos (Bishop, 2006).
 	
-	El objetivo principal de este trabajo es, por tanto, diseñar, implementar y evaluar un sistema híbrido que combine estrategias de compra-venta de activos \textit{(trading)} basadas en inercia \textit{(momentum)} con algoritmos de agrupamiento \textit{(clustering)}, con el fin de identificar patrones de comportamiento en activos financieros y mejorar la estabilidad de las estrategias de inversión en entornos de alta volatilidad. Este enfoque se sitúa en la intersección entre las finanzas cuantitativas y el aprendizaje automático, contribuyendo al desarrollo de metodologías más robustas y adaptativas en el análisis de mercados.
+	\subsection{Fundamentos conceptuales}\label{fundamentos-conceptuales}
 	
+	Dentro del ámbito del clustering, existen diversos algoritmos que permiten abordar el problema desde diferentes perspectivas. Uno de los más utilizados es el algoritmo K-Means, que tiene como objetivo dividir un conjunto de observaciones en un número predefinido de grupos, asignando cada punto al clúster cuyo centroide es más cercano. Este algoritmo fue formalizado por MacQueen (1967) y consiste en minimizar la varianza intra-clúster, es decir, la suma de las distancias cuadráticas entre los puntos y el centroide de su grupo (Jain, 2010). A pesar de su eficiencia y simplicidad, K-Means presenta limitaciones importantes, especialmente en presencia de valores atípicos, ya que estos pueden desplazar significativamente los centroides y afectar la calidad de la agrupación.
 	
+	Para superar esta limitación, se han desarrollado algoritmos basados en densidad, como DBSCAN, Agrupamiento Espacial Basado en Densidad con Ruido \emph{(Density-Based Spatial Clustering of Applications with Noise)}, propuesto por Ester et al. (1996). Este algoritmo define los clústeres como regiones de alta densidad de puntos separadas por regiones de baja densidad, permitiendo además identificar automáticamente observaciones anómalas. DBSCAN se basa en dos parámetros principales: el radio de vecindad ($\epsilon$) y el número mínimo de puntos necesarios para formar una región densa (MinPts). Su principal ventaja es que no requiere especificar el número de clústeres y es capaz de detectar estructuras de forma arbitraria, lo que lo hace especialmente adecuado para datos financieros complejos (Schubert et al., 2017).
+	
+	La combinación de estos algoritmos permite abordar de manera más eficaz los desafíos asociados al análisis de datos financieros. En particular, el uso de DBSCAN como técnica de filtrado de anomalías y K-Means como método de agrupamiento permite construir modelos más robustos frente al ruido y a los valores atípicos.
+	
+	\subsection{Planteamiento del trabajo}\label{planteamiento-del-trabajo}
+	
+	A partir de la problemática descrita, surge la siguiente cuestión: `¿cómo se puede mejorar la robustez de las estrategias de \emph{momentum} en entornos de alta volatilidad y ruido?'
+	
+	La hipótesis de este trabajo es que una parte significativa de la inestabilidad de las estrategias de \emph{momentum} se debe a la presencia de anomalías en los datos. Por tanto, si se logra identificar y eliminar estas anomalías antes de aplicar la estrategia, es posible mejorar su rendimiento y estabilidad.
+	
+	Para ello, se propone el desarrollo de una `arquitectura híbrida' que combine técnicas de agrupamiento \emph{(clustering)} con estrategias de compra-venta de activos \emph{(trading)} basadas en \emph{momentum}. Esta arquitectura se estructura en dos etapas:
+	
+	\begin{itemize}
+		\item En primer lugar, se aplica el algoritmo DBSCAN para detectar y eliminar observaciones anómalas.
+		
+		\item En segundo lugar, se utiliza el algoritmo K-Means para agrupar los activos en función de su comportamiento.
+		
+	\end{itemize}
+	
+	El objetivo principal es evaluar si esta combinación permite mejorar la calidad de las señales de inversión y reducir el riesgo asociado a eventos extremos.
+	
+	\subsection{Estructura del trabajo}\label{estructura-del-trabajo}
+	
+	El presente trabajo se organiza en varios capítulos. En el primero, se presenta el contexto y estado del arte, incluyendo una revisión de la literatura sobre \emph{text}momentum y técnicas de agrupamiento \emph{(clustering)}. En el segundo, se describen los objetivos y la metodología empleada. En los capítulos siguientes, se desarrollará la implementación del modelo propuesto, el análisis de resultados y la evaluación del sistema. Finalmente, se presentarán las conclusiones y posibles líneas de investigación futura.
+	
+	En conjunto, este trabajo aborda un problema relevante en el ámbito de las finanzas cuantitativas, proponiendo una solución basada en la integración de técnicas de aprendizaje automático \emph{(machine learning)}. La combinación de estrategias de \emph{momentum} con algoritmos de agrupamiento \emph{(clustering)} representa una aproximación innovadora que puede contribuir al desarrollo de modelos más robustos y adaptativos en entornos financieros complejos.
+	
+	\newpage
 	\section{Contexto y estado del arte}\label{contexto-y-estado-del-arte}
 	
 	El presente capítulo trata los fundamentos teóricos y matemáticos que
@@ -662,6 +704,7 @@
 	el filtrado previo de anomalías reduce de forma efectiva las pérdidas de
 	la cartera durante los escenarios de estrés del mercado.
 	
+	\newpage
 	\section{Objetivos concretos y metodología de trabajo}
 	\label{metodologuxeda-del-trabajo}
 	
