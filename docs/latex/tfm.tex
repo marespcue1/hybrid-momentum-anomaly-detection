@@ -1,8 +1,10 @@
-% Options for packages loaded elsewhere
 \PassOptionsToPackage{unicode}{hyperref}
 \PassOptionsToPackage{hyphens}{url}
 \documentclass[
 ]{article}
+\usepackage[spanish]{babel}
+\usepackage{caption}
+\captionsetup{compatibility=false}
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
 \setcounter{secnumdepth}{5}
@@ -63,6 +65,7 @@
 }
 % Set default figure placement to htbp
 \def\fps@figure{htbp}
+\usepackage{float}
 \makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
@@ -114,138 +117,11 @@
 		\end{longtable}
 	}
 	
-	Índice de contenidos
+	\tableofcontents
+
+  \listoffigures
 	
-	\hyperref[introduccion]{1. Introducción
-		\hyperref[introduccion]{7}}
-	
-	\hyperref[motivacion]{1.1 Motivación
-		\hyperref[motivacion]{7}}
-	
-	\hyperref[fundamentos-conceptuales]{1.2 Fundamentos conceptuales
-		\hyperref[fundamentos-conceptuales]{7}}
-	
-	\hyperref[planteamiento-del-trabajo]{1.3 Planteamiento del trabajo
-		\hyperref[planteamiento-del-trabajo]{7}}
-	
-	\hyperref[estructura-del-trabajo]{1.4 Estructura del trabajo
-		\hyperref[estructura-del-trabajo]{7}}
-	
-	\hyperref[contexto-y-estado-del-arte]{2. Contexto y estado del arte
-		\hyperref[contexto-y-estado-del-arte]{7}}
-	
-	\hyperref[el-momentum-en-los-mercados-financieros-y-el-riesgo-de-anomaluxedas]{2.1.
-		El Momentum en los mercados financieros y el riesgo de anomalías
-		\hyperref[el-momentum-en-los-mercados-financieros-y-el-riesgo-de-anomaluxedas]{7}}
-	
-	\hyperref[fundamentaciuxf3n-matemuxe1tica-del-momentum]{2.1.1.
-		Fundamentación matemática del Momentum
-		\hyperref[fundamentaciuxf3n-matemuxe1tica-del-momentum]{7}}
-	
-	\hyperref[asimetruxeda-de-riesgo-y-el-concepto-de-momentum-crashes]{2.1.2.
-		Asimetría de riesgo y el concepto de Momentum Crashes
-		\hyperref[asimetruxeda-de-riesgo-y-el-concepto-de-momentum-crashes]{9}}
-	
-	\hyperref[ruido-estructural-anomaluxedas-y-la-necesidad-de-filtrado-topoluxf3gico]{2.1.3.
-		Ruido estructural, anomalías y la necesidad de filtrado topológico
-		\hyperref[ruido-estructural-anomaluxedas-y-la-necesidad-de-filtrado-topoluxf3gico]{11}}
-	
-	\hyperref[fundamentos-de-machine-learning-no-supervisado]{2.2.
-		Fundamentos de Machine Learning no supervisado
-		\hyperref[fundamentos-de-machine-learning-no-supervisado]{12}}
-	
-	\hyperref[algoritmo-de-agrupamiento-k-means]{2.2.1. Algoritmo de
-		Agrupamiento K-Means \hyperref[algoritmo-de-agrupamiento-k-means]{12}}
-	
-	\hyperref[filtro-de-densidad-topoluxf3gica-dbscan]{2.2.2. Filtro de
-		densidad topológica DBSCAN
-		\hyperref[filtro-de-densidad-topoluxf3gica-dbscan]{14}}
-	
-	\hyperref[estado-del-arte-y-justificaciuxf3n-de-la-arquitectura-propuesta]{2.3.
-		Estado del arte y justificación de la arquitectura propuesta
-		\hyperref[estado-del-arte-y-justificaciuxf3n-de-la-arquitectura-propuesta]{15}}
-	
-	\hyperref[el-problema-del-momentum-tradicional-en-entornos-voluxe1tiles]{2.3.1.
-		El problema del Momentum tradicional en entornos volátiles
-		\hyperref[el-problema-del-momentum-tradicional-en-entornos-voluxe1tiles]{16}}
-	
-	\hyperref[el-intento-de-soluciuxf3n-mediante-k-means-y-sus-limitaciones]{2.3.2.
-		El intento de solución mediante K-Means y sus limitaciones
-		\hyperref[el-intento-de-soluciuxf3n-mediante-k-means-y-sus-limitaciones]{16}}
-	
-	\hyperref[propuesta-de-soluciuxf3n-arquitectura-huxedbrida-y-marco-de-evaluaciuxf3n]{2.3.3.
-		Propuesta de Solución: Arquitectura Híbrida y Marco de Evaluación
-		\hyperref[propuesta-de-soluciuxf3n-arquitectura-huxedbrida-y-marco-de-evaluaciuxf3n]{17}}
-	
-	\hyperref[objetivos-concretos-y-metodologuxeda-de-trabajo]{3. Objetivos
-		concretos y metodología de trabajo
-		\hyperref[objetivos-concretos-y-metodologuxeda-de-trabajo]{18}}
-	
-	\hyperref[objetivo-general]{3.1. Objetivo general
-		\hyperref[objetivo-general]{18}}
-	
-	\hyperref[objetivos-especuxedficos]{3.2. Objetivos específicos
-		\hyperref[objetivos-especuxedficos]{18}}
-	
-	\hyperref[metodologuxeda-del-trabajo]{3.3. Metodología del trabajo
-		\hyperref[metodologuxeda-del-trabajo]{19}}
-	
-	\hyperref[obtenciuxf3n-de-datos]{3.3.1. Obtención de datos
-		\hyperref[obtenciuxf3n-de-datos]{19}}
-	
-	\hyperref[procesamiento-y-preparaciuxf3n-de-datos]{3.3.2. Procesamiento
-		y preparación de datos
-		\hyperref[procesamiento-y-preparaciuxf3n-de-datos]{20}}
-	
-	\hyperref[anuxe1lisis-exploratorio-de-datos-eda]{3.3.3. Análisis
-		exploratorio de datos (EDA)
-		\hyperref[anuxe1lisis-exploratorio-de-datos-eda]{20}}
-	
-	\hyperref[implementaciuxf3n-de-la-arquitectura-huxedbrida]{3.3.4.
-		Implementación de la arquitectura híbrida
-		\hyperref[implementaciuxf3n-de-la-arquitectura-huxedbrida]{20}}
-	
-	\hyperref[estrategia-de-momentum-y-detecciuxf3n-de-anomaluxedas]{3.3.5.
-		Estrategia de momentum y detección de anomalías
-		\hyperref[estrategia-de-momentum-y-detecciuxf3n-de-anomaluxedas]{21}}
-	
-	\hyperref[evaluaciuxf3n-del-sistema]{3.3.6. Evaluación del sistema
-		\hyperref[evaluaciuxf3n-del-sistema]{21}}
-	
-	\hyperref[entorno-de-desarrollo-y-herramientas]{3.3.7. Entorno de
-		desarrollo y herramientas
-		\hyperref[entorno-de-desarrollo-y-herramientas]{21}}
-	
-	\hyperref[_Toc227174287]{4. Referencias bibliográficas
-		\hyperref[_Toc227174287]{22}}
-	
-	Índice de figuras
-	
-	\hyperref[_Toc227174288]{Figura 1. Evolución de las caídas catastróficas
-		en estrategias de momentum. El desplome en (Panel A) se explica por el
-		rebote explosivo de los activos con peor rendimiento previo mostrado en
-		(Panel B). Fuente: Daniel y Moskowitz (2016).
-		\hyperref[_Toc227174288]{10}}
-	
-	\hyperref[_Toc227174289]{Figura 2: Clasificación de activos en el
-		espacio riesgo-rentabilidad mediante el algoritmo KMeans. Los puntos
-		sólidos representan los centroides µi calculados según la Ecuación 2,
-		mientras que las regiones sombreadas delimitan las fronteras de decisión
-		de cada clúster. Fuente: Elaboración propia.
-		\hyperref[_Toc227174289]{13}}
-	
-	\hyperref[_Toc227174290]{Figura 3: Clasificación topológica en DBSCAN:
-		Identificación de puntos núcleo, frontera y ruido en función del radio ϵ
-		y MinPts. Fuente: Elaboración propia. \hyperref[_Toc227174290]{15}}
-	
-	Índice de tablas
-	
-	\hyperref[_Toc227174291]{Tabla 1 Rendimientos de las carteras
-		superpuestas J\textbackslash/K de momentum. Fuente: Jegadeesh y Titman
-		(1993). \hyperref[_Toc227174291]{8}}
-	
-	\textbf{\hfill\break
-	}
+  \listoftables
 	
 	Índice de ecuaciones
 	
@@ -261,55 +137,25 @@
 	\hyperref[_Toc227174295]{Ecuación 4. Vecindad
 		\hyperref[_Toc227174295]{14}}
 	
-	\newpage
 	\section{Introducción}\label{introduccion}
 	
-	\subsection{Motivación}\label{motivacion}
+	En las últimas décadas, los mercados financieros han experimentado un crecimiento exponencial en la cantidad y complejidad de los datos disponibles, lo que ha impulsado el desarrollo de metodologías cuantitativas avanzadas para la toma de decisiones de inversión. En este contexto, la compraventa de activos \textit{(trading)} se define como la actividad de comprar y vender instrumentos financieros —como acciones, bonos o derivados— con el objetivo de obtener beneficio económico. En su vertiente moderna, el \textit{trading} se apoya cada vez más en modelos matemáticos y computacionales, dando lugar al denominado \textit{trading} cuantitativo (López de Prado, 2018).
 	
-	En las últimas décadas, los mercados financieros han experimentado una transformación estructural impulsada por la globalización, la digitalización y el crecimiento exponencial de los datos disponibles. Este nuevo paradigma ha dado lugar a un entorno altamente complejo, dinámico y competitivo, en el que la toma de decisiones de inversión requiere el uso de herramientas cuantitativas avanzadas. En este contexto, la compraventa de activos financieros \emph{(trading)} se define como la actividad de compra y venta de instrumentos financieros —como acciones, bonos, divisas o derivados— con el objetivo de obtener un beneficio económico. En su evolución más reciente, el \emph{trading} ha incorporado metodologías matemáticas y computacionales, dando lugar al denominado \emph{trading} cuantitativo, que se apoya en modelos estadísticos y algoritmos para la generación de señales de inversión (López de Prado, 2018).
+	Dentro de este ámbito, una de las estrategias más relevantes es el impulso o inercia \textit{(momentum)}, que puede definirse como la persistencia temporal en los rendimientos de los activos financieros. Este fenómeno implica que los activos que han tenido buen comportamiento en el pasado tienden a seguir mostrando rendimientos positivos en el corto plazo, mientras que los activos con mal rendimiento tienden a continuar su tendencia negativa. Esta anomalía fue documentada empíricamente por Narendra Jegadeesh y Sheridan Titman (1993), y posteriormente reinterpretada desde una perspectiva de riesgo dinámico por Kent Daniel y Tobias Moskowitz (2016), quienes destacan su relación con cambios en el estado del mercado y episodios de alta volatilidad.
 	
-	Uno de los enfoques más relevantes dentro del \emph{trading} cuantitativo es el basado en el impulso o inercia \emph{(momentum)}, que puede definirse como la persistencia temporal en los rendimientos de los activos financieros. Este fenómeno implica que los activos que han mostrado un buen comportamiento en el pasado reciente tienden a continuar dicha tendencia en el corto plazo, mientras que aquellos con rendimientos negativos tienden a seguir comportándose de forma desfavorable. Esta anomalía fue documentada empíricamente por Jegadeesh y Titman (1993) y posteriormente incorporada en modelos multifactoriales como el de Carhart (1997). Desde una perspectiva más reciente, el \emph{momentum} también puede interpretarse como una manifestación de dinámicas de riesgo dependientes del estado del mercado (Daniel y Moskowitz, 2016).
+	No obstante, las estrategias de \textit{momentum} presentan limitaciones importantes, especialmente en presencia de ruido estructural y valores atípicos \textit{(outliers)}. Como señala Marcos López de Prado (2018), los datos financieros están altamente contaminados por fenómenos que no reflejan la dinámica real del mercado, lo que dificulta la identificación de patrones fiables. En este contexto, el uso de técnicas de aprendizaje automático \textit{(machine learning)} se ha consolidado como una herramienta fundamental para el análisis de datos complejos.
 	
-	A pesar de su robustez empírica, las estrategias de \emph{momentum} presentan limitaciones significativas cuando se aplican en entornos reales de mercado. En particular, estas estrategias son altamente vulnerables a episodios de alta volatilidad y a eventos extremos, conocidos como caídas de inercia \emph{(momentum crashes)}, que pueden generar pérdidas severas en periodos cortos de tiempo (Daniel y Moskowitz, 2016). Este comportamiento pone de manifiesto un problema fundamental: los modelos tradicionales de \emph{momentum} asumen implícitamente condiciones de estabilidad en la distribución de los rendimientos, una hipótesis que no se cumple en la práctica debido a la naturaleza no estacionaria de los mercados financieros.
+	En particular, el agrupamiento  \textit{(clustering)} es una técnica de aprendizaje no supervisado que consiste en organizar un conjunto de datos en grupos o clústeres, de forma que los elementos dentro de un mismo grupo sean más similares entre sí que con los de otros grupos. Este tipo de técnicas permite descubrir estructuras ocultas en los datos sin necesidad de información etiquetada previamente (Bishop, 2006).
 	
-	Las causas de esta problemática son diversas. En primer lugar, los mercados financieros presentan un alto nivel de ruido estructural, es decir, variaciones en los precios que no responden a información fundamental, sino a factores aleatorios o transitorios (López de Prado, 2018). En segundo lugar, la presencia de valores atípicos \emph{(outliers)}, como caídas abruptas o subidas extremas, puede distorsionar significativamente los resultados de los modelos cuantitativos. En tercer lugar, los mercados están sujetos a `cambios de régimen´, que implican transiciones entre diferentes estados del mercado (por ejemplo, mercados alcistas y bajistas), afectando de forma no lineal al comportamiento de los activos (Hamilton, 1989).
+	Entre los algoritmos de agrupamiento \textit{(clustering)} más utilizados destaca K-Medias \textit{(K-Means)}, un método que divide un conjunto de datos en un número predefinido de grupos, asignando cada observación al clúster cuyo centroide (media) es más cercano. El objetivo del algoritmo es minimizar la varianza interna de los clústeres, es decir, la distancia entre los puntos y su centroide. Este método fue formalizado por MacQueen (1967) y ha sido ampliamente utilizado en aplicaciones financieras, aunque presenta limitaciones importantes debido a su sensibilidad a valores atípicos.
 	
-	La relevancia de este problema es evidente tanto desde una perspectiva académica como práctica. Desde el punto de vista teórico, cuestiona la validez de modelos ampliamente aceptados en la literatura financiera. Desde el punto de vista práctico, tiene implicaciones directas en la gestión de carteras y en la toma de decisiones de inversión, donde la capacidad de gestionar el riesgo es fundamental. En un entorno caracterizado por la incertidumbre y la volatilidad, desarrollar estrategias robustas frente a anomalías se convierte en una necesidad.
+	Para abordar esta limitación, se emplean algoritmos más robustos como agrupamiento espacial basado en densidad con ruido \textit{DBSCAN (Density-Based Spatial Clustering of Applications with Noise)}. Este algoritmo, propuesto por Ester (1996), define los clústeres como regiones de alta densidad de puntos separadas por regiones de baja densidad, permitiendo además identificar automáticamente observaciones anómalas (ruido). A diferencia de \textit{K-Means}, \textit{DBSCAN} no requiere especificar el número de clústeres y es capaz de detectar estructuras de forma arbitraria, lo que lo hace especialmente adecuado para datos financieros complejos.
 	
-	En este contexto, el  aprendizaje automático \emph{(machine learning)} ha emergido como una herramienta clave para el análisis de datos complejos. En particular, las técnicas de aprendizaje no supervisado permiten identificar patrones ocultos en los datos sin necesidad de etiquetas previas. Entre estas técnicas, el agrupamiento \emph{(clustering)}  se define como el proceso de organizar un conjunto de datos en grupos o clústeres, de forma que los elementos dentro de un mismo grupo sean más similares entre sí que con los de otros grupos (Bishop, 2006).
+	En este contexto, el presente Trabajo Fin de Máster propone la integración de estas técnicas en una arquitectura híbrida orientada al análisis de mercados financieros. En particular, se plantea el uso de \textit{DBSCAN} como mecanismo de filtrado de anomalías, seguido de la aplicación de \textit{K-Means} para la identificación de patrones o regímenes de mercado. Esta aproximación permite mejorar la robustez de las estrategias de \textit{momentum}, reduciendo el impacto del ruido y de los eventos extremos en la toma de decisiones.
 	
-	\subsection{Fundamentos conceptuales}\label{fundamentos-conceptuales}
+	El objetivo principal de este trabajo es, por tanto, diseñar, implementar y evaluar un sistema híbrido que combine estrategias de compra-venta de activos \textit{(trading)} basadas en inercia \textit{(momentum)} con algoritmos de agrupamiento \textit{(clustering)}, con el fin de identificar patrones de comportamiento en activos financieros y mejorar la estabilidad de las estrategias de inversión en entornos de alta volatilidad. Este enfoque se sitúa en la intersección entre las finanzas cuantitativas y el aprendizaje automático, contribuyendo al desarrollo de metodologías más robustas y adaptativas en el análisis de mercados.
 	
-	Dentro del ámbito del clustering, existen diversos algoritmos que permiten abordar el problema desde diferentes perspectivas. Uno de los más utilizados es el algoritmo K-Means, que tiene como objetivo dividir un conjunto de observaciones en un número predefinido de grupos, asignando cada punto al clúster cuyo centroide es más cercano. Este algoritmo fue formalizado por MacQueen (1967) y consiste en minimizar la varianza intra-clúster, es decir, la suma de las distancias cuadráticas entre los puntos y el centroide de su grupo (Jain, 2010). A pesar de su eficiencia y simplicidad, K-Means presenta limitaciones importantes, especialmente en presencia de valores atípicos, ya que estos pueden desplazar significativamente los centroides y afectar la calidad de la agrupación.
 	
-	Para superar esta limitación, se han desarrollado algoritmos basados en densidad, como DBSCAN, Agrupamiento Espacial Basado en Densidad con Ruido \emph{(Density-Based Spatial Clustering of Applications with Noise)}, propuesto por Ester et al. (1996). Este algoritmo define los clústeres como regiones de alta densidad de puntos separadas por regiones de baja densidad, permitiendo además identificar automáticamente observaciones anómalas. DBSCAN se basa en dos parámetros principales: el radio de vecindad ($\epsilon$) y el número mínimo de puntos necesarios para formar una región densa (MinPts). Su principal ventaja es que no requiere especificar el número de clústeres y es capaz de detectar estructuras de forma arbitraria, lo que lo hace especialmente adecuado para datos financieros complejos (Schubert et al., 2017).
-	
-	La combinación de estos algoritmos permite abordar de manera más eficaz los desafíos asociados al análisis de datos financieros. En particular, el uso de DBSCAN como técnica de filtrado de anomalías y K-Means como método de agrupamiento permite construir modelos más robustos frente al ruido y a los valores atípicos.
-	
-	\subsection{Planteamiento del trabajo}\label{planteamiento-del-trabajo}
-	
-	A partir de la problemática descrita, surge la siguiente cuestión: `¿cómo se puede mejorar la robustez de las estrategias de \emph{momentum} en entornos de alta volatilidad y ruido?'
-	
-	La hipótesis de este trabajo es que una parte significativa de la inestabilidad de las estrategias de \emph{momentum} se debe a la presencia de anomalías en los datos. Por tanto, si se logra identificar y eliminar estas anomalías antes de aplicar la estrategia, es posible mejorar su rendimiento y estabilidad.
-	
-	Para ello, se propone el desarrollo de una `arquitectura híbrida' que combine técnicas de agrupamiento \emph{(clustering)} con estrategias de compra-venta de activos \emph{(trading)} basadas en \emph{momentum}. Esta arquitectura se estructura en dos etapas:
-	
-	\begin{itemize}
-		\item En primer lugar, se aplica el algoritmo DBSCAN para detectar y eliminar observaciones anómalas.
-		
-		\item En segundo lugar, se utiliza el algoritmo K-Means para agrupar los activos en función de su comportamiento.
-		
-	\end{itemize}
-	
-	El objetivo principal es evaluar si esta combinación permite mejorar la calidad de las señales de inversión y reducir el riesgo asociado a eventos extremos.
-	
-	\subsection{Estructura del trabajo}\label{estructura-del-trabajo}
-	
-	El presente trabajo se organiza en varios capítulos. En el primero, se presenta el contexto y estado del arte, incluyendo una revisión de la literatura sobre \emph{text}momentum y técnicas de agrupamiento \emph{(clustering)}. En el segundo, se describen los objetivos y la metodología empleada. En los capítulos siguientes, se desarrollará la implementación del modelo propuesto, el análisis de resultados y la evaluación del sistema. Finalmente, se presentarán las conclusiones y posibles líneas de investigación futura.
-	
-	En conjunto, este trabajo aborda un problema relevante en el ámbito de las finanzas cuantitativas, proponiendo una solución basada en la integración de técnicas de aprendizaje automático \emph{(machine learning)}. La combinación de estrategias de \emph{momentum} con algoritmos de agrupamiento \emph{(clustering)} representa una aproximación innovadora que puede contribuir al desarrollo de modelos más robustos y adaptativos en entornos financieros complejos.
-	
-	\newpage
 	\section{Contexto y estado del arte}\label{contexto-y-estado-del-arte}
 	
 	El presente capítulo trata los fundamentos teóricos y matemáticos que
@@ -331,7 +177,7 @@
 	obtención sistemática de rendimientos anormales (Fama, 1970). Sin embargo, la
 	evidencia empírica ha demostrado que los inversores tienden a reaccionar
 	de forma ineficiente (por sobrerreacción o infrarreacción) ante la nueva
-	información (Barberis et al., 1998; Hong & Stein, 1999), generando tendencias explotables matemáticamente. A la
+	información (Barberis et al., 1998; Hong \& Stein, 1999), generando tendencias explotables matemáticamente. A la
 	captura sistemática de estas tendencias se le conoce como inversión de
 	\emph{momentum}.
 	
@@ -341,7 +187,7 @@
 	El \emph{momentum} se fundamenta en la premisa de que los activos que
 	han obtenido un rendimiento superior en el pasado reciente continuarán
 	haciéndolo en el futuro cercano, mientras que aquellos con un
-	rendimiento deficiente seguirán una trayectoria bajista (Jegadeesh & Titman, 1993; Carhart, 1997). La
+	rendimiento deficiente seguirán una trayectoria bajista (Jegadeesh \& Titman, 1993; Carhart, 1997). La
 	formalización académica de esta estrategia fue establecida de forma
 	pionera por (Jegadeesh, 1993), quienes demostraron que comprar acciones
 	ganadoras y vender acciones perdedoras genera rendimientos anormales
@@ -366,17 +212,15 @@
 	y en los \(K - 1\ \)meses anteriores, rebalanceando mensualmente una
 	fracción \(1\text{/}K\) de los pesos del hiperespacio de activos.
 	
-	\begin{figure}
-		\centering
-		\includegraphics[width=6.29931in,height=4.74653in]{media/image004.png}
-	\end{figure}
-	\begin{figure}
-		\centering
-		\includegraphics[width=6.29931in,height=4.74653in]{media/image002.png}
-		\caption{\protect\phantomsection\label{_Toc227174291}{}Tabla
-			Rendimientos de las carteras superpuestas J\textbackslash/K de momentum.
-			Fuente: Jegadeesh y Titman (1993).}
-	\end{figure}
+  \begin{table}[H]
+  \centering
+
+  \includegraphics[width=0.9\textwidth]{media/image003.png}
+
+  \caption{Rendimientos de las carteras superpuestas J/K de momentum. Fuente: Jegadeesh y Titman (1993).}
+  \label{tab:momentum_returns}
+
+  \end{table}
 	
 	Esta formulación lineal clásica ha demostrado ser rentable, pero asume
 	implícitamente una distribución estacionaria del riesgo, una suposición
@@ -388,11 +232,11 @@
 	A pesar de sus altos rendimientos promedio y ratios de Sharpe
 	atractivos, la estrategia de \emph{momentum} presenta un riesgo de cola. La
 	distribución de sus rendimientos está fuertemente sesgada hacia la
-	izquierda (Barroso & Santa Clara, 2015), lo que significa que el modelo experimenta pérdidas
+	izquierda (Barroso \& Santa Clara, 2015), lo que significa que el modelo experimenta pérdidas
 	infrecuentes pero devastadoras, conocidas en la literatura como colapsos de tendencia \emph{Momentum
 	Crashes} (Daniel, 2016).
 	
-	Daniel y Moskowitz (Daniel & Moskovitz, 2016) demuestran que estos colapsos no son
+	Daniel y Moskowitz (Daniel \& Moskovitz, 2016) demuestran que estos colapsos no son
 	eventos aleatorios (saltos de Poisson), sino que son parcialmente
 	predecibles al concentrarse en "estados de pánico" del mercado; es
 	decir, tras caídas prolongadas \emph{(bear markets)} combinadas con picos
@@ -407,7 +251,7 @@
 	de estas empresas actúa matemáticamente como una opción de
 	compra \emph{(call option)} fuera del dinero sobre los activos de la empresa. Mediante la
 	introducción de variables indicadoras de mercado bajista ( \(I_{B}\) ) y
-	alcista ( \(I_{U}\) ), Daniel y Moskowitz (Daniel & Moskovitz, 2016) demuestran que
+	alcista ( \(I_{U}\) ), Daniel y Moskowitz (Daniel \& Moskovitz, 2016) demuestran que
 	en estados de pánico, la cartera de perdedores presenta una asimetría
 	extrema: su beta a la baja es moderada, pero su beta al alza se dispara
 	ante cualquier rebote positivo.
@@ -419,13 +263,20 @@
 	destruyendo el margen de la posición corta, mientras que la cartera de
 	ganadores apenas sube, generando un elevado declive \emph{drawdown} en la estrategia.
 	
-	\includegraphics[width=6.29931in,height=3.76736in]{media/image003.png}\includegraphics[width=6.29931in,height=3.70417in]{media/image004.png}
-	
-	\protect\phantomsection\label{_Toc227174288}{}Figura . Evolución de las
-	caídas catastróficas en estrategias de \emph{momentum}. El desplome en (Panel
-	A) se explica por el rebote explosivo de los activos con peor
-	rendimiento previo mostrado en (Panel B). Fuente: Daniel y Moskowitz
-	(2016).
+  \begin{figure}[H]
+  \centering
+
+  \textbf{Panel A}\\
+  \includegraphics[width=0.9\textwidth]{media/image004.png}
+
+  \vspace{0.5cm}
+
+  \textbf{Panel B}\\
+  \includegraphics[width=0.9\textwidth]{media/image002.png}
+
+  \caption{Evolución de las caídas catastróficas en estrategias de momentum. Fuente: Daniel y Moskowitz (2016).}
+  \label{fig:momentum_panels}
+  \end{figure}
 	
 	\subsubsection{Ruido estructural, anomalías y la necesidad de filtrado
 		topológico}\label{ruido-estructural-anomaluxedas-y-la-necesidad-de-filtrado-topoluxf3gico}
@@ -515,7 +366,7 @@
 	\protect\phantomsection\label{_Toc227174294}{}Ecuación . Distancia
 	euclídea
 	
-	\begin{figure}
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=5.76667in,height=4.01906in]{media/image005.png}
 		\caption{\protect\phantomsection\label{_Toc227174289}{}Figura :
@@ -583,12 +434,12 @@
 		alcanzan la densidad crítica.
 	\end{enumerate}
 	
-	\begin{figure}
+	\begin{figure}[H]
 		\centering
 		\includegraphics[width=4.43701in,height=3.72824in]{media/image006.png}
 		\caption{\protect\phantomsection\label{_Toc227174290}{}Figura :
 			Clasificación topológica en DBSCAN: Identificación de puntos núcleo,
-			frontera y ruido en función del radio ϵ y MinPts. Fuente: Elaboración
+			frontera y ruido en función del radio $\epsilon$ y MinPts. Fuente: Elaboración
 			propia.}
 	\end{figure}
 	
@@ -703,196 +554,295 @@
 	objetivo final de la experimentación será demostrar matemáticamente que
 	el filtrado previo de anomalías reduce de forma efectiva las pérdidas de
 	la cartera durante los escenarios de estrés del mercado.
-	
-	\newpage
-	\section{Objetivos concretos y metodología de trabajo}
-	\label{metodologuxeda-del-trabajo}
-	
-	En este capítulo se definen los objetivos del trabajo y la metodología
-	seguida para su desarrollo. Este apartado actúa como nexo entre el estudio
-	del contexto y estado del arte presentado anteriormente y la implementación
-	práctica de la propuesta planteada.
-	
-	El trabajo se enmarca en el ámbito del análisis de datos financieros
-	mediante técnicas de Aprendizaje Automático \emph{Machine Learning}, con el objetivo de desarrollar
-	y evaluar una arquitectura algorítmica híbrida capaz de identificar patrones
-	de comportamiento en activos financieros y reducir el impacto de anomalías en
-	entornos de alta volatilidad.
-	
-	\subsection{Marco metodológico: CRISP-DM}
-	
-	La metodología adoptada en este trabajo se basa en el estándar
-	\emph{CRISP-DM} (\emph{Cross Industry Standard Process for Data Mining}),
-	traducido como \emph{Proceso Estándar Intersectorial para Minería de Datos}.
-	Este marco fue desarrollado por un consorcio de empresas tecnológicas
-	europeas, entre ellas \emph{SPSS}, \emph{Daimler-Benz} y \emph{NCR}, como
-	respuesta a la necesidad de estandarizar los procesos de proyectos de
-	\emph{minería de datos} en distintos dominios industriales
-	\parencite{Chapman2000CRISPDM1S}.
-	
-	CRISP-DM se ha consolidado como una de las metodologías más utilizadas en
-	proyectos de ciencia de datos debido a su carácter iterativo, flexible y
-	centrado en el problema de negocio \parencite{wirth2000crisp}. Su estructura
-	permite adaptar el ciclo de vida del proyecto a entornos complejos como los
-	mercados financieros, caracterizados por ruido, no estacionariedad e
-	incertidumbre.
-	
-	El modelo CRISP-DM se compone de seis fases:
-	(1) comprensión del negocio,
-	(2) comprensión de los datos,
-	(3) preparación de los datos,
-	(4) modelado,
-	(5) evaluación y
-	(6) despliegue.
-	
-	En este trabajo, estas fases se utilizan como marco de referencia para
-	estructurar el desarrollo del sistema propuesto, adaptándolas al contexto
-	del análisis de datos financieros.
-	
-	En la Figura~\ref{fig:crispdm} se presenta una representación del ciclo CRISP-DM, el cual sirve como guía metodológica en el desarrollo del presente trabajo.
-	
-	\begin{figure}[h]
-		\centering
-		\includegraphics[width=0.85\textwidth]{media/crispdm_es.png}
-		\caption{Diagrama del proceso CRISP-DM adaptado al español. Fuente: elaboración propia a partir de \parencite{jensen2012crispdm} bajo licencia CC BY-SA 3.0.}
-		\label{fig:crispdm}
-	\end{figure}
-	
-	\subsection{Objetivo general}
-	
-	El objetivo general de este trabajo es diseñar, implementar y evaluar
-	una arquitectura híbrida basada en técnicas de \emph{clustering} (DBSCAN
-	y K-Means) que permita identificar patrones de comportamiento en activos
-	financieros y mejorar la robustez de las estrategias de \emph{momentum}
-	mediante el filtrado previo de anomalías.
-	
-	Para ello, se desarrollará un sistema capaz de agrupar activos con
-	dinámicas similares tras un proceso de depuración del ruido estructural,
-	generando señales indicativas de posibles oportunidades de inversión o
-	eventos atípicos.
-	
-	El sistema propuesto será evaluado con el fin de analizar su utilidad en
-	la interpretación del comportamiento del mercado y en la toma de
-	decisiones basada en datos.
-	
-	\subsection{Objetivos específicos}
-	
-	Los objetivos específicos del trabajo se derivan del planteamiento general
-	y se encuentran alineados de forma indirecta con las fases del modelo
-	CRISP-DM, que se utiliza como marco metodológico de referencia:
-	
-	\begin{enumerate}
-		\item \textbf{Recopilar} datos históricos de precios de activos financieros.
-		\item \textbf{Analizar} la estructura de los datos y realizar análisis exploratorio.
-		\item \textbf{Preprocesar} y \textbf{limpiar} el conjunto de datos.
-		\item \textbf{Transformar} series temporales en variables relevantes.
-		\item \textbf{Implementar} una arquitectura secuencial basada en DBSCAN y K-Means.
-		\item \textbf{Aplicar} DBSCAN para detección de anomalías.
-		\item \textbf{Aplicar} K-Means sobre datos depurados.
-		\item \textbf{Analizar} e interpretar los clústeres obtenidos.
-		\item \textbf{Integrar} una estrategia de \emph{momentum} como marco de evaluación.
-		\item \textbf{Comparar} el modelo híbrido frente a un modelo base.
-		\item \textbf{Evaluar} el rendimiento con datos no vistos.
-		\item \textbf{Validar} la utilidad del modelo en entorno experimental.
-	\end{enumerate}
-	
-	\subsection{Metodología del trabajo}
-	
-	La metodología del presente trabajo se basa en la aplicación práctica del
-	marco CRISP-DM al desarrollo del sistema propuesto, estructurando el proceso
-	en fases iterativas que permiten la retroalimentación continua entre
-	obtención de datos, modelado y evaluación.
-	
-	El proceso global se organiza en cuatro bloques principales:
-	obtención y comprensión de datos, preparación de datos, modelado y evaluación.
-	
-	\subsubsection{Obtención y comprensión de datos}
-	
-	Se recopilan series temporales de activos financieros (precios de apertura,
-	cierre, máximos, mínimos y volumen) a partir de fuentes públicas. Posteriormente,
-	se realiza un análisis exploratorio de datos (\emph{EDA}) para identificar
-	patrones, distribuciones y posibles anomalías.
-	
-	\subsubsection{Preparación de datos}
-	
-	Se realiza la limpieza del conjunto de datos mediante la eliminación de
-	valores nulos, normalización de variables y transformación de precios en
-	retornos y medidas de volatilidad.
-	
-	\subsubsection{Modelado}
-	
-	Se implementa una arquitectura híbrida en dos etapas:
-	DBSCAN como filtro de anomalías y K-Means como algoritmo de segmentación
-	de regímenes de mercado.
-	
-	\subsubsection{Evaluación}
-	
-	Se evalúa el sistema mediante comparación con un modelo base y una estrategia
-	tradicional de \emph{momentum}, utilizando métricas financieras como
-	rentabilidad y estabilidad.
-	
-	\subsection{Organización del equipo de trabajo}
-	
-	El desarrollo del proyecto se ha realizado de forma colaborativa entre los tres integrantes del equipo, estableciendo una distribución de responsabilidades orientada a facilitar la coordinación, aunque con participación transversal en todas las fases del proyecto.
-	
-	\begin{itemize}
-		\item \textbf{Alumno 1}: diseño e implementación de la arquitectura de \emph{machine learning}, incluyendo los algoritmos de clustering (DBSCAN y K-Means) y la construcción del sistema híbrido.
-		\item \textbf{Alumno 2}: obtención, limpieza y transformación de los datos financieros, así como el diseño del pipeline de preprocesamiento.
-		\item \textbf{Alumno 3}: análisis exploratorio de datos, revisión bibliográfica, apoyo en la interpretación de resultados y redacción de la memoria.
-	\end{itemize}
-	
-	A pesar de esta distribución inicial, el trabajo ha sido completamente colaborativo, participando los tres integrantes en el diseño, validación y toma de decisiones técnicas del proyecto.
-	
-	\subsection{Planificación y coordinación}
-	
-	El equipo mantiene un sistema de reuniones periódicas:
-	
-	\begin{itemize}
-		\item Reuniones semanales de seguimiento del estado del proyecto.
-		\item Reuniones adicionales en fases críticas (preprocesamiento, modelado y evaluación).
-	\end{itemize}
-	
-	Estas reuniones permiten revisar avances, resolver problemas técnicos y
-	alinear decisiones metodológicas bajo el marco de CRISP-DM.
-	
-	Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo.
-	
-	Estas herramientas han permitido gestionar el desarrollo de forma estructurada, mantener un historial de cambios y facilitar la integración de las distintas partes del sistema implementado.
-	
-	\section{Referencias
-		bibliográficas}\label{referencias-bibliogruxe1ficas}
-	
-	Aslam, B. (2025). Identifying optimistic stocks with K-means clustering
-	algorithm. \emph{International Review of Economics \& Finance}, 104579.
-	
-	Bin, S. (2020). K-means stock clustering analysis based on historical
-	price movements and financial ratios (Senior thesis). \emph{Claremont
-		McKenna College}.
-	
-	Daniel, K. M. (2016). Momentum crashes. \emph{Journal of Financial
-		Economics}, 221-247.
-	
-	Jegadeesh, N. T. (1993). Returns to Buying Winners and Selling Losers:
-	Implications for Stock Market Efficiency. \emph{The Journal of Finance},
-	65--91.
-	
-	López de Prado, M. (2018). \emph{Advances in Financial Machine
-		Learning.} Wiley.
-	
-	Luan, Q., \& Hamp, J. (2025). Automated regime classification in
-	multidimensional time series data using sliced Wasserstein k-means
-	clustering. \emph{Data Science in Finance and Economics}, 387--418.
-	
-	Nyffeler, L. (2024). K-means clustering with Mahalanobis distance for
-	stock classification into value and growth portfolios (Bachelor's
-	thesis). \emph{Zurich University of Applied Sciences (ZHAW)}.
-	
-	Shiraj, M., Rahman, M., Al-Imran, M., Liza, M., Murshed, M., \& Akhter,
-	N. (2024). Anomaly detection in financial time series data via mapper
-	algorithm and DBSCAN clustering. \emph{World Journal of Advanced
-		Engineering Technology and Sciences}, 70-84.
-	
-	
-	
-	\printbibliography
+
+\section{Objetivos concretos y metodología de trabajo}
+\label{metodologuxeda-del-trabajo}
+
+En este capítulo se definen los objetivos del trabajo y la metodología
+seguida para su desarrollo. Este apartado actúa como nexo entre el estudio
+del contexto y estado del arte presentado anteriormente y la implementación
+práctica de la propuesta planteada.
+
+El trabajo se enmarca en el ámbito del análisis de datos financieros
+mediante técnicas de \emph{Machine Learning}, con el objetivo de desarrollar
+y evaluar una arquitectura algorítmica híbrida capaz de identificar patrones
+de comportamiento en activos financieros y reducir el impacto de anomalías en
+entornos de alta volatilidad.
+
+\subsection{Marco metodológico: CRISP-DM}
+
+La metodología adoptada en este trabajo se basa en el estándar
+\emph{CRISP-DM} (\emph{Cross Industry Standard Process for Data Mining}),
+traducido como \emph{Proceso Estándar Intersectorial para Minería de Datos}.
+Este marco fue desarrollado por un consorcio de empresas tecnológicas
+europeas, entre ellas \emph{SPSS}, \emph{Daimler-Benz} y \emph{NCR}, como
+respuesta a la necesidad de estandarizar los procesos de proyectos de
+\emph{minería de datos} en distintos dominios industriales
+\parencite{Chapman2000CRISPDM1S}.
+
+CRISP-DM se ha consolidado como una de las metodologías más utilizadas en
+proyectos de ciencia de datos debido a su carácter iterativo, flexible y
+centrado en el problema de negocio \parencite{wirth2000crisp}. Su estructura
+permite adaptar el ciclo de vida del proyecto a entornos complejos como los
+mercados financieros, caracterizados por ruido, no estacionariedad e
+incertidumbre.
+
+El modelo CRISP-DM se compone de seis fases:
+(1) comprensión del negocio,
+(2) comprensión de los datos,
+(3) preparación de los datos,
+(4) modelado,
+(5) evaluación y
+(6) despliegue.
+
+En este trabajo, estas fases se utilizan como marco de referencia para
+estructurar el desarrollo del sistema propuesto, adaptándolas al contexto
+del análisis de datos financieros.
+
+En la Figura~\ref{fig:crispdm} se presenta una representación del ciclo CRISP-DM, el cual sirve como guía metodológica en el desarrollo del presente trabajo.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.85\textwidth]{media/crispdm_es.png}
+\caption{Diagrama del proceso CRISP-DM adaptado al español. Fuente: elaboración propia a partir de \parencite{jensen2012crispdm} bajo licencia CC BY-SA 3.0.}
+\label{fig:crispdm}
+\end{figure}
+
+\subsection{Objetivo general}
+
+El objetivo general de este trabajo es diseñar, implementar y evaluar
+una arquitectura híbrida basada en técnicas de \emph{clustering} (DBSCAN
+y K-Means) que permita identificar patrones de comportamiento en activos
+financieros y mejorar la robustez de las estrategias de \emph{momentum}
+mediante el filtrado previo de anomalías.
+
+Para ello, se desarrollará un sistema capaz de agrupar activos con
+dinámicas similares tras un proceso de depuración del ruido estructural,
+generando señales indicativas de posibles oportunidades de inversión o
+eventos atípicos.
+
+El sistema propuesto será evaluado con el fin de analizar su utilidad en
+la interpretación del comportamiento del mercado y en la toma de
+decisiones basada en datos.
+
+\subsection{Objetivos específicos}
+
+Los objetivos específicos del trabajo se derivan del planteamiento general
+y se encuentran alineados de forma indirecta con las fases del modelo
+CRISP-DM, que se utiliza como marco metodológico de referencia:
+
+\begin{enumerate}
+\item \textbf{Recopilar} datos históricos de precios de activos financieros.
+\item \textbf{Analizar} la estructura de los datos y realizar análisis exploratorio.
+\item \textbf{Preprocesar} y \textbf{limpiar} el conjunto de datos.
+\item \textbf{Transformar} series temporales en variables relevantes.
+\item \textbf{Implementar} una arquitectura secuencial basada en DBSCAN y K-Means.
+\item \textbf{Aplicar} DBSCAN para detección de anomalías.
+\item \textbf{Aplicar} K-Means sobre datos depurados.
+\item \textbf{Analizar} e interpretar los clústeres obtenidos.
+\item \textbf{Integrar} una estrategia de \emph{momentum} como marco de evaluación.
+\item \textbf{Comparar} el modelo híbrido frente a un modelo base.
+\item \textbf{Evaluar} el rendimiento con datos no vistos.
+\item \textbf{Validar} la utilidad del modelo en entorno experimental.
+\end{enumerate}
+
+\subsection{Metodología del trabajo}
+
+La metodología del presente trabajo se basa en la aplicación práctica del
+marco CRISP-DM al desarrollo del sistema propuesto, estructurando el proceso
+en fases iterativas que permiten la retroalimentación continua entre
+obtención de datos, modelado y evaluación.
+
+El proceso global se organiza en cuatro bloques principales:
+obtención y comprensión de datos, preparación de datos, modelado y evaluación.
+
+\subsubsection{Obtención y comprensión de datos}
+
+Se recopilan series temporales de activos financieros (precios de apertura,
+cierre, máximos, mínimos y volumen) a partir de fuentes públicas. Posteriormente,
+se realiza un análisis exploratorio de datos (\emph{EDA}) para identificar
+patrones, distribuciones y posibles anomalías.
+
+\subsubsection{Preparación de datos}
+
+Se realiza la limpieza del conjunto de datos mediante la eliminación de
+valores nulos, normalización de variables y transformación de precios en
+retornos y medidas de volatilidad.
+
+\subsubsection{Modelado}
+
+Se implementa una arquitectura híbrida en dos etapas:
+DBSCAN como filtro de anomalías y K-Means como algoritmo de segmentación
+de regímenes de mercado.
+
+\subsubsection{Evaluación}
+
+Se evalúa el sistema mediante comparación con un modelo base y una estrategia
+tradicional de \emph{momentum}, utilizando métricas financieras como
+rentabilidad y estabilidad.
+
+\subsection{Organización del equipo de trabajo}
+
+El desarrollo del proyecto se ha realizado de forma colaborativa entre los tres integrantes del equipo, estableciendo una distribución de responsabilidades orientada a facilitar la coordinación, aunque con participación transversal en todas las fases del proyecto.
+
+\begin{itemize}
+\item \textbf{Alumno 1}: diseño e implementación de la arquitectura de \emph{machine learning}, incluyendo los algoritmos de clustering (DBSCAN y K-Means) y la construcción del sistema híbrido.
+\item \textbf{Alumno 2}: obtención, limpieza y transformación de los datos financieros, así como el diseño del pipeline de preprocesamiento.
+\item \textbf{Alumno 3}: análisis exploratorio de datos, revisión bibliográfica, apoyo en la interpretación de resultados y redacción de la memoria.
+\end{itemize}
+
+A pesar de esta distribución inicial, el trabajo ha sido completamente colaborativo, participando los tres integrantes en el diseño, validación y toma de decisiones técnicas del proyecto.
+
+\subsection{Planificación y coordinación}
+
+El equipo mantiene un sistema de reuniones periódicas:
+
+\begin{itemize}
+\item Reuniones semanales de seguimiento del estado del proyecto.
+\item Reuniones adicionales en fases críticas (preprocesamiento, modelado y evaluación).
+\end{itemize}
+
+Estas reuniones permiten revisar avances, resolver problemas técnicos y
+alinear decisiones metodológicas bajo el marco de CRISP-DM.
+
+Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo.
+
+Estas herramientas han permitido gestionar el desarrollo de forma estructurada, mantener un historial de cambios y facilitar la integración de las distintas partes del sistema implementado.
+%
+\section{Desarrollo específico de la contribución}\label{desarollo-especi}
+
+\subsection{Selección de activos financieros y ETFs}
+
+Para el desarrollo del sistema propuesto, se ha definido un conjunto
+diversificado de activos financieros compuesto por acciones individuales
+y fondos cotizados (ETFs), con el objetivo de capturar distintos
+regímenes de mercado y estructuras sectoriales.
+
+En concreto, se han seleccionado:
+
+\begin{itemize}
+\item Acciones del mercado español (IBEX 35), representativas de distintos sectores.
+\item Acciones del mercado estadounidense, caracterizadas por alta liquidez y relevancia global.
+\item ETFs sectoriales y de mercado, que permiten capturar dinámicas agregadas y factores sistemáticos.
+\end{itemize}
+
+La inclusión de activos de distintos mercados y sectores responde al
+principio de diversificación en carteras financieras, ampliamente
+establecido en la literatura desde la teoría moderna de carteras
+\parencite{markowitz1952}, y posteriormente desarrollado en el
+contexto de construcción de carteras eficientes
+\parencite{elton1997modern}. Esta diversidad permite capturar
+comportamientos heterogéneos y reducir sesgos asociados a un único mercado.
+
+Asimismo, la combinación de mercados internacionales se justifica por la
+existencia de dinámicas diferenciadas entre regiones geográficas,
+especialmente entre mercados desarrollados, tal y como se ha documentado
+en estudios sobre integración financiera internacional
+\parencite{bekaert1995time}.
+
+Por otro lado, el uso de ETFs permite representar de forma eficiente
+factores de mercado y sectores económicos completos, actuando como
+aproximaciones agregadas del comportamiento del mercado y reduciendo el
+impacto del ruido idiosincrático de activos individuales
+\parencite{madhavan2012exchange}.
+
+Además, la inclusión de activos pertenecientes a distintos sectores
+económicos se fundamenta en la evidencia de que los retornos presentan
+estructuras diferenciadas en función del sector, lo que resulta relevante
+en tareas de segmentación y clustering financiero
+\parencite{fama1997industry}.
+
+Finalmente, la selección de activos líquidos y ampliamente negociados
+responde a la necesidad de garantizar la calidad de los datos y evitar
+distorsiones asociadas a problemas de iliquidez, tal y como se ha señalado
+en la literatura sobre microestructura de mercados
+\parencite{amihud2002illiquidity}.
+
+En la Tabla~\ref{tab:assets} se presenta el universo de activos financieros utilizado en el desarrollo del sistema propuesto, incluyendo acciones de los mercados español y estadounidense, así como distintos fondos cotizados (ETFs) representativos de sectores, índices y factores de riesgo.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lll}
+\toprule
+\textbf{Ticker} & \textbf{Activo} & \textbf{Categoría} \\
+\midrule
+
+\multicolumn{3}{l}{\textbf{Mercado España (IBEX 35)}} \\
+SAN.MC  & Banco Santander        & Acción \\
+FER.MC  & Ferrovial             & Acción \\
+ACS.MC  & ACS                   & Acción \\
+ITX.MC  & Inditex               & Acción \\
+REP.MC  & Repsol                & Acción \\
+AMS.MC  & Amadeus IT Group      & Acción \\
+
+\midrule
+\multicolumn{3}{l}{\textbf{Mercado Estados Unidos}} \\
+AAPL    & Apple Inc.            & Acción \\
+MSFT    & Microsoft             & Acción \\
+NVDA    & NVIDIA                & Acción \\
+JPM     & JPMorgan Chase        & Acción \\
+BLK     & BlackRock             & Acción \\
+TSLA    & Tesla                 & Acción \\
+DPZ     & Domino's Pizza        & Acción \\
+CAT     & Caterpillar           & Acción \\
+XOM     & Exxon Mobil           & Acción \\
+
+\midrule
+\multicolumn{3}{l}{\textbf{ETFs}} \\
+XLK     & Technology Select Sector ETF   & ETF Sectorial \\
+SMH     & Semiconductor ETF              & ETF Sectorial \\
+XLV     & Health Care ETF                & ETF Sectorial \\
+XLI     & Industrial ETF                 & ETF Sectorial \\
+XLY     & Consumer Discretionary ETF     & ETF Sectorial \\
+XLP     & Consumer Staples ETF           & ETF Sectorial \\
+GLD     & SPDR Gold Trust                & ETF Materias Primas \\
+SPY     & S\&P 500 ETF                  & ETF Índice \\
+QQQ     & Nasdaq-100 ETF                & ETF Índice \\
+EWP     & Spain ETF                     & ETF País \\
+MTUM    & Momentum Factor ETF           & ETF Factorial \\
+XLE     & Energy ETF                    & ETF Sectorial \\
+XLF     & Financials ETF                & ETF Sectorial \\
+TLT     & Treasury Bonds ETF            & ETF Renta Fija \\
+XLU     & Utilities ETF                 & ETF Sectorial \\
+
+\bottomrule
+\end{tabular}
+\caption{Universo de activos financieros utilizados en el sistema propuesto.}
+\label{tab:assets}
+\end{table}
+
+\section{Referencias
+bibliográficas}\label{referencias-bibliogruxe1ficas}
+
+Aslam, B. (2025). Identifying optimistic stocks with K-means clustering
+algorithm. \emph{International Review of Economics \& Finance}, 104579.
+
+Bin, S. (2020). K-means stock clustering analysis based on historical
+price movements and financial ratios (Senior thesis). \emph{Claremont
+McKenna College}.
+
+Daniel, K. M. (2016). Momentum crashes. \emph{Journal of Financial
+Economics}, 221-247.
+
+Jegadeesh, N. T. (1993). Returns to Buying Winners and Selling Losers:
+Implications for Stock Market Efficiency. \emph{The Journal of Finance},
+65--91.
+
+López de Prado, M. (2018). \emph{Advances in Financial Machine
+Learning.} Wiley.
+
+Luan, Q., \& Hamp, J. (2025). Automated regime classification in
+multidimensional time series data using sliced Wasserstein k-means
+clustering. \emph{Data Science in Finance and Economics}, 387--418.
+
+Nyffeler, L. (2024). K-means clustering with Mahalanobis distance for
+stock classification into value and growth portfolios (Bachelor's
+thesis). \emph{Zurich University of Applied Sciences (ZHAW)}.
+
+Shiraj, M., Rahman, M., Al-Imran, M., Liza, M., Murshed, M., \& Akhter,
+N. (2024). Anomaly detection in financial time series data via mapper
+algorithm and DBSCAN clustering. \emph{World Journal of Advanced
+Engineering Technology and Sciences}, 70-84.
+
+\printbibliography
 \end{document}
