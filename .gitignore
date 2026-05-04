@@ -9,3 +9,18 @@ data/processed/
 __pycache__/
 *.py[cod]
 *$py.class
+
+# LaTeX
+*.aux
+*.bbl
+*.bcf
+*.blg
+*.log
+*.run.xml
+*.synctex.gz
+*.toc
+*.out
+*.lof
+*.lot
+*.fdb_latexmk
+*.fls
