@@ -24,3 +24,4 @@ __pycache__/
 *.lot
 *.fdb_latexmk
 *.fls
+*.bbl-SAVE-ERROR
