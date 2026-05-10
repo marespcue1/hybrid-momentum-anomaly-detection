@@ -708,8 +708,28 @@ alinear decisiones metodológicas bajo el marco de CRISP-DM.
 Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo.
 
 Estas herramientas han permitido gestionar el desarrollo de forma estructurada, mantener un historial de cambios y facilitar la integración de las distintas partes del sistema implementado.
-%
+
 \section{Desarrollo específico de la contribución}\label{desarollo-especi}
+
+En este capítulo se describe el desarrollo completo de la contribución propuesta en el presente Trabajo de Fin de Máster, orientada al análisis no supervisado de activos financieros mediante técnicas de aprendizaje automático y análisis cuantitativo.
+
+El objetivo principal del sistema desarrollado consiste en identificar estructuras de comportamiento dentro de los mercados financieros y detectar observaciones anómalas a partir de información histórica de precios y variables derivadas. Para ello, se propone un enfoque híbrido basado en técnicas de \textit{clustering} y detección de anomalías aplicadas sobre series temporales financieras.
+
+En primer lugar, se presenta el proceso de selección del universo de activos financieros y ETFs utilizados en el estudio, justificando la inclusión de distintos mercados, sectores económicos y factores de riesgo. Posteriormente, se detalla la construcción del conjunto de datos y el proceso de análisis exploratorio de datos (\textit{Exploratory Data Analysis}, EDA), incluyendo las fases de descarga, validación, limpieza y caracterización estadística inicial de las series financieras.
+
+A continuación, se abordará la construcción de variables e indicadores financieros derivados, orientados a representar propiedades relevantes del mercado como rentabilidad, volatilidad, momentum o comportamiento relativo entre activos. Estas variables servirán como entrada para las etapas posteriores de modelado.
+
+Sobre este conjunto de características financieras se aplicará un enfoque híbrido compuesto por dos técnicas principales de aprendizaje no supervisado:
+
+\begin{itemize}
+\item En primer lugar, se empleará el algoritmo DBSCAN (\textit{Density-Based Spatial Clustering of Applications with Noise}) con el objetivo de detectar y filtrar observaciones anómalas o regiones de baja densidad dentro del espacio de datos.
+    
+\item Posteriormente, sobre el conjunto de observaciones filtradas, se aplicará el algoritmo K-Means para identificar agrupaciones de activos con comportamientos financieros similares.
+\end{itemize}
+
+La combinación de ambas técnicas permite construir un sistema más robusto frente a ruido y eventos extremos, algo especialmente relevante en entornos financieros reales caracterizados por alta volatilidad, distribuciones no gaussianas y presencia frecuente de anomalías de mercado.
+
+Finalmente, se presentarán los resultados obtenidos, analizando tanto la calidad de los clusters generados como la capacidad del sistema para identificar patrones relevantes y comportamientos atípicos dentro del universo financiero analizado.
 
 \subsection{Selección de activos financieros y ETFs}
 
@@ -726,37 +746,15 @@ En concreto, se han seleccionado:
 \item ETFs sectoriales y de mercado, que permiten capturar dinámicas agregadas y factores sistemáticos.
 \end{itemize}
 
-La inclusión de activos de distintos mercados y sectores responde al
-principio de diversificación en carteras financieras, ampliamente
-establecido en la literatura desde la teoría moderna de carteras
-\parencite{markowitz1952}, y posteriormente desarrollado en el
-contexto de construcción de carteras eficientes
-\parencite{elton1997modern}. Esta diversidad permite capturar
-comportamientos heterogéneos y reducir sesgos asociados a un único mercado.
+La inclusión de activos de distintos mercados y sectores responde al principio de diversificación en carteras financieras, ampliamente establecido en la literatura desde la teoría moderna de carteras \parencite{markowitz1952}, y posteriormente desarrollado en el contexto de construcción de carteras eficientes \parencite{elton1997modern}. Esta diversidad permite capturar comportamientos heterogéneos y reducir sesgos asociados a un único mercado.
 
-Asimismo, la combinación de mercados internacionales se justifica por la
-existencia de dinámicas diferenciadas entre regiones geográficas,
-especialmente entre mercados desarrollados, tal y como se ha documentado
-en estudios sobre integración financiera internacional
-\parencite{bekaert1995time}.
+Asimismo, la combinación de mercados internacionales se justifica por la existencia de dinámicas diferenciadas entre regiones geográficas, especialmente entre mercados desarrollados, tal y como se ha documentado en estudios sobre integración financiera internacional \parencite{bekaert1995time}.
 
-Por otro lado, el uso de ETFs permite representar de forma eficiente
-factores de mercado y sectores económicos completos, actuando como
-aproximaciones agregadas del comportamiento del mercado y reduciendo el
-impacto del ruido idiosincrático de activos individuales
-\parencite{madhavan2012exchange}.
+Por otro lado, el uso de ETFs permite representar de forma eficiente factores de mercado y sectores económicos completos, actuando como aproximaciones agregadas del comportamiento del mercado y reduciendo el impacto del ruido idiosincrático de activos individuales \parencite{madhavan2012exchange}.
 
-Además, la inclusión de activos pertenecientes a distintos sectores
-económicos se fundamenta en la evidencia de que los retornos presentan
-estructuras diferenciadas en función del sector, lo que resulta relevante
-en tareas de segmentación y clustering financiero
-\parencite{fama1997industry}.
+Además, la inclusión de activos pertenecientes a distintos sectores económicos se fundamenta en la evidencia de que los retornos presentan estructuras diferenciadas en función del sector, lo que resulta relevante en tareas de segmentación y clustering financiero \parencite{fama1997industry}.
 
-Finalmente, la selección de activos líquidos y ampliamente negociados
-responde a la necesidad de garantizar la calidad de los datos y evitar
-distorsiones asociadas a problemas de iliquidez, tal y como se ha señalado
-en la literatura sobre microestructura de mercados
-\parencite{amihud2002illiquidity}.
+Finalmente, la selección de activos líquidos y ampliamente negociados responde a la necesidad de garantizar la calidad de los datos y evitar distorsiones asociadas a problemas de iliquidez, tal y como se ha señalado en la literatura sobre microestructura de mercados \parencite{amihud2002illiquidity}.
 
 En la Tabla~\ref{tab:assets} se presenta el universo de activos financieros utilizado en el desarrollo del sistema propuesto, incluyendo acciones de los mercados español y estadounidense, así como distintos fondos cotizados (ETFs) representativos de sectores, índices y factores de riesgo.
 
@@ -810,6 +808,190 @@ XLU     & Utilities ETF                 & ETF Sectorial \\
 \caption{Universo de activos financieros utilizados en el sistema propuesto.}
 \label{tab:assets}
 \end{table}
+
+\subsection{Construcción del conjunto de datos y análisis exploratorio de datos (EDA)}
+
+Una vez definido el universo de activos financieros utilizado en el estudio, se procedió a la construcción y análisis inicial del conjunto de datos financiero.
+
+Como paso previo al modelado, se realizó un proceso de \textit{Exploratory Data Analysis} (EDA) \parencite{tukey1977eda}, conocido en español como análisis exploratorio de datos. El EDA constituye una etapa fundamental dentro de cualquier flujo de trabajo de ciencia de datos y análisis cuantitativo, ya que permite comprender la estructura del conjunto de datos, detectar posibles problemas de calidad, identificar patrones relevantes y validar que la información disponible es adecuada para las técnicas estadísticas y de aprendizaje automático que se aplicarán posteriormente.
+
+En el contexto financiero, esta fase resulta especialmente importante debido a que las series temporales de mercado suelen presentar características complejas, como volatilidad heterogénea, correlaciones dinámicas, valores extremos y comportamientos no gaussianos.
+
+\subsubsection{Ventana temporal del análisis}
+
+El periodo temporal seleccionado para el estudio abarca desde enero de 2017 hasta mayo de 2026. La elección de esta ventana temporal responde a la necesidad de incorporar distintos regímenes de mercado y ciclos económicos completos, incluyendo tanto fases expansivas como periodos de elevada incertidumbre financiera.
+
+En particular, este horizonte temporal permite incluir eventos sistémicos relevantes como:
+
+\begin{itemize}
+\item La crisis financiera derivada de la pandemia COVID-19.
+\item El periodo inflacionario posterior a 2021.
+\item Distintas fases de recuperación y desaceleración de mercado.
+\end{itemize}
+
+Además, disponer de un histórico amplio resulta especialmente útil para el cálculo posterior de métricas financieras basadas en ventanas temporales, tales como volatilidades móviles, indicadores técnicos o medidas de correlación.
+
+\subsubsection{Descarga y construcción del conjunto de datos bruto}
+
+Los datos financieros fueron descargados mediante la librería \texttt{yfinance}, que proporciona acceso programático a información histórica de mercado obtenida desde Yahoo Finance \parencite{yfinance,yahooFinance}.
+
+Para cada activo financiero se descargaron las siguientes variables diarias:
+
+\begin{itemize}
+\item Precio de cierre ajustado (\texttt{Precio\_Adj}).
+\item Precio máximo diario (\texttt{High}).
+\item Precio mínimo diario (\texttt{Low}).
+\item Volumen negociado (\texttt{Volumen}).
+\end{itemize}
+
+Inicialmente, la información fue obtenida en formato matricial, donde cada columna representaba un activo financiero y cada fila correspondía a una fecha concreta. Posteriormente, las distintas variables fueron unificadas en un único DataFrame en formato panel o \textit{long format}, estructura ampliamente utilizada en análisis financiero multivariante.
+
+En el conjunto de datos final, cada fila representa un activo financiero en una fecha específica, quedando definida mediante las siguientes variables:
+
+\begin{itemize}
+\item \texttt{Fecha}: Fecha de cotización.
+\item \texttt{Ticker}: Identificador bursátil del activo.
+\item \texttt{Precio\_Adj}: Precio de cierre ajustado.
+\item \texttt{High}: Precio máximo diario.
+\item \texttt{Low}: Precio mínimo diario.
+\item \texttt{Volumen}: Volumen de negociación diario.
+\end{itemize}
+
+Esta estructura facilita posteriormente la aplicación de transformaciones por activo, cálculos temporales y técnicas de clustering sobre observaciones multivariantes.
+
+\subsubsection{Validación estructural y limpieza inicial}
+
+Una vez construido el conjunto de datos bruto, se realizó una validación estructural inicial con el objetivo de comprobar la calidad y consistencia de los datos descargados.
+
+Durante esta fase se analizaron aspectos como:
+
+\begin{itemize}
+\item la presencia de valores nulos,
+\item el rango temporal disponible para cada activo,
+\item la consistencia de los tipos de datos,
+\item y la correcta alineación temporal entre series financieras.
+\end{itemize}
+
+El análisis reveló la existencia de valores faltantes principalmente concentrados al inicio de algunas series temporales. Este comportamiento es habitual en bases de datos financieras y puede deberse a diferencias en las fechas de cotización, festivos bursátiles o limitaciones históricas del proveedor de datos.
+
+Tras esta inspección inicial, se aplicó un proceso básico de limpieza consistente en:
+
+\begin{itemize}
+\item Eliminación de observaciones con información crítica faltante.
+\item Reorganización cronológica de las series.
+\item Validación de la cobertura mínima de cada activo.
+\end{itemize}
+
+Como resultado, se obtuvo un conjunto de datos homogéneo y estructuralmente consistente para su posterior análisis cuantitativo.
+
+\subsubsection{Construcción y análisis de retornos financieros}
+
+A partir de los precios ajustados se calcularon los retornos diarios de cada activo financiero. En finanzas, el retorno representa la variación porcentual del precio entre dos instantes consecutivos y constituye una de las variables fundamentales para medir rentabilidad y riesgo.
+
+El uso de retornos, en lugar de precios absolutos, permite comparar activos con escalas de precio completamente diferentes. Por ejemplo, acciones tecnológicas con precios elevados pueden analizarse conjuntamente con ETFs o activos de menor valor nominal sin introducir sesgos derivados de la escala.
+
+Posteriormente, se realizó un análisis estadístico descriptivo de los retornos, estudiando métricas como:
+
+\begin{itemize}
+\item Media.
+\item Desviación estándar.
+\item Asimetría (\textit{skewness}).
+\item Curtosis (\textit{kurtosis}).
+\end{itemize}
+
+La desviación estándar se utilizó como medida de volatilidad, entendida como el grado de variabilidad de los retornos de un activo. Los resultados mostraron diferencias significativas entre activos financieros.
+
+En particular, activos tecnológicos como NVIDIA o Tesla presentaron niveles de volatilidad considerablemente superiores al resto del universo analizado. Asimismo, estos activos mostraron distribuciones más asimétricas y con curtosis elevada.
+
+La curtosis mide el peso de las colas de una distribución estadística. Valores elevados de curtosis indican una mayor frecuencia de eventos extremos respecto a lo esperado bajo una distribución normal, fenómeno característico de los mercados financieros reales y ampliamente documentado en la literatura financiera \parencite{cont2001empirical}.
+
+\subsubsection{Distribución global de retornos y eventos extremos}
+
+Además del análisis individual por activo, se estudió la distribución agregada de retornos del conjunto completo del mercado analizado.
+
+Los resultados mostraron una distribución aproximadamente centrada en cero, aunque con presencia clara de colas pesadas (\textit{fat tails}), indicando una frecuencia de movimientos extremos superior a la esperada bajo hipótesis gaussianas.
+
+En términos financieros, este comportamiento implica que eventos de mercado muy intensos —caídas o subidas bruscas— ocurren con mayor frecuencia de lo que asumirían modelos estadísticos basados en distribuciones normales.
+
+Con el objetivo de estudiar estos episodios, se identificaron observaciones extremas definidas como retornos absolutos superiores al 10\%.
+
+El análisis permitió detectar múltiples eventos asociados a periodos de elevada volatilidad, especialmente durante marzo de 2020, coincidiendo con el impacto global de la pandemia COVID-19 sobre los mercados financieros. Asimismo, se observaron movimientos extremos en activos tecnológicos y sectores especialmente sensibles a shocks macroeconómicos.
+
+La existencia de estos eventos extremos refuerza la necesidad de emplear modelos robustos capaces de capturar dinámicas no lineales y comportamientos anómalos dentro del mercado.
+
+\subsubsection{Análisis exploratorio avanzado}
+
+Finalmente, se desarrolló una fase de análisis exploratorio avanzado mediante visualizaciones y métricas multivariantes orientadas a comprender la dinámica conjunta de los activos financieros.
+
+En primer lugar, se analizaron series temporales normalizadas de precios. La normalización permite representar todos los activos sobre una escala comparable, facilitando el análisis visual de su evolución relativa independientemente de su precio nominal.
+
+Los resultados mostraron una fuerte concentración del crecimiento en el sector tecnológico, destacando especialmente NVIDIA, Tesla y el ETF de semiconductores (\texttt{SMH}) como los activos con mayor revalorización acumulada durante el periodo estudiado.
+
+Al segmentar el análisis por regiones geográficas, se observó que:
+
+\begin{itemize}
+\item en el mercado español destacaron ACS y Ferrovial,
+\item mientras que en el mercado estadounidense sobresalieron NVIDIA y Tesla.
+\end{itemize}
+
+También se identificó visualmente el impacto sistémico de la crisis del COVID-19, reflejado en caídas sincronizadas entre la mayoría de activos financieros Figura~\ref{fig:preci_norm} y Figura~\ref{fig:preci_norm_sep}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{media/precios_normalizados.png}
+\caption{Precios normalizados. Fuente: elaboración propia.}
+\label{fig:preci_norm}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{media/precios_normalizados_etf_españa_usa.png}
+\caption{Precios normalizados separando ETFs, activos de españa y activos de EEUU. Fuente: elaboración propia.}
+\label{fig:preci_norm_sep}
+\end{figure}
+
+Posteriormente, se analizó la distribución visual de retornos mediante histogramas Figura~\ref{fig:distr_ret}. Aunque la distribución presentaba una forma aproximadamente simétrica alrededor de cero, el análisis estadístico realizado anteriormente confirmó que los retornos financieros no siguen una distribución normal estricta debido a la presencia de colas pesadas y eventos extremos.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{media/distribucin_retornos.png}
+\caption{Histograma de distribución de retornos. Fuente: elaboración propia.}
+\label{fig:distr_ret}
+\end{figure}
+
+Finalmente, se construyó una matriz de correlación entre activos financieros Figura~\ref{fig:corr_matrix}. La correlación mide el grado de relación lineal entre dos variables y constituye una herramienta fundamental para comprender estructuras de dependencia dentro de los mercados \parencite{markowitz1952}.
+
+El análisis mostró que:
+
+\begin{itemize}
+\item Los activos tecnológicos presentaban correlaciones elevadas entre sí.
+\item Los ETFs de renta fija como \texttt{TLT} mostraban baja correlación respecto al resto del mercado.
+\item Activos refugio como \texttt{GLD} mantenían un comportamiento relativamente independiente.
+\end{itemize}
+
+Estas estructuras de dependencia resultan especialmente relevantes para las fases posteriores de clustering y detección de anomalías, ya que permiten identificar grupos de activos con dinámicas similares y posibles comportamientos atípicos dentro del sistema financiero analizado.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{media/Matriz_correlacion_retornos.png}
+\caption{Matriz de correlación de retornos. Fuente: elaboración propia.}
+\label{fig:corr_matrix}
+\end{figure}
+
+\subsubsection{Conclusiones del análisis exploratorio}
+
+El análisis exploratorio realizado permitió validar la calidad y consistencia del conjunto de datos, además de identificar múltiples propiedades relevantes del mercado financiero analizado.
+
+Entre las principales conclusiones obtenidas destacan:
+
+\begin{itemize}
+\item La elevada heterogeneidad entre activos financieros.
+\item La existencia de volatilidad extrema y eventos no gaussianos.
+\item La presencia de estructuras de correlación claramente diferenciadas.
+\item La fuerte concentración del crecimiento en determinados sectores tecnológicos.
+\end{itemize}
+
+Estas observaciones justifican la posterior construcción de variables financieras avanzadas y la aplicación de técnicas de clustering y detección de anomalías sobre el conjunto de datos.
 
 \section{Referencias
 bibliográficas}\label{referencias-bibliogruxe1ficas}
