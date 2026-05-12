@@ -993,6 +993,184 @@ Entre las principales conclusiones obtenidas destacan:
 
 Estas observaciones justifican la posterior construcción de variables financieras avanzadas y la aplicación de técnicas de clustering y detección de anomalías sobre el conjunto de datos.
 
+\subsection{Transformación del Espacio de Características: Rolling Z-Score}
+\label{sec:rolling_zscore}
+
+Tal y como se ha evidenciado en las conclusiones del análisis exploratorio, las características extraídas de los activos presentan escalas y unidades de medida heterogéneas. En la estructura de datos tipo panel que se maneja, conviven variables de distinta naturaleza: desde el volumen de negociación cuantificado en millones de unidades hasta los retornos logarítmicos situados en órdenes de magnitud de milésimas.
+
+En el aprendizaje no supervisado, tanto los algoritmos basados en densidad (DBSCAN) como los basados en partición de centroides (K-Means) fundamentan su capacidad de clasificación en métricas de distancia geométrica, generalmente la distancia Euclídea. Introducir los datos brutos en este tipo de modelos generaría un sesgo estructural severo: aquellas variables con mayor escala nominal dominarían por completo el cálculo de las distancias, invalidando la contribución informativa de los indicadores financieros con rangos menores.
+%\cite{garcia2023_tesis}.
+
+\subsubsection{Homogeneización mediante el Estadístico Z}
+
+Para garantizar una base de datos equitativa donde cada variable contribuya proporcionalmente a la topología del modelo, es necesario realizar una normalización. Se ha optado por implementar la estandarización Z-Score, la cual transforma cada variable para que posea una media ($\mu$) igual a cero y una desviación estándar ($\sigma$) unitaria.
+
+Matemáticamente, la transformación clásica para una observación $x$ se define en la Ecuación \ref{eq:zscore_simple}:
+
+\begin{equation}
+    Z = \frac{x - \mu}{\sigma}
+    \label{eq:zscore_simple}
+\end{equation}
+
+Esta transformación constituye un requisito fundamental en finanzas cuantitativas, especialmente en metodologías basadas en distancias. Al aplicar la estandarización Z-Score, se eliminan los efectos derivados de las distintas escalas y magnitudes originales de las variables, permitiendo que la distancia euclídea entre vectores capture diferencias relativas de comportamiento y no magnitudes absolutas.
+
+\subsubsection{El problema del Sesgo de Información Futura}
+
+A pesar de su utilidad, la normalización tradicional aplicada directamente sobre series temporales introduce un problema metodológico crítico conocido como sesgo de información futura. 
+
+Si se calculase la media y la varianza utilizando toda la serie histórica para normalizar un dato del pasado, el modelo estaría incorporando implícitamente información de eventos posteriores (como la crisis del COVID). Esto introduce una fuga de información que invalidaría el análisis, ya que el sistema estaría utilizando datos que no eran conocidos por el mercado en el instante $t$.
+
+\subsubsection{Implementación del Rolling Z-Score dinámico}
+
+Para evitar este problema y respetar la estructura temporal de los datos, se ha desarrollado una función de estandarización dinámica denominada \texttt{estandarizar\_zscore\_rolling}. Dado que los mercados financieros son no estacionarios,
+%\cite{nyffeler2024}
+se utiliza una ventana móvil de $w = 252$ sesiones, equivalente a un año bursátil.
+
+El valor de la característica $i$ en el instante $t$ se normaliza exclusivamente con su histórico previo disponible, según la Ecuación \ref{eq:zscore_rolling}:
+
+\begin{equation}
+    Z_{i,t} = \frac{x_{i,t} - \mu_{i,[t-w,t-1]}}{\sigma_{i,[t-w,t-1]}}
+    \label{eq:zscore_rolling}
+\end{equation}
+
+Esto garantiza la estricta causalidad temporal del sistema. El impacto longitudinal de esta transformación se ilustra en la Figura \ref{fig:zscore_series}, donde se observa la estabilización de la serie y el intervalo de seguridad inicial (área sombreada) correspondiente al periodo de \textit{warmup} (calentamiento).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.95\textwidth]{media/zscore_series_temporal.png}
+    \caption{Evolución de la volatilidad para el activo NVDA. Arriba: Serie nominal. Abajo: Serie tras la aplicación del Z-Score dinámico y convergencia hacia la media móvil ($\mu=0$). El área sombreada denota el periodo de \textit{warmup} (calentamiento). Fuente: Elaboración propia.}
+    \label{fig:zscore_series}
+\end{figure}
+
+Finalmente, la Figura \ref{fig:zscore_dist} confirma que la variable transformada presenta propiedades distribucionales adecuadas para el aprendizaje no supervisado, concentrando la mayor densidad de observaciones en torno al origen y facilitando la separación topológica de observaciones extremas.
+
+En este caso, el estadístico representado corresponde específicamente al Z-Score dinámico de la volatilidad a 21 días (\texttt{Volatilidad\_21d\_Z}) del activo NVDA, tal y como se define en la Figura \ref{fig:zscore_series}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.65\textwidth]{media/zscore_distribucion.png}
+    \caption{Distribución de probabilidad empírica del estadístico Z para el activo NVDA. Fuente: Elaboración propia. }
+    \label{fig:zscore_dist}
+\end{figure}
+
+
+\subsection{Filtrado Topológico de Anomalías: DBSCAN}
+\label{sec:dbscan_logic}
+
+Una vez estandarizadas las variables mediante el estadístico \textit{Rolling Z-Score} (Sección \ref{sec:rolling_zscore}), se tiene una matriz de datos estacionaria donde las distancias Euclídeas entre vectores de activos que son directamente comparables al encontrarse las variables expresadas en una escala homogénea. El siguiente paso en la arquitectura del sistema consiste en la identificación y filtrado del ruido mediante el algoritmo de agrupamiento basado en densidad, DBSCAN.
+%\cite{ester1996}.
+
+\subsubsection{Limitaciones del Análisis Longitudinal y Propuesta Cross-Sectional}
+
+En la literatura convencional de \textit{Machine Learning}, el filtrado de valores atípicos suele ejecutarse de forma longitudinal, alimentando al algoritmo con la matriz que contiene la serie temporal completa. Sin embargo, en el mundo de las finanzas, este enfoque contiene un defecto a destacar: la incapacidad de distinguir entre una anomalía local y un cambio de régimen de mercado. 
+
+Si el algoritmo DBSCAN procesara de manera conjunta la década completa de datos financieros, detectaría los periodos de pánico extremo (como el colapso de los mercados en marzo de 2020 a raíz del COVID) como una disonancia global. En consecuencia, el algoritmo eliminaría años enteros de observaciones, introduciendo un grave sesgo de supervivencia en los datos.
+%\cite{lopezdeprado2018}.
+
+Para evitar esta limitación y mantener la información que corresponde a las colas pesadas de la distribución, el presente estudio propone un algoritmo (\textit{Cross-Sectional}) que se implementa mediante un bucle secuencial (\texttt{for fecha in sorted(fechas)}), de forma que los datos se analizan día a día de manera independiente. 
+
+Matemáticamente, para cada instante de cotización $t$, se define una matriz de características $X_t \in \mathbb{R}^{N_t \times d}$, donde $N_t$ representa el número de activos disponibles en esa sesión y $d$ es el número de variables consideradas.
+En este esquema, el cálculo de distancias se realiza únicamente entre activos dentro del mismo día, por lo que el modelo analiza cómo se comporta cada activo en relación con el resto en esa misma sesión. Esto permite identificar aquellos activos que se alejan del comportamiento general del mercado en un día concreto.
+
+En el caso de un evento de mercado extremo, como una caída generalizada, todos los activos tienden a moverse de forma similar entre sí, por lo que sus relaciones relativas se mantienen estables. De este modo, el sistema no interpreta estas situaciones como ruido, sino como un comportamiento válido del mercado bajo ese contexto.
+
+\subsubsection{Calibración Dinámica de Hiperparámetros}
+
+El rendimiento del algoritmo DBSCAN depende de forma crítica de la elección de sus hiperparámetros, en particular el radio de vecindad ($\epsilon$) y el número mínimo de puntos por grupo ($min\_samples$), también conocido como umbral mínimo de densidad. En el contexto de mercados financieros, donde la variabilidad entre activos cambia de una sesión a otra, el uso de parámetros fijos no resulta adecuado, ya que puede provocar tanto una eliminación excesiva de observaciones en periodos de alta volatilidad como una baja capacidad de detección en fases de mercado más estables.
+
+Para resolver este problema, se ha diseñado una estrategia de calibración dinámica basada en los propios datos del sistema, de forma que los hiperparámetros se ajustan automáticamente en cada instante $t$:
+
+\begin{itemize}
+    \item \textbf{Imposición de cuórum topológico ($min\_samples$):}
+    Para evitar que pequeños clústeres marginales o errores puntuales en los precios sean interpretados como estructuras válidas, se exige un tamaño mínimo de grupo. Este umbral se fija de forma proporcional al universo de activos disponible en cada sesión, utilizando el $10\%$ del total, con un límite inferior que garantiza que siempre sea posible formar al menos un grupo significativo:
+    \begin{equation}
+        min\_samples_t = \max \left( 3, \lceil 0.10 \times N_t \rceil \right)
+    \label{eq:minsamples}
+    \end{equation}
+
+    \item \textbf{Cálculo adaptativo del radio de vecindad ($\epsilon_t$):}
+    En lugar de fijar un hiperparámetro de distancia fijo, el modelo ajusta este parámetro en función de la distribución diaria de distancias entre activos. %Basado en la formulación original de \citeonline{ester1996}.
+    Se calcula la distancia euclidiana de cada activo $i \in X_t$ a su $k$-ésimo vecino más cercano, fijando $k=3$. Sea $D_{i,3}$ dicha distancia, el hiperparámetro $\epsilon_t$ se calibra dinámicamente sobre el \textbf{percentil 90} de esta distribución de distancias, lo que permite adaptar el radio a las condiciones de dispersión del mercado en cada sesión.
+
+    Adicionalmente, para prevenir que el algoritmo se vuelva hiper-restrictivo en espacios de menor dimensionalidad, se ha introducido un límite inferior (\textit{suelo adaptativo}) proporcional a la raíz cuadrada de la dimensión del espacio de características:
+    
+    \begin{equation}
+    \epsilon_t = \max \left( 0.2 \cdot \sqrt{d},\; P_{90} \left( \{ D_{i,3} \}_{i=1}^{N_t} \right) \right)
+    \label{eq:eps_dinamico}
+    \end{equation}
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{media/k_distance_plot.png}
+    \caption{Obtención de $\epsilon_t$, aplicada a la sesión del 11 de marzo de 2020. El gráfico muestra el ordenamiento de las distancias al tercer vecino. El percentil 90 actúa como el umbral de densidad para la discriminación de ruido. Fuente: Elaboración propia.}
+    \label{fig:k_distance}
+\end{figure}
+
+Esta formulación permite que el radio de análisis se adapte al estado del mercado en cada sesión. En periodos de alta volatilidad, el umbral de distancia se amplía, lo que evita que movimientos generalizados del mercado sean interpretados como anomalías. En cambio, en fases más estables, el criterio se vuelve más restrictivo, pudiendo activar el límite inferior de seguridad cuando la dispersión es excesivamente baja, como se ilustra en la Figura \ref{fig:eps_evolution}. Como resultado, el sistema no trata los cambios globales del mercado como ruido, sino que se centra en identificar únicamente aquellos activos que se separan de forma significativa del comportamiento general en cada sesión.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{media/epsilon_evolution.png}
+    \caption{Evolución temporal del radio de vecindad adaptativo $\epsilon_t$. La línea discontinua marca el límite inferior conservador. Fuente: Elaboración propia.}
+    \label{fig:eps_evolution}
+\end{figure}
+
+
+\subsection{Resultados Empíricos del Filtrado de Anomalías}
+\label{sec:resultados_purga}
+
+La implementación del modelo topológico descrito en la sección anterior se ha ejecutado sobre el conjunto de variables previamente estandarizado. El procedimiento recorre el dataset de forma secuencial, analizando cada fecha de manera independiente. Para cada instante $t$, el algoritmo asigna a cada activo una etiqueta en función de su comportamiento relativo dentro de esa sesión.
+Aquellos activos que no cumplen simultáneamente el tamaño mínimo de grupo definido en la Ecuación \ref{eq:minsamples} ni el criterio de proximidad establecido por el radio adaptativo de la Ecuación \ref{eq:eps_dinamico} son clasificados automáticamente como ruido, recibiendo la etiqueta $-1$.
+
+En la Tabla \ref{tab:resultados_dbscan} se exponen las métricas globales resultantes de la ejecución del proceso de filtrado.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|c|}
+\hline
+\textbf{Métricas (DBSCAN Cross-Sectional)} & \textbf{Valor} \\ \hline
+Total de sesiones procesadas ($T$) & 2.415 \\ \hline
+Volumen total de observaciones evaluadas ($N \times T$) & 70.758 \\ \hline
+Anomalías identificadas y purgadas (Etiqueta $-1$) & 2.365 \\ \hline
+\textbf{Porcentaje de observaciones eliminadas} & \textbf{3,34 \%} \\ \hline
+\end{tabular}
+\caption{Estadísticas del filtrado de ruido topológico generados por DBSCAN. }
+\label{tab:resultados_dbscan}
+\end{table}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{media/anomaly_timeline.png}
+    \caption{ Distribución temporal del filtrado de ruido. Fuente: Elaboración propia.}
+    \label{fig:anomaly_timeline}
+\end{figure}
+
+La proporción de datos eliminados se mantiene en niveles moderados a lo largo de todo el periodo analizado. Este resultado es coherente con el comportamiento esperado del sistema y respalda la adaptabilidad del parámetro $\epsilon_t$. El objetivo del modelo no es reducir de forma agresiva el conjunto de datos, sino eliminar únicamente observaciones extremas que corresponden a ruido idiosincrático, preservando la estructura general del mercado representada por la mayoría de los activos.
+
+\subsubsection{Validación del modelo en entornos de alta volatilidad}
+
+La validez de un modelo de \textit{Machine Learning} aplicado a finanzas no se demuestra únicamente mediante propiedades matemáticas, sino también comprobando que sus resultados sean coherentes con situaciones reales observadas en el mercado. Un caso especialmente relevante para evaluar la robustez del sistema es el colapso financiero de marzo de 2020.
+
+Durante la sesión del 16 de marzo de 2020, el índice VIX alcanzó niveles históricamente elevados y los principales índices bursátiles registraron caídas superiores al 11\%. Un enfoque tradicional basado en el análisis longitudinal podría haber interpretado este episodio como una anomalía estructural del conjunto de datos. Sin embargo, el enfoque \textit{Cross-Sectional} analiza cada sesión de forma independiente, identificando que la caída generalizada responde a un comportamiento conjunto del mercado (\textit{riesgo sistémico}) y no a errores aislados en los datos.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.85\textwidth]{media/pca_scatter_covid.png}
+    \caption{Visualización topológica del colapso del 16 de marzo de 2020 mediante proyección PCA. La cohesión del clúster principal refleja un movimiento generalizado del mercado ante un shock externo. Fuente: Elaboración propia.}
+    \label{fig:pca_covid}
+\end{figure}
+
+Como puede observarse en la Figura \ref{fig:pca_covid}, el algoritmo no eliminó ningún activo durante esa sesión. A pesar de las fuertes caídas registradas, los valores mantuvieron un comportamiento relativamente homogéneo entre sí dentro del espacio de características. No obstante, conviene realizar dos precisiones técnicas sobre esta representación:
+
+\begin{itemize}
+    \item Efecto de la reducción de dimensionalidad: Aunque en la proyección bidimensional obtenida mediante PCA algunos activos puedan aparecer en posiciones periféricas, esto responde en muchos casos a una limitación propia de la representación visual. Al reducir un espacio multidimensional a dos componentes principales, parte de la información se pierde. Sin embargo, en el espacio original, dichos activos continúan situándose dentro de las distancias permitidas por el radio $\epsilon_t$ calculado por el modelo.
+
+    \item Adaptabilidad del radio de vecindad: En días de volatilidad elevada, la dispersión natural entre observaciones aumenta. Gracias al cálculo dinámico del percentil 90 de distancias, el umbral $\epsilon_t$ se amplía automáticamente, permitiendo que el clúster principal incorpore el movimiento conjunto del mercado sin clasificar erróneamente activos válidos como ruido.
+\end{itemize}
+
+En definitiva, este sistema de filtrado actúa como una herramienta de depuración inteligente. Permite eliminar ruido sin perder la información relevante asociada a los grandes movimientos del mercado, garantizando que la matriz resultante ($\tilde{X}$) conserve una estructura limpia. Este paso facilita posteriormente que el algoritmo K-Means converja de forma más estable y pueda identificar los distintos regímenes de mercado en las fases posteriores del estudio.
+
 \section{Referencias
 bibliográficas}\label{referencias-bibliogruxe1ficas}
 
