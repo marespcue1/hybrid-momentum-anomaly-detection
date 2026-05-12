@@ -1171,6 +1171,183 @@ Como puede observarse en la Figura \ref{fig:pca_covid}, el algoritmo no eliminó
 
 En definitiva, este sistema de filtrado actúa como una herramienta de depuración inteligente. Permite eliminar ruido sin perder la información relevante asociada a los grandes movimientos del mercado, garantizando que la matriz resultante ($\tilde{X}$) conserve una estructura limpia. Este paso facilita posteriormente que el algoritmo K-Means converja de forma más estable y pueda identificar los distintos regímenes de mercado en las fases posteriores del estudio.
 
+\subsection{Segmentación de Regímenes de Mercado mediante K-Means}
+\label{sec:kmeans}
+
+Una vez depurado el conjunto de datos mediante el filtrado topológico basado en DBSCAN, el siguiente paso del sistema consiste en identificar estructuras internas dentro del mercado utilizando técnicas de aprendizaje no supervisado basadas en partición.
+
+Con este objetivo, se ha aplicado el algoritmo K-Means sobre el conjunto de observaciones previamente filtrado. La finalidad de esta etapa no es predecir directamente precios futuros, sino identificar regímenes de comportamiento financiero homogéneos dentro del espacio de características construido en las fases anteriores.
+
+El algoritmo K-Means se aplica sobre un espacio previamente estandarizado mediante Rolling Z-Score y depurado de ruido mediante DBSCAN, lo que garantiza la comparabilidad geométrica entre observaciones y la validez del uso de distancias euclídeas.
+
+\subsubsection{Fundamentos del algoritmo K-Means}
+
+K-Means es un algoritmo de clustering no supervisado que particiona un conjunto de observaciones en $K$ grupos minimizando la distancia intra-cluster \parencite{macqueen1967}. Formalmente, el objetivo del algoritmo es minimizar la función:
+
+\begin{equation}
+J = \sum_{k=1}^{K} \sum_{x_i \in C_k} ||x_i - \mu_k||^2
+\end{equation}
+
+donde $\mu_k$ representa el centroide del cluster $C_k$.
+
+En el contexto financiero, esta partición permite agrupar observaciones con perfiles similares de momentum, volatilidad e indicadores técnicos.
+
+\paragraph{Inicialización mediante K-Means++}
+
+Para mejorar la estabilidad del algoritmo y evitar soluciones subóptimas asociadas a inicializaciones aleatorias, se utiliza la variante K-Means++. Este método selecciona los centroides iniciales de forma probabilística, favoreciendo puntos alejados entre sí.
+
+Este enfoque mejora la convergencia del algoritmo, reduce la varianza entre ejecuciones y resulta especialmente relevante en espacios financieros de alta dimensionalidad, donde la sensibilidad a la inicialización puede afectar significativamente a la solución final.
+
+\subsubsection{Selección del espacio de características}
+
+El modelo se construye sobre un conjunto de variables financieras derivadas, obtenidas a partir de transformaciones sobre precios, retornos e indicadores técnicos, con el objetivo de capturar distintas dimensiones del comportamiento del mercado.
+
+Estas variables no se utilizan en su forma original, sino que han sido previamente transformadas mediante el estadístico Rolling Z-Score (Sección \ref{sec:rolling_zscore}), lo que garantiza su comparabilidad temporal y transversal entre activos.
+
+De forma conceptual, el espacio de características puede agruparse en cuatro bloques principales:
+
+\begin{itemize}
+\item \textbf{Momentum multiescala}: captura la dinámica direccional del precio en distintos horizontes temporales (largo, medio y corto plazo).
+\item \textbf{Indicadores técnicos}: variables derivadas de análisis técnico clásico como RSI y MACD, utilizadas para medir sobrecompra, sobreventa y cambios de tendencia.
+\item \textbf{Volatilidad}: medidas de dispersión del precio que reflejan el nivel de incertidumbre del mercado.
+\item \textbf{Actividad relativa}: variables relacionadas con el volumen negociado y su comportamiento respecto a su distribución histórica.
+\end{itemize}
+
+En este contexto, el conjunto final de variables utilizado en el modelo se define como:
+
+\begin{itemize}
+\item ALR12M\_SKIP\_Z (momentum largo plazo)
+\item ALR6M\_SKIP\_Z (momentum medio plazo)
+\item ALR1M\_SKIP\_Z (momentum corto plazo)
+\item MACD\_Hist\_Z (oscilador de tendencia)
+\item RSI\_14\_Z (fuerza relativa del precio)
+\item Volatilidad\_252d\_Z (volatilidad anualizada)
+\item ATR\_14\_Z (rango verdadero medio)
+\item Vol\_Relativo\_Z (actividad de mercado relativa)
+\end{itemize}
+
+\subsubsection{Selección del número óptimo de clusters}
+
+La elección del número de clusters $K$ se ha abordado mediante dos metodologías complementarias:
+
+\begin{itemize}
+\item Método del codo (Elbow Method).
+\item Coeficiente de silueta (Silhouette Score).
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{media/elbow_method.png}
+    \caption{Método del codo para la selección del número óptimo de clusters. Fuente: elaboración propia.}
+    \label{fig:elbow_kmeans}
+\end{figure}
+
+El método del codo muestra una disminución progresiva de la inercia, observándose una desaceleración del beneficio marginal a partir de valores intermedios de $K$.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=\textwidth]{media/silhouette_score.png}
+    \caption{Evolución del Silhouette Score en función del número de clusters. Fuente: elaboración propia.}
+    \label{fig:silhouette_kmeans}
+\end{figure}
+
+El coeficiente de silueta presenta una estabilización a partir de $K=5$, lo que sugiere que incrementos adicionales en la complejidad del modelo no aportan mejoras significativas en la separación de clusters.
+
+Aunque valores inferiores de $K$ presentan métricas ligeramente superiores, estos generan una segmentación excesivamente agregada desde el punto de vista financiero, reduciendo la interpretabilidad económica del sistema.
+
+En consecuencia, se selecciona $K=5$ como compromiso entre estabilidad estadística e interpretabilidad económica.
+
+\subsubsection{Análisis comparativo de estructuras de clustering}
+
+Se analiza la evolución de la estructura de clusters para distintos valores de $K$ con el objetivo de evaluar la estabilidad de las particiones.
+
+\begin{table}[H]
+\centering
+\begin{tabular}{lcc}
+\toprule
+\textbf{K} & \textbf{Distribución} & \textbf{Interpretación} \\
+\midrule
+3 & Muy agregada & Baja granularidad, pérdida de detalle \\
+4 & Intermedia & Mejora interpretativa \\
+5 & Óptima & Equilibrio entre detalle y estabilidad \\
+6 & Sobreespecificación & Fragmentación de regímenes \\
+\bottomrule
+\end{tabular}
+\caption{Comparativa de estructuras de clustering para distintos valores de K.}
+\label{tab:kmeans_distribution}
+\end{table}
+
+\subsubsection{Perfil cuantitativo de los clusters}
+
+A continuación se presenta el perfil promedio de los clusters obtenidos para $K=5$, que constituye la configuración final del modelo.
+
+Cabe destacar que todas las variables utilizadas en el clustering corresponden a transformaciones estandarizadas mediante Rolling Z-Score, por lo que los valores reflejan desviaciones respecto a su media histórica y no niveles absolutos de los indicadores.
+
+\begin{table}[H]
+\centering
+\small
+\begin{tabular}{lrrrrrrr}
+\toprule
+Cluster & Momentum L/P & Momentum C/P & RSI & MACD & Volatilidad & ATR & Vol Relativo \\
+\midrule
+0 & -0.92 & -0.84 & -0.65 & -0.22 & 0.66 & 0.35 & -0.08 \\
+1 & -1.48 & -1.32 & 0.75 & 0.95 & 1.18 & 0.35 & -0.27 \\
+2 & 0.56 & 0.42 & 0.96 & 0.56 & -0.82 & -0.23 & 0.01 \\
+3 & 1.09 & 0.88 & -0.51 & -0.54 & -0.77 & 0.16 & -0.18 \\
+4 & 0.34 & 0.42 & -1.65 & -2.00 & 0.69 & 2.57 & 0.92 \\
+\bottomrule
+\end{tabular}
+\caption{Perfil promedio de los clusters obtenidos para $K=5$.}
+\label{tab:cluster_profiles}
+\end{table}
+
+\subsubsection{Interpretación económica de los clusters}
+
+A partir de los centroides obtenidos, se procede a la interpretación económica de cada cluster en términos de régimen de mercado.
+
+\paragraph{Cluster 0 — Régimen bajista moderado}
+
+Este cluster se caracteriza por valores negativos en momentum de largo y medio plazo, junto con niveles bajos de indicadores técnicos como RSI y MACD. La volatilidad se sitúa en niveles moderados.
+
+Representa fases de mercado bajista sostenido sin episodios extremos de pánico o capitulación.
+
+\paragraph{Cluster 1 — Rebote en mercado bajista}
+
+Se observa un patrón mixto, con momentum negativo en horizontes largos, pero recuperación en el corto plazo reflejada en MACD y RSI positivos. La volatilidad es elevada.
+
+Este cluster corresponde a rebotes técnicos dentro de tendencias bajistas más amplias.
+
+\paragraph{Cluster 2 — Régimen alcista estable}
+
+Presenta momentum positivo en todos los horizontes, acompañado de indicadores técnicos favorables y baja volatilidad.
+
+Representa un entorno de mercado alcista estable y continuo.
+
+\paragraph{Cluster 3 — Pullback en tendencia alcista}
+
+Se observa fortaleza en el largo plazo, pero debilidad en el corto plazo. Esto sugiere correcciones temporales dentro de tendencias alcistas consolidadas.
+
+La volatilidad se mantiene contenida, lo que refuerza la interpretación de consolidación.
+
+\paragraph{Cluster 4 — Régimen de estrés o capitulación}
+
+Este cluster presenta caídas extremas en momentum de corto plazo, valores muy negativos en MACD y RSI, y niveles elevados de volatilidad y ATR.
+
+Representa episodios de estrés extremo de mercado o movimientos de capitulación.
+
+\subsubsection{Conclusiones del modelo K-Means}
+
+Los resultados muestran que el algoritmo K-Means permite transformar el espacio continuo de variables financieras en una representación discreta de regímenes de mercado interpretables.
+
+La arquitectura final del sistema combina dos etapas complementarias:
+
+\begin{itemize}
+    \item DBSCAN, encargado de la eliminación de ruido y observaciones anómalas.
+    \item K-Means++, encargado de la estructuración del espacio en regímenes de mercado.
+\end{itemize}
+
+La configuración $K=5$ se selecciona como solución final por proporcionar un equilibrio adecuado entre interpretabilidad económica y estabilidad estadística.
+
 \section{Referencias
 bibliográficas}\label{referencias-bibliogruxe1ficas}
 
