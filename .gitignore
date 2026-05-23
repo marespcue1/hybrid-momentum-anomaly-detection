@@ -5,6 +5,9 @@ data/processed/
 # csv
 *.csv
 
+#.png
+*.png
+
 # Python cache
 __pycache__/
 *.py[cod]
