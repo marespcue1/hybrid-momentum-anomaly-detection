@@ -1315,7 +1315,7 @@ Esta transformación constituye un requisito fundamental en finanzas cuantitativ
 
 A pesar de su utilidad, la normalización tradicional aplicada directamente sobre series temporales introduce un problema metodológico crítico conocido como sesgo de información futura. 
 
-Si se calculase la media y la varianza utilizando toda la serie histórica para normalizar un dato del pasado, el modelo estaría incorporando implícitamente información de eventos posteriores (como la crisis del COVID). Esto introduce una fuga de información que invalidaría el análisis, ya que el sistema estaría utilizando datos que no eran conocidos por el mercado en el instante $t$.
+Si se calculase la media y la varianza utilizando toda la serie histórica global para normalizar un dato en un instante $t$ del pasado (por ejemplo, en el año 2018), el modelo estaría incorporando información de eventos que para ese instante aún no habían ocurrido (como la extrema volatilidad introducida por la crisis del COVID-19 en 2020). Esto introduce una fuga de información que invalidaría el análisis, ya que el modelo estaría utilizando parámetros afectados por datos que no eran conocidos por el mercado en el instante $t$.
 
 \subsubsection{Implementación del \gls{rollingzscore} dinámico}
 
@@ -1378,7 +1378,7 @@ El rendimiento del algoritmo \gls{dbscan} depende de forma crítica de la elecci
 Para resolver este problema, se ha diseñado una estrategia de calibración dinámica basada en los propios datos del sistema, de forma que los hiperparámetros se ajustan automáticamente en cada instante $t$:
 
 \begin{itemize}
-    \item \textbf{Imposición de cuórum topológico ($min\_samples$):}
+    \item \textbf{Requisito de densidad mínima ($min\_samples$):}
     Para evitar que pequeños clústeres marginales o errores puntuales en los precios sean interpretados como estructuras válidas, se exige un tamaño mínimo de grupo. Este umbral se fija de forma proporcional al universo de activos disponible en cada sesión, utilizando el $10\%$ del total, con un límite inferior que garantiza que siempre sea posible formar al menos un grupo significativo:
     \begin{equation}
         min\_samples_t = \max \left( 3, \lceil 0.10 \times N_t \rceil \right)

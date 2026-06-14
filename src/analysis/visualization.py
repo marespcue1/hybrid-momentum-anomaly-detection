@@ -756,10 +756,7 @@ def plot_hyperparameter_distribution(
                 f"  [AVISO] '{clave}': conteos({suma}) + NaN({nan_count}) ≠ n_elite({n_elite})."
             )
 
-        if clave == "active_cluster":
-            colores_barras = [COLORES_CLUSTER.get(int(k), "#888") for k in conteos.index]
-        else:
-            colores_barras = "#457b9d"
+        colores_barras = "#457b9d"
 
         barras = ax.bar(range(len(conteos)), conteos.values,
                         color=colores_barras, alpha=0.85, edgecolor="white")
@@ -851,7 +848,7 @@ def plot_degradation_bar(
         return
 
     # Limitar a un número manejable de barras para legibilidad
-    MAX_BARS = 50
+    MAX_BARS = 30
     n_total_validos = len(valido)
     if n_total_validos > MAX_BARS:
         print(f"[visualization] Sección 6 — {n_total_validos} configs válidas; mostrando top/bottom {MAX_BARS//2} por Sharpe_Train.")
@@ -993,7 +990,11 @@ def plot_oos_parameter_sensitivity(
     curvas_por_pos: dict[int, pd.Series] = {}
     failed_indices: list[int] = []
 
+    prog_chunk = max(1, n_elite // 10)
     for pos, fila in enumerate(elite_reset.itertuples(index=False)):
+        if (pos + 1) % prog_chunk == 0 or pos == 0:
+            pct = (pos + 1) / n_elite * 100
+            print(f"  [progreso] {pct:.0f}% ({pos+1}/{n_elite})")
         pf_test = _run_engine_for_config(fila, (FECHA_TEST_START, test_fin))
         if pf_test.empty:
             failed_indices.append(pos)
