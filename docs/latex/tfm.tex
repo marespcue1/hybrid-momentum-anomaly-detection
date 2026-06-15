@@ -1254,6 +1254,19 @@ estricta debido a la presencia de colas pesadas y eventos extremos.
 \label{fig:distr_ret}
 \end{figure}
 
+No obstante, la presencia de colas pesadas no resulta fácilmente apreciable en el histograma de la Figura~\ref{fig:distr_ret}, debido a que la elevada concentración de observaciones alrededor de cero tiende a ocultar visualmente el comportamiento de los valores extremos. Por este motivo, se complementó el análisis mediante un gráfico Q-Q frente a una distribución normal teórica, mostrado en la Figura~\ref{fig:distr_QQ}.
+
+Este tipo de representación permite comparar los cuantiles observados de los retornos con los cuantiles esperados bajo una distribución normal. Si los retornos siguieran una distribución gaussiana, los puntos se situarían aproximadamente sobre la recta de referencia. Sin embargo, se observan desviaciones significativas en los extremos de la distribución, lo que indica una frecuencia de eventos extremos superior a la esperada bajo hipótesis de normalidad.
+
+Esta evidencia visual resulta consistente con los resultados estadísticos obtenidos previamente, en particular con los valores elevados de curtosis observados en varios activos financieros. En conjunto, estos resultados confirman que los retornos presentan colas pesadas y un comportamiento alejado de la distribución normal, una característica ampliamente documentada en la literatura financiera \parencite{haas2009financial}.
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=\textwidth]{media/graficoQQ.png}
+\caption{Histograma de distribución de retornos de todos los tickers. Fuente: elaboración propia.}
+\label{fig:distr_QQ}
+\end{figure}
+
 Finalmente, se construyó una matriz de correlación entre activos 
 financieros en la Figura~\ref{fig:corr_matrix}. La correlación mide 
 el grado de relación lineal entre dos variables y constituye una 
@@ -1281,13 +1294,13 @@ Estas estructuras de dependencia resultan especialmente relevantes para las fase
 
 El análisis exploratorio realizado permitió validar la calidad y consistencia del conjunto de datos, además de identificar múltiples propiedades relevantes del mercado financiero analizado.
 
-Entre las principales conclusiones obtenidas destacan:
+Entre las principales observaciones derivadas de las Figuras~\ref{fig:preci_norm}, \ref{fig:preci_norm_sep}, \ref{fig:distr_ret}, \ref{fig:distr_QQ} y \ref{fig:corr_matrix} destacan:
 
 \begin{itemize}
-\item La elevada heterogeneidad entre activos financieros.
-\item La existencia de volatilidad extrema y eventos no gaussianos.
-\item La presencia de estructuras de correlación claramente diferenciadas.
-\item La fuerte concentración del crecimiento en determinados sectores tecnológicos.
+\item Las Figuras~\ref{fig:preci_norm} y \ref{fig:preci_norm_sep} muestran una elevada heterogeneidad en la evolución de los activos financieros, observándose diferencias significativas en los niveles de crecimiento acumulado entre sectores y regiones geográficas.
+\item Las Figuras~\ref{fig:distr_ret} y \ref{fig:distr_QQ} evidencian la presencia de distribuciones de retornos con colas pronunciadas, compatibles con episodios de volatilidad elevada y eventos extremos que se apartan de los supuestos de normalidad.
+\item La Figura~\ref{fig:corr_matrix} revela la existencia de estructuras de correlación diferenciadas entre grupos de activos, identificándose relaciones más intensas entre activos tecnológicos y una menor dependencia de activos refugio y renta fija.
+\item Las Figuras~\ref{fig:preci_norm} y \ref{fig:preci_norm_sep} muestran una fuerte concentración del crecimiento en determinados activos y sectores tecnológicos, destacando especialmente NVIDIA, Tesla y el ETF de semiconductores (\texttt{SMH}) durante el periodo analizado.
 \end{itemize}
 
 Estas observaciones justifican la posterior construcción de variables financieras avanzadas y la aplicación de técnicas de \gls{clustering} y detección de anomalías sobre el conjunto de datos.
