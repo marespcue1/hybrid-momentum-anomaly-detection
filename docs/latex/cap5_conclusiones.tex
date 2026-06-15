@@ -1,0 +1,200 @@
+\newpage
+\section{Conclusiones y trabajo futuro}
+\label{sec:conclusiones}
+
+\subsection{Conclusiones}
+\label{sec:conclusiones_generales}
+
+El presente Trabajo Fin de Máster ha abordado el problema de la 
+vulnerabilidad de las estrategias de momentum frente a valores 
+atípicos y cambios bruscos de régimen en los mercados financieros. 
+La revisión del estado del arte puso de manifiesto que los algoritmos 
+de partición tradicionales, como K-Means, presentan una elevada 
+sensibilidad a las observaciones anómalas, lo que puede distorsionar 
+la clasificación del universo de activos y degradar el rendimiento de 
+las carteras cuantitativas. Para mitigar esta limitación, se ha 
+propuesto, implementado y evaluado una arquitectura híbrida que 
+combina DBSCAN como filtro topológico previo con K-Means como 
+mecanismo de segmentación en regímenes de mercado.
+
+A continuación, se presentan las conclusiones del trabajo, organizadas 
+en correspondencia con los objetivos específicos planteados en el 
+Capítulo~\ref{metodologuxeda-del-trabajo}:
+
+\begin{enumerate}
+
+    \item \textbf{Recopilación de datos históricos.} Se ha construido 
+    un conjunto de datos compuesto por 30 activos (acciones de los 
+    mercados español y estadounidense, así como ETF sectoriales, 
+    factoriales y de renta fija) para el periodo comprendido entre 
+    enero de 2017 y mayo de 2026, utilizando la librería 
+    \texttt{yfinance} como fuente de datos. La cobertura temporal y la 
+    diversidad de activos han proporcionado una base adecuada para el 
+    análisis posterior.
+
+    \item \textbf{Análisis exploratorio de datos.} El análisis 
+    descriptivo y visual de las series temporales confirmó la presencia 
+    de distribuciones de retornos con colas pesadas, eventos extremos 
+    concentrados en periodos de crisis como marzo de 2020 y estructuras 
+    de correlación diferenciadas entre sectores. Estos hallazgos 
+    justificaron la necesidad de un enfoque robusto frente a valores 
+    atípicos para el modelado posterior.
+
+    \item \textbf{Preprocesamiento y limpieza.} Se aplicó un proceso de 
+    validación estructural que incluyó la detección y eliminación de 
+    valores nulos, la reorganización cronológica de las series y la 
+    verificación de la cobertura mínima de cada activo. El conjunto de 
+    datos resultante presentó una estructura homogénea y consistente, 
+    apta para las etapas de modelado.
+
+    \item \textbf{Transformación de series temporales en variables 
+    relevantes.} Se implementó un proceso de estandarización dinámica 
+    basado en el estadístico \textit{rolling Z-score} con ventana móvil 
+    de 252 sesiones, que elimina el sesgo de información futura y 
+    garantiza la comparabilidad geométrica entre variables financieras 
+    de distinta naturaleza. Este paso resultó crítico para el correcto 
+    funcionamiento de los algoritmos de agrupamiento, que se 
+    fundamentan en métricas de distancia euclídea.
+
+    \item \textbf{Implementación de la arquitectura secuencial DBSCAN + 
+    K-Means.} Se desarrolló un sistema en Python que aplica DBSCAN con 
+    calibración dinámica de hiperparámetros en cada sesión de mercado, 
+    seguido de K-Means++ sobre el espacio de datos depurado. La 
+    arquitectura en dos etapas quedó reflejada en los diagramas de 
+    flujo presentados y constituye la contribución central del trabajo.
+
+    \item \textbf{Aplicación de DBSCAN para detección de anomalías.} 
+    El filtro DBSCAN identificó y eliminó un 3,34\% de las 
+    observaciones totales como ruido, una proporción moderada que 
+    respalda la capacidad del sistema para eliminar únicamente valores 
+    atípicos sin descartar información estructural del mercado. La 
+    validación específica sobre la sesión del 16 de marzo de 2020 
+    confirmó que el algoritmo no eliminó ningún activo durante un 
+    evento de pánico generalizado, demostrando su capacidad para 
+    distinguir entre riesgo sistémico y ruido idiosincrático.
+
+    \item \textbf{Aplicación de K-Means sobre datos depurados.} El 
+    algoritmo K-Means++ se aplicó sobre el espacio de características 
+    ya filtrado, utilizando una configuración de $K=5$ clústeres 
+    seleccionada mediante los métodos del codo y del coeficiente de 
+    silueta. La inicialización K-Means++ garantizó la estabilidad de 
+    las particiones obtenidas.
+
+    \item \textbf{Análisis e interpretación de los clústeres.} Los 
+    cinco regímenes de mercado identificados recibieron una 
+    interpretación económica clara: régimen bajista moderado, rebote en 
+    mercado bajista, régimen alcista estable, retroceso en tendencia 
+    alcista y régimen de estrés o capitulación. El perfil cuantitativo 
+    de cada clúster, basado en los centroides de las variables 
+    estandarizadas, resultó coherente con la caracterización financiera 
+    esperada para cada régimen.
+
+    \item \textbf{Integración con estrategia de momentum como marco de 
+    evaluación.} Se diseñó un marco experimental que vincula la 
+    segmentación en regímenes de mercado con una estrategia de 
+    momentum, utilizando la señal del clúster activo para filtrar el 
+    universo de activos y construir carteras en cada periodo de 
+    rebalanceo. Este diseño permitió cerrar el ciclo completo desde los 
+    datos brutos hasta las señales de inversión.
+
+    \item \textbf{Evaluación del rendimiento con datos no vistos.} Se 
+    implementó un protocolo de validación con estricta separación 
+    temporal entre los periodos de entrenamiento y prueba, evaluando 
+    12.800 combinaciones de hiperparámetros mediante búsqueda en malla. 
+    Los resultados evidenciaron la presencia de sobreajuste, pero 
+    también confirmaron la capacidad de generalización del sistema: el 
+    55,9\% de las configuraciones mantuvieron un ratio de Sharpe 
+    positivo en la ventana de prueba. La mejor configuración en test 
+    alcanzó un Sharpe de 2,113, triplicando el rendimiento ajustado al 
+    riesgo del índice de referencia SPY, con una caída máxima del 
+    4,05\% frente al 12,10\% del índice.
+
+    \item \textbf{Validación de la utilidad del modelo.} El análisis de 
+    robustez mediante bosque aleatorio (\textit{random forest}) reveló 
+    que los parámetros con 
+    mayor impacto en el rendimiento fuera de muestra son el tamaño de 
+    la cartera, el tamaño mínimo para permanecer invertido y la 
+    selección del clúster de mercado, que conjuntamente explican más 
+    del 70\% de la varianza. La práctica irrelevancia del parámetro de 
+    ventana de anomalías sugiere que la presencia del filtro DBSCAN es 
+    estructuralmente beneficiosa con independencia de su configuración 
+    concreta, lo que valida la arquitectura híbrida propuesta.
+
+\end{enumerate}
+
+En conjunto, el trabajo ha cumplido el objetivo general de diseñar, 
+implementar y evaluar una arquitectura híbrida que mejora la robustez 
+de las estrategias de momentum mediante el filtrado previo de anomalías. 
+Los resultados empíricos demuestran que la combinación secuencial de 
+DBSCAN y K-Means constituye una aproximación viable y efectiva para la 
+gestión cuantitativa de carteras en entornos de mercado reales, 
+caracterizados por ruido, no estacionariedad y eventos extremos.
+
+\subsection{Trabajo futuro}
+\label{sec:trabajo_futuro}
+
+A la vista de los resultados obtenidos y de las limitaciones 
+identificadas durante el desarrollo del presente trabajo, se proponen 
+las siguientes líneas de investigación futura:
+
+\begin{itemize}
+
+    \item \textbf{Comparación explícita con el modelo base K-Means 
+    aislado.} Aunque el diseño experimental original contemplaba tres 
+    escenarios de inversión (índice de referencia, K-Means aislado y 
+    modelo híbrido), la evaluación se ha centrado en la comparación con 
+    el índice SPY. Una extensión inmediata consistiría en ejecutar el 
+    mismo protocolo de backtesting sobre un modelo que utilice K-Means 
+    sin filtro DBSCAN previo, con el fin de cuantificar de forma 
+    precisa la mejora atribuible exclusivamente al filtrado de 
+    anomalías y verificar la hipótesis de partida del trabajo.
+
+    \item \textbf{Ampliación del universo de activos.} El conjunto de 
+    datos utilizado, aunque diversificado, se limita a 30 
+    identificadores bursátiles. Sería deseable extender el estudio a un 
+    universo más amplio que incluya activos de mercados emergentes, 
+    divisas, materias primas y renta fija corporativa, con el objetivo 
+    de evaluar la capacidad del sistema para generalizar a distintas 
+    clases de activos y condiciones de liquidez.
+
+    \item \textbf{Incorporación de costes de transacción.} El 
+    backtesting realizado asume un entorno de ejecución sin fricciones. 
+    En un contexto de aplicación real, los costes de comisiones, el 
+    deslizamiento de precios y el impacto de mercado pueden erosionar 
+    significativamente los rendimientos. Una línea de trabajo futura 
+    consistiría en incorporar modelos realistas de costes de 
+    transacción y analizar la sensibilidad de la estrategia a distintos 
+    niveles de fricción.
+
+    \item \textbf{Exploración de señales de momentum alternativas.} El 
+    presente trabajo ha evaluado únicamente señales basadas en retornos 
+    acumulados a distintos horizontes temporales. Futuras 
+    investigaciones podrían incorporar señales fundamentales, factores 
+    macroeconómicos o indicadores de sentimiento de mercado, 
+    enriqueciendo el espacio de características y potencialmente 
+    mejorando la capacidad predictiva del sistema.
+
+    \item \textbf{Optimización dinámica del número de clústeres.} La 
+    selección de $K=5$ se realizó de forma estática sobre el conjunto 
+    de datos históricos. Sería conveniente explorar métodos que 
+    permitan recalibrar automáticamente el número de regímenes en 
+    función de las condiciones cambiantes del mercado, adaptándose a 
+    periodos de mayor o menor dispersión entre activos.
+
+    \item \textbf{Validación con datos de mercado en tiempo real.} 
+    Aunque la división entre periodos de entrenamiento y prueba 
+    garantiza la independencia temporal, la validación definitiva del 
+    sistema requeriría su aplicación en un entorno de simulación en 
+    tiempo real o, idealmente, su implementación controlada con datos 
+    de mercado en vivo durante un periodo de prueba suficientemente 
+    prolongado.
+
+\end{itemize}
+
+Estas líneas de trabajo futuro no solo amplían el alcance de la 
+presente investigación, sino que reflejan la madurez del sistema 
+desarrollado como punto de partida para aplicaciones profesionales en 
+el ámbito de la inversión cuantitativa. La arquitectura híbrida 
+propuesta ha demostrado ser una base sólida sobre la que construir 
+herramientas de soporte a la decisión cada vez más sofisticadas y 
+adaptadas a la complejidad de los mercados financieros contemporáneos.
