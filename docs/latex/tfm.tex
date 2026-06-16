@@ -200,84 +200,87 @@
 	
 	\newpage
 	
-	\textbf{\Large Organización del trabajo en grupo}\\
+	\textbf{\Large Organización del trabajo en grupo}
 	
-	meter texto
+	El desarrollo del proyecto se ha realizado de forma colaborativa entre los tres integrantes del equipo, estableciendo una distribución de responsabilidades orientada a facilitar la coordinación, aunque con participación transversal en todas las fases del proyecto.\\
 	
-	\textbf{Organización del equipo de trabajo}
+	\textbf{Partes que aborda el TFE}
 	
-	El desarrollo del proyecto se ha realizado de forma colaborativa entre los tres integrantes del equipo, estableciendo una distribución de responsabilidades orientada a facilitar la coordinación, aunque con participación transversal en todas las fases del proyecto.
-	
-	\begin{itemize}
-		\item \textbf{Espejo Cuenca, Marcel}: diseño e implementación de la arquitectura de \gls{machinelearning}, incluyendo los algoritmos de \gls{clustering} (\gls{dbscan} y \gls{kmeans}) y la construcción del sistema híbrido.
-		\item \textbf{Gómez Hernández, Raúl}: obtención, limpieza y transformación de los datos financieros, así como el diseño del pipeline de preprocesamiento.
-		\item \textbf{Martínez Díez, Diego}: análisis exploratorio de datos, revisión bibliográfica, apoyo en la interpretación de resultados y redacción de la memoria.
-	\end{itemize}
-	
-	A pesar de esta distribución inicial, el trabajo ha sido completamente colaborativo, participando los tres integrantes en el diseño, validación y toma de decisiones técnicas del proyecto.
-	
-	\textbf{Planificación y coordinación}
-	
-	El equipo mantiene un sistema de reuniones periódicas:
+	Con el objetivo de optimizar el desarrollo del proyecto y aprovechar las competencias específicas de cada integrante del equipo, se realizó una distribución inicial de responsabilidades, asignando a cada miembro las tareas relacionadas con su ámbito principal de trabajo. Esta organización permitió avanzar de forma coordinada en las diferentes fases del proyecto, desde la adquisición y preparación de los datos hasta el diseño, implementación y evaluación de la solución propuesta.
 	
 	\begin{itemize}
-		\item Reuniones semanales de seguimiento del estado del proyecto.
-		\item Reuniones adicionales en fases críticas (preprocesamiento, modelado y evaluación).
+		\item Espejo Cuenca, Marcel: responsable del diseño, implementación y validación de la arquitectura de aprendizaje automático propuesta. Sus tareas incluyeron el estudio de los algoritmos de \gls{clustering}, \gls{dbscan} y \gls{kmeans}, la integración de ambos en una arquitectura híbrida para la detección de anomalías y segmentación de activos financieros, el desarrollo del código correspondiente, la optimización de hiperparámetros y la evaluación experimental del rendimiento del modelo mediante técnicas de backtesting y métricas financieras.
+		\item Gómez Hernández, Raúl: responsable de la obtención, integración y preparación de los datos financieros empleados en la investigación. Entre sus funciones se encontraron la recopilación de series temporales desde fuentes públicas, el diseño e implementación del pipeline de preprocesamiento, la limpieza de datos, el tratamiento de valores faltantes y atípicos, la normalización de variables y la construcción del conjunto de características que sirve de entrada a los algoritmos de aprendizaje automático.
+		\item Martínez Díez, Diego: responsable del análisis exploratorio de los datos, la revisión del estado del arte y el estudio de la bibliografía científica relacionada con las estrategias de \gls{momentum}, el aprendizaje automático y la detección de anomalías en mercados financieros. Asimismo, participó en la interpretación de los resultados obtenidos durante la experimentación, la elaboración de figuras y tablas, y la redacción y revisión de los distintos capítulos de la memoria, garantizando la coherencia metodológica y la calidad científica del documento.
 	\end{itemize}
 	
-	Estas reuniones permiten revisar avances, resolver problemas técnicos y
-	alinear decisiones metodológicas bajo el marco de \gls{crispdm}.
+	Aunque esta distribución permitió organizar el trabajo y asignar responsabilidades principales, el desarrollo del proyecto se llevó a cabo de forma plenamente colaborativa. Los tres integrantes participaron activamente en la definición de los objetivos, la toma de decisiones metodológicas, la selección de las técnicas empleadas, la resolución de problemas surgidos durante la implementación y la validación de los resultados obtenidos. Del mismo modo, la revisión de la memoria, la discusión de los experimentos y la interpretación de las conclusiones fueron realizadas de manera conjunta, asegurando una visión global del proyecto y una participación equilibrada de todos los miembros del equipo.\\
 	
-	Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo.
-	
-	Estas herramientas han permitido gestionar el desarrollo de forma estructurada, mantener un historial de cambios y facilitar la integración de las distintas partes del sistema implementado.
 	
 	\textbf{Distribución y estructura de la memoria}
 	
+	Con el fin de ofrecer una visión clara de la distribución del trabajo realizado por cada uno de los integrantes del equipo, la Tabla 1 recoge las principales tareas desarrolladas a lo largo del proyecto y su grado de participación en cada una de ellas. Para facilitar la lectura y mejorar la claridad de la información presentada, en la tabla se emplean las iniciales de los autores: \textbf{MEC} (Marcel Espejo Cuenca), \textbf{RGH} (Raúl Gómez Hernández) y \textbf{DMD} (Diego Martínez Díez). Aunque cada miembro asumió responsabilidades específicas en determinadas fases del proyecto, el desarrollo del TFE se llevó a cabo de forma colaborativa, participando los tres integrantes en las principales decisiones metodológicas, la validación de resultados y la revisión de la memoria final.
+	
+	
 	\begin{table}[H]
 		\centering
-		\caption{Organización del trabajo en grupo.}
 		\label{tab:organizacion_grupo}
 		\begin{tabular}{ll}
 			\toprule
 			\textbf{Apartado de la memoria} & \textbf{Responsables} \\ \midrule
-			Introducción & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\
-			Contexto y estado del arte & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\
-			Objetivos y metodología de trabajo & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\
+			Introducción & DMD \\
+			Contexto y estado del arte & MEC, DMD  \\
+			Objetivos y metodología de trabajo &  RGH, DMD \\
 			Realizar un análisis de los datos obtenidos para & \\
-			comprender la distribución de los mismos. & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\
-			Realizar técnicas de depuración y limpieza de los datos obtenidos & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\
+			comprender la distribución de los mismos. & MEC, RGH \\
+			Realizar técnicas de depuración y limpieza de los datos obtenidos & MEC, DMD \\
 			Identificar los parámetros de estudio mediante la selección de & \\
-			variables predictivas & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\
-			Aplicar técnicas de Machine Learning para el análisis de los resultados & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\
-			Evaluar la usabilidad y generalización de las técnicas implementadas & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\
-			Conclusiones & Espejo Cuenca, Marcel
-			Gómez Hernández, Raúl
-			Martínez Díez, Diego \\ \bottomrule
+			variables predictivas & MEC, RGH \\
+			Aplicar técnicas de Machine Learning para el análisis de los resultados &  RGH, DMD \\
+			Evaluar la usabilidad y generalización de las técnicas implementadas & MEC, RGH \\
+			Conclusiones & MEC, RGH \\ \bottomrule
 		\end{tabular}
-		\begin{flushleft}
-			\small \textit{Fuente:} Elaboración propia.
-		\end{flushleft}
-	\end{table}
+	\caption{Organización del trabajo en grupo. Fuente: Elaboración propia.}
+	\end{table}\\
+
+\textbf{Objetivo del TFE desde el punto de vista de la adquisición de conocimientos}
+
+Desde el punto de vista de la adquisición de conocimientos, el presente Trabajo Fin de Máster integra diferentes áreas de conocimiento que, de forma individual, podrían constituir líneas de investigación independientes. La combinación de todas ellas permite abordar un problema complejo desde una perspectiva multidisciplinar, proporcionando una visión global que trasciende el aprendizaje puramente teórico y se orienta hacia la aplicación práctica en el ámbito de las finanzas cuantitativas.
+
+En primer lugar, el trabajo profundiza en los fundamentos de los mercados financieros y en el estudio de las estrategias de inversión basadas en el factor \gls{momentum}, analizando sus ventajas, limitaciones y riesgos, especialmente en escenarios de elevada volatilidad y durante los denominados momentum crashes. Este conocimiento permite comprender los desafíos existentes en la gestión cuantitativa de carteras y la necesidad de desarrollar modelos más robustos.
+
+En segundo lugar, el desarrollo del proyecto requiere adquirir conocimientos avanzados en Ciencia de Datos y Aprendizaje Automático, centrándose en técnicas de aprendizaje no supervisado como los algoritmos DBSCAN y K-Means. La implementación de una arquitectura híbrida basada en ambos métodos implica comprender sus fundamentos matemáticos, sus limitaciones y las ventajas que aporta su utilización conjunta para la identificación de patrones y la detección de anomalías en conjuntos de datos financieros.
+
+Asimismo, el trabajo permite profundizar en el proceso completo de desarrollo de un proyecto de análisis de datos siguiendo la metodología CRISP-DM, abarcando desde la obtención y preparación de los datos hasta el modelado, la validación experimental y la interpretación de los resultados. De este modo, se adquieren competencias relacionadas con la ingeniería de datos, el análisis exploratorio, la selección de variables, la optimización de modelos y la evaluación mediante técnicas de backtesting y métricas financieras de rendimiento ajustado al riesgo.
+
+Por otra parte, la realización del proyecto favorece el desarrollo de competencias en programación y experimentación científica mediante el uso de herramientas especializadas para el tratamiento de datos financieros y la implementación de algoritmos de Aprendizaje Automático (Machine Learning). Estas capacidades permiten transformar conceptos teóricos en soluciones reproducibles y evaluables bajo condiciones similares a las empleadas en entornos profesionales.
+
+En conjunto, este Trabajo Fin de Máster proporciona una formación multidisciplinar que integra conocimientos de finanzas, estadística, minería de datos, inteligencia artificial y programación aplicada. Esta visión holística dota al estudiante de competencias tanto académicas como profesionales, permitiéndole diseñar, desarrollar y evaluar sistemas cuantitativos de apoyo a la toma de decisiones financieras, con una metodología rigurosa y fácilmente extrapolable a proyectos reales dentro del ámbito de la ciencia de datos y la gestión de inversiones.\\
+
+
+\textbf{Mecanismos de coordinación empleados}
+
+El equipo mantiene un sistema de reuniones periódicas:
+
+\begin{itemize}
+	\item Reuniones semanales de seguimiento del estado del proyecto.
+	\item Reuniones adicionales en fases críticas (preprocesamiento, modelado y evaluación).
+\end{itemize}
+
+Estas reuniones permiten revisar avances, resolver problemas técnicos y
+alinear decisiones metodológicas bajo el marco de \gls{crispdm}.
+
+Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo.
+
+Estas herramientas han permitido gestionar el desarrollo de forma estructurada, mantener un historial de cambios y facilitar la integración de las distintas partes del sistema implementado.
 	
 	\newpage
 	\section{Introducción}\label{introduccion}
+	
+	El presente capítulo introduce el contexto en el que se desarrolla este Trabajo Fin de Máster, poniendo de manifiesto la relevancia del problema abordado y la motivación que justifica su estudio. Asimismo, se expone el planteamiento del problema de investigación, los objetivos generales que persigue el trabajo y la organización de la memoria, proporcionando al lector una visión global de la propuesta y del contenido que se desarrolla en los capítulos posteriores.
+	
+	
+	\subsection{Justificación}\label{justificacion}
 	
 	En las últimas décadas, los mercados financieros han experimentado un crecimiento exponencial en la cantidad y complejidad de los datos disponibles, lo que ha impulsado el desarrollo de metodologías cuantitativas avanzadas para la toma de decisiones de inversión. En este contexto, la \gls{trading} se define como la actividad de comprar y vender instrumentos financieros —como acciones, bonos o derivados— con el objetivo de obtener beneficio económico. En su vertiente moderna, el \gls{trading} se apoya cada vez más en modelos matemáticos y computacionales, dando lugar al denominado \gls{trading} cuantitativo \parencite{lopezdeprado2018}.
 	
@@ -300,7 +303,7 @@
 			\path [line] (features) -- (zscore);
 			\path [line] (zscore) -- (final);
 		\end{tikzpicture}
-		\caption{Flujo de transformación y homogeneización del espacio de características multidimensional para evitar sesgo de escala geométrica en el cálculo de distancias.}
+		\caption{Flujo de transformación y homogeneización del espacio de características multidimensional para evitar sesgo de escala geométrica en el cálculo de distancias. Fuente: Elaboración propia.}
 		\label{fig:procesamiento_caracteristicas}
 	\end{figure}
 	
@@ -322,39 +325,41 @@
 	
 	\begin{figure}[H]
 		\centering
-		\begin{tikzpicture}[scale=1, every node/.style={transform shape}]
-			% Bloques iniciales
-			\node (in) [draw, rectangle, fill=gray!10, minimum width=2cm] {Espacio $Z_{i,t}$};
+		% Asegúrate de tener \usetikzlibrary{positioning} en el preámbulo de tu documento
+		\begin{tikzpicture}[scale=0.8, every node/.style={transform shape}, node distance=1.2cm and 1.5cm]
 			
-			% Caja DBSCAN
-			\node (dbscan) [draw, rectangle, fill=blue!10, minimum width=3.5cm, minimum height=1.2cm, right of=in, node distance=3.5cm] {
+			% Bloque inicial (Entrada)
+			\node (in) [draw, rectangle, fill=gray!10, minimum height=0.8cm] {Espacio $Z_{i,t}$};
+			
+			% Caja DBSCAN (A la derecha de 'in')
+			\node (dbscan) [draw, rectangle, fill=blue!10, minimum height=1.2cm, right=of in] {
 				\begin{tabular}{c}
 					\textbf{Filtro DBSCAN} \\
 					Radio adaptativo $\epsilon_t$
 				\end{tabular}
 			};
 			
-			% Bifurcación
-			\node (ruido) [draw, rectangle, fill=red!20, minimum width=3cm, below of=dbscan, node distance=2.2cm] {Ruido/Anomalías (Purgado)};
-			\node (limpio) [draw, rectangle, fill=green!20, minimum width=3cm, right of=dbscan, node distance=4.5cm] {Espacio Depurado $\tilde{X}$};
+			% Espacio Depurado (A la derecha de 'dbscan')
+			\node (limpio) [draw, rectangle, fill=green!10, minimum height=0.8cm, right=of dbscan] {Espacio Depurado $\tilde{X}$};
 			
-			% Caja K-Means
-			\node (kmeans) [draw, rectangle, fill=blue!10, minimum width=3.5cm, minimum height=1.2cm, below of=limpio, node distance=2.2cm] {
+			% Regímenes de Mercado (Abajo de 'dbscan')
+			\node (regimenes) [draw, rectangle, fill=yellow!10, minimum height=0.8cm, below=of dbscan] {Regímenes de Mercado (0 a 4)};
+			
+			% Caja K-Means++ (A la derecha de 'regimenes' y abajo de 'limpio')
+			\node (kmeans) [draw, rectangle, fill=blue!10, minimum height=1.2cm, right=of regimenes] {
 				\begin{tabular}{c}
 					\textbf{Clustering K-Means++} \\
 					Segmentación en $K=5$
 				\end{tabular}
 			};
 			
-			% Salidas finales
-			\node (regimenes) [draw, rectangle, fill=yellow!10, minimum width=4cm, left of=kmeans, node distance=4.5cm] {Regímenes de Mercado (0 a 4)};
-			
-			% Conexiones
+			% Conexiones (Flechas)
 			\draw[-latex, thick] (in) -- (dbscan);
-			\draw[-latex, thick] (dbscan) -- (ruido);
 			\draw[-latex, thick] (dbscan) -- (limpio);
+			\draw[-latex, thick] (dbscan) -- (regimenes);
 			\draw[-latex, thick] (limpio) -- (kmeans);
-			\draw[-latex, thick] (kmeans) -- (regimenes);
+			\draw[-latex, thick] (regimenes) -- (kmeans);
+			
 		\end{tikzpicture}
 		\caption{Esquema conceptual de la arquitectura secuencial propuesta: Uso de DBSCAN como filtro no supervisado de anomalías individuales y posterior segmentación mediante K-Means para la identificación robusta de regímenes de mercado. Fuente: Elaboración propia.}
 		\label{fig:arquitectura_hibrida}
@@ -362,9 +367,13 @@
 	
 	El núcleo operativo de este diseño conceptual radica en la separación de funciones. Al delegar en el algoritmo DBSCAN la tarea de actuar como un filtro topológico cross-sectional, se logra purgar el ruido y las anomalías de cotización individuales. De este modo, el posterior algoritmo K-Means recibe un espacio de datos depurado, lo que optimiza la convergencia de sus centroides y garantiza que los cinco regímenes de mercado identificados respondan a patrones macroeconómicos genuinos y estables.
 	
+	\subsection{Planteamiento del problema}\label{planteamiento-del-problema}
+	
 	El objetivo principal de este trabajo es, por tanto, diseñar, implementar y evaluar un sistema híbrido que combine estrategias de compraventa de activos \gls{trading} basadas en inercia \gls{momentum} con algoritmos de agrupamiento \gls{clustering}, con el fin de identificar patrones de comportamiento en activos financieros y mejorar la estabilidad de las estrategias de inversión en entornos de alta volatilidad. Este enfoque se sitúa en la intersección entre las finanzas cuantitativas y el aprendizaje automático, contribuyendo al desarrollo de metodologías más robustas y adaptativas en el análisis de mercados.
 	
 	La relevancia de esta investigación radica no solo en la innovación algorítmica que representa la hibridación de modelos de densidad y partición, sino también en su aplicabilidad directa a la gestión de carteras institucionales en condiciones reales de mercado. Al mitigar el sesgo de inestabilidad de los centroides provocado por anomalías puntuales, el sistema propuesto ofrece una herramienta avanzada para la toma de decisiones que busca reconciliar la explotación del factor \gls{momentum} con un control estricto del riesgo de cola. En un entorno financiero global cada vez más expuesto a fenómenos de no estacionariedad y flash crashes, transicionar desde aproximaciones lineales estáticas hacia marcos dinámicos gestionados por riesgo constituye un paso fundamental para la evolución del \gls{trading} cuantitativo.
+	
+	\subsection{Estructura del trabajo}\label{estructura-del-trabajo}
 	
 	Con el objetivo de abordar esta propuesta de manera sistemática y rigurosa, el presente documento se estructura en cinco capítulos claramente definidos. Tras esta introducción, el Capítulo 2 detalla el contexto y el estado del arte, profundizando en la fundamentación matemática del \gls{momentum}, los riesgos asimétricos de sus colapsos y los principios teóricos de los algoritmos \gls{kmeans} y \gls{dbscan}. El Capítulo 3 describe los objetivos concretos y el marco metodológico basado en el estándar \gls{crispdm}. Seguidamente, el Capítulo 4 expone el desarrollo específico de la contribución, detallando desde la selección del universo de activos y el análisis exploratorio avanzado, hasta la calibración dinámica de la arquitectura híbrida. Finalmente, el Capítulo 5 despliega la evaluación experimental y el protocolo de backtesting, discutiendo los resultados empíricos, la interpretación económica de los regímenes obtenidos y las implicaciones directas para la gestión profesional de carteras. A modo de mapa de ruta para facilitar la navegación a través de la presente investigación, la Figura 3 sintetiza gráficamente la estructura capitular de la memoria, mostrando la correspondencia y el avance secuencial de cada etapa del proyecto.
 	
@@ -385,7 +394,7 @@
 			\path [flecha] (c3) -- (c4);
 			\path [flecha] (c4) -- (c5);
 		\end{tikzpicture}
-		\caption{Mapa de ruta de la investigación y su correspondencia secuencial con los capítulos que estructuran esta memoria de Trabajo Fin de Máster.}
+		\caption{Mapa de ruta de la investigación y su correspondencia secuencial con los capítulos que estructuran esta memoria de Trabajo Fin de Máster. Fuente: Elaboración propia.}
 		\label{fig:mapa_ruta_capitulos}
 	\end{figure}
 
@@ -716,7 +725,7 @@ En los Paneles A y B se ilustra la evolución acumulada de las carteras de ganad
 	\begin{figure}[H]
 		\centering
 		\includegraphics[width=0.85\textwidth]{media/dbscan_density_isolation}
-		\caption{Representación esquemática del aislamiento espacial operado por DBSCAN. Las observaciones densas permanecen conectadas en el núcleo del clúster, mientras que las anomalías individuales quedan totalmente huérfanas de densidad crítica.}
+		\caption{Representación esquemática del aislamiento espacial operado por DBSCAN. Las observaciones densas permanecen conectadas en el núcleo del clúster, mientras que las anomalías individuales quedan totalmente huérfanas de densidad crítica. Fuente: Elaboración propia.}
 		\label{fig:aislamiento_dbscan}
 	\end{figure}
 
