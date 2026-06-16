@@ -7,6 +7,7 @@
     \renewcommand{\tablename}{Tabla}
 }
 \usepackage{caption}
+\usepackage{subcaption}
 \captionsetup{compatibility=false}
 \usepackage{xcolor}
 \usepackage{amsmath,amssymb}
@@ -629,13 +630,16 @@ En los Paneles A y B se ilustra la evolución acumulada de las carteras de ganad
 	
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=5.76667in,height=4.01906in]{media/image005.png}
+		\includegraphics[width=\textwidth]{media/image005.png}
 		\caption{\protect\phantomsection\label{_Toc227174289}{}Clasificación de activos en el espacio riesgo-rentabilidad mediante el
 			algoritmo KMeans. Los puntos sólidos representan los centroides \(\mu_{i}\)
 			calculados según la Ecuación~\eqref{eq:kmeans_centroid}, mientras que
 			las regiones sombreadas delimitan las fronteras de decisión de cada
 			clúster. Fuente: Elaboración propia.}
+	\label{fig:kmeans_example}
 	\end{figure}
+
+	En la Figura~\ref{fig:kmeans_example} se observa un ejemplo al aplicar K-Means sobre el plano riesgo-rentabilidad. Cada color representa un clúster y los puntos sólidos los centroides $\mu_i$. Se aprecia cómo los activos se organizan en grupos (alta rentabilidad-alto riesgo frente a baja rentabilidad-bajo riesgo), confirmando que el algoritmo puede capturar regímenes de mercado diferenciados a partir de las variables de entrada. En esta representación bidimensional se han utilizado únicamente dos variables (rentabilidad y volatilidad) con fines de visualización. A lo largo del informe se observará que el sistema emplea un conjunto más amplio de variables financieras, lo que permite dividir el conjunto de datos en grupos de mayor dimensionalidad, capturando relaciones más complejas entre los activos.
 
 	La convergencia local del algoritmo se logra mediante un proceso alternativo de dos pasos: asignación y actualización. En el paso de asignación, cada observación vectorial del mercado financiero se vincula de manera exclusiva al centroide más próximo bajo la norma euclídea analizada en la Ecuación~\eqref{eq:euclidean_distance}. En el paso de actualización, expresado en la Ecuación~\eqref{eq:kmeans_centroid}, la coordenada del centroide se desplaza hacia la media geométrica de su nueva población. Este bucle se repite de manera iterativa hasta que la función objetivo de la Ecuación~\eqref{eq:kmeans_wcss} estabilice su inercia global. Sin embargo, este criterio de optimización por mínimos cuadrados penaliza de forma cuadrática las distancias, provocando que cualquier punto situado en las regiones periféricas del espacio vectorial ejerza una fuerza de atracción desproporcionada sobre la trayectoria del centroide $\mu_i$.
 	
@@ -704,7 +708,10 @@ En los Paneles A y B se ilustra la evolución acumulada de las carteras de ganad
 		\caption{\protect\phantomsection\label{_Toc227174290}{}Clasificación topológica en \gls{dbscan}: Identificación de puntos núcleo,
 			frontera y ruido en función del radio $\epsilon$ y MinPts. Fuente: Elaboración
 			propia.}
+	\label{fig:dbscan_categories}
 	\end{figure}
+
+	En la Figura~\ref{fig:dbscan_categories} se muestran las tres categorías topológicas: los puntos núcleo (rojo) forman el esqueleto del clúster; los puntos frontera (amarillo) se sitúan en el perímetro; y el ruido (azul) queda aislado al no alcanzar la densidad crítica dentro del radio $\epsilon$. Esta separación visual permite entender cómo DBSCAN distingue el comportamiento mayoritario del mercado de las desviaciones catalogadas como ruido.
 
 	\begin{figure}[H]
 		\centering
@@ -1552,18 +1559,31 @@ Durante la sesión del 16 de marzo de 2020, el índice \gls{vix} alcanzó nivele
 
 \begin{figure}[H]
     \centering
-    \includegraphics[width=0.85\textwidth]{media/pca_scatter_covid.png}
-    \caption{Visualización topológica del colapso del 16 de marzo de 2020 mediante proyección \gls{pca}. La cohesión del clúster principal refleja un movimiento generalizado del mercado ante un shock externo. Fuente: Elaboración propia.}
-    \label{fig:pca_covid}
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{media/pca_scatter_covid.png}
+        \caption{Colapso del 16 de marzo de 2020: el desplazamiento conjunto del mercado mantiene la cohesión del clúster.}
+        \label{fig:pca_covid}
+    \end{subfigure}
+    \hfill
+    \begin{subfigure}{0.48\textwidth}
+        \centering
+        \includegraphics[width=\textwidth]{media/pca_scatter_anomaly.png}
+        \caption{Sesión normal del 24 de octubre de 2017: tres activos (CAT, DPZ e ITX.MC) son clasificados como ruido y purgados.}
+        \label{fig:pca_anomaly}
+    \end{subfigure}
+    \caption{Comparativa de proyecciones PCA del espacio de características en dos escenarios de mercado. Izquierda: shock sistémico sin detección de anomalías. Derecha: sesión ordinaria con identificación de activos anómalos. Fuente: Elaboración propia.}
 \end{figure}
 
-Como puede observarse en la Figura \ref{fig:pca_covid}, el algoritmo no eliminó ningún activo durante esa sesión. A pesar de las fuertes caídas registradas, los valores mantuvieron un comportamiento relativamente homogéneo entre sí dentro del espacio de características. No obstante, conviene realizar dos precisiones técnicas sobre esta representación:
+Como puede observarse en la Figura \ref{fig:pca_covid}, el algoritmo no eliminó ningún activo durante esa sesión. A pesar de las fuertes caídas registradas, los valores mantuvieron un comportamiento relativamente homogéneo entre sí dentro del espacio de características. No obstante, conviene realizar dos observaciones sobre esta representación:
 
 \begin{itemize}
     \item Efecto de la reducción de dimensionalidad: Aunque en la proyección bidimensional obtenida mediante \gls{pca} algunos activos puedan aparecer en posiciones periféricas, esto responde en muchos casos a una limitación propia de la representación visual. Al reducir un espacio multidimensional a dos componentes principales, parte de la información se pierde. Sin embargo, en el espacio original, dichos activos continúan situándose dentro de las distancias permitidas por el radio $\epsilon_t$ calculado por el modelo.
 
     \item Adaptabilidad del radio de vecindad: En días de volatilidad elevada, la dispersión natural entre observaciones aumenta. Gracias al cálculo dinámico del percentil 90 de distancias, el umbral $\epsilon_t$ se amplía automáticamente, permitiendo que el clúster principal incorpore el movimiento conjunto del mercado sin clasificar erróneamente activos válidos como ruido.
 \end{itemize}
+
+Para contrastar, la Figura~\ref{fig:pca_anomaly} muestra una sesión de mercado normal donde el filtro topológico sí identificó activos cuyo comportamiento se desviaba del resto. Los tres activos señalados (CAT, DPZ e ITX.MC) superaron el umbral de densidad $\epsilon_t$ establecido por el percentil~90 de distancias, siendo etiquetados como anomalías y eliminados de la matriz de datos. Esta evidencia completa la validación del sistema: cuando existen datos anómalos, DBSCAN los identifica y purga; cuando el movimiento es homogéneo (como en el colapso de 2020), los mantiene, evitando la pérdida de información relevante.
 
 En definitiva, este sistema de filtrado actúa como una herramienta de depuración inteligente. Permite eliminar ruido sin perder la información relevante asociada a los grandes movimientos del mercado, garantizando que la matriz resultante ($\tilde{X}$) conserve una estructura limpia. Este paso facilita posteriormente que el algoritmo \gls{kmeans} converja de forma más estable y pueda identificar los distintos regímenes de mercado en las fases posteriores del estudio.
 
