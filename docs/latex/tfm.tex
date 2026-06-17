@@ -412,6 +412,115 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	
 	El objetivo principal de este trabajo es, por tanto, diseñar, implementar y evaluar un sistema híbrido que combine estrategias de compraventa de activos \gls{trading} basadas en inercia \gls{momentum} con algoritmos de agrupamiento \gls{clustering}, con el fin de identificar patrones de comportamiento en activos financieros y mejorar la estabilidad de las estrategias de inversión en entornos de alta volatilidad. Este enfoque se sitúa en la intersección entre las finanzas cuantitativas y el aprendizaje automático, contribuyendo al desarrollo de metodologías más robustas y adaptativas en el análisis de mercados.
 	
+	A pesar de la abundante literatura existente sobre estrategias de \gls{momentum} y sobre la aplicación de técnicas de aprendizaje automático en finanzas, continúa existiendo una limitación importante en la forma en que ambos enfoques se combinan. La mayor parte de los trabajos analizados emplean algoritmos de agrupamiento con el objetivo de clasificar activos o detectar regímenes de mercado, pero asumen implícitamente que los datos de entrada representan adecuadamente el comportamiento del mercado. Sin embargo, las series temporales financieras contienen con frecuencia observaciones anómalas derivadas de episodios de volatilidad extrema, errores de cotización, movimientos especulativos o acontecimientos extraordinarios que alteran significativamente la distribución de los datos.
+	
+	Cuando este tipo de observaciones se incorpora directamente a algoritmos de partición como \gls{kmeans}, los centroides obtenidos pueden desplazarse hacia regiones del espacio de características que no representan el comportamiento predominante del mercado. Como consecuencia, la clasificación de los activos deja de reflejar regímenes financieros consistentes y pasa a estar influenciada por un reducido número de observaciones extremas. Este fenómeno reduce la capacidad predictiva de las estrategias de inversión y dificulta la identificación de señales robustas para la toma de decisiones.
+	
+	El problema puede entenderse como una cuestión de calidad del espacio de representación sobre el que operan los algoritmos de aprendizaje automático. Si el conjunto de datos contiene ruido estructural, la información utilizada para construir los modelos estará sesgada desde el inicio del proceso, independientemente de la sofisticación del algoritmo empleado. En este contexto, resulta más eficiente actuar sobre la calidad de los datos antes de realizar la segmentación que tratar de compensar posteriormente los errores producidos durante el proceso de agrupamiento.
+	
+	\begin{figure}[H]
+		\centering
+		\begin{tikzpicture}[
+			node distance=0.9cm,
+			box/.style={
+				draw,
+				rounded corners,
+				align=center,
+				minimum width=3.5cm,
+				minimum height=0.8cm,
+				font=\small
+			},
+			arrow/.style={-{Latex}, thick}
+			]
+			
+			\node[box] (data) {Datos financieros históricos};
+			
+			\node[box, below=of data] (noise)
+			{Series temporales\\con ruido y valores atípicos};
+			
+			\node[box, below left=0.2cm and 0.2cm of noise] (kmeans)
+			{Aplicar\\K-Means directamente};
+			
+			\node[box, below right=0.2cm and 0.2cm of noise] (dbscan)
+			{Eliminar anomalías\\mediante DBSCAN};
+			
+			\node[box, below=of kmeans] (bad)
+			{Centroides desplazados\\Clústeres inestables};
+			
+			\node[box, below=of dbscan] (clean)
+			{Datos depurados};
+			
+			\node[box, below=of clean] (good)
+			{K-Means};
+			
+			\node[box, below=of good] (result)
+			{Regímenes de mercado\\más estables};
+			
+			\draw[arrow] (data)--(noise);
+			
+			\draw[arrow] (noise)--(kmeans);
+			\draw[arrow] (noise)--(dbscan);
+			
+			\draw[arrow] (kmeans)--(bad);
+			
+			\draw[arrow] (dbscan)--(clean);
+			\draw[arrow] (clean)--(good);
+			\draw[arrow] (good)--(result);
+			
+		\end{tikzpicture}
+		
+		\caption{Problema que aborda la investigación. La presencia de ruido y valores atípicos en los datos financieros puede afectar negativamente a los algoritmos de agrupamiento tradicionales. La arquitectura propuesta incorpora una fase previa de detección de anomalías antes de realizar la segmentación mediante K-Means. Fuente: Elaboración propia.}
+		
+		\label{fig:problema}
+	\end{figure}
+	
+	Desde esta perspectiva, el presente trabajo plantea una arquitectura secuencial en la que la detección de anomalías constituye una etapa previa e independiente de la clasificación de los activos financieros. Esta separación funcional permite que cada algoritmo desempeñe la tarea para la que fue diseñado: \gls{dbscan} identifica automáticamente las observaciones que no pertenecen a ninguna estructura densa del espacio de características, mientras que \gls{kmeans} realiza la segmentación únicamente sobre un conjunto de datos previamente depurado. De esta forma se pretende mejorar la estabilidad de los centroides, aumentar la coherencia de los clústeres obtenidos y, en consecuencia, generar señales de inversión más consistentes durante el proceso de \emph{backtesting}.
+	
+	\begin{figure}[H]
+		\centering
+		
+		\begin{tikzpicture}[
+			node distance=1cm,
+			box/.style={
+				draw,
+				rounded corners,
+				align=center,
+				minimum width=5cm,
+				minimum height=0.8cm,
+				font=\small
+			},
+			arrow/.style={-{Latex}, thick}
+			]
+			
+			\node[box] (noise)
+			{Ruido del mercado\\Flash Crashes\\Valores atípicos};
+			
+			\node[box, below=of noise] (question)
+			{¿Cómo evitar que estas observaciones\\distorsionen la clasificación?};
+			
+			\node[box, below=of question] (hybrid)
+			{Arquitectura híbrida\\DBSCAN + K-Means};
+			
+			\node[box, below=of hybrid] (stable)
+			{Clasificación más estable\\de los activos};
+			
+			\node[box, below=of stable] (goal)
+			{Mejorar la robustez\\de las estrategias Momentum};
+			
+			\draw[arrow] (noise)--(question);
+			\draw[arrow] (question)--(hybrid);
+			\draw[arrow] (hybrid)--(stable);
+			\draw[arrow] (stable)--(goal);
+			
+		\end{tikzpicture}
+		
+		\caption{Esquema conceptual de la pregunta de investigación. El trabajo propone una arquitectura híbrida basada en DBSCAN y K-Means para reducir el impacto del ruido estructural sobre la clasificación de activos financieros y mejorar la robustez de las estrategias de inversión. Fuente: Elaboración propia.}
+		
+		\label{fig:pregunta}
+	\end{figure}
+	
+	Finalmente, el problema de investigación puede formularse mediante la siguiente cuestión principal: \textbf{¿es posible mejorar el rendimiento y la estabilidad de una estrategia cuantitativa basada en \gls{momentum} incorporando un proceso previo de detección y eliminación de anomalías mediante técnicas de aprendizaje no supervisado?} La respuesta a esta pregunta constituye el eje central de la investigación desarrollada en los capítulos posteriores, donde se diseña, implementa y evalúa experimentalmente la arquitectura híbrida propuesta.
+	
 	La relevancia de esta investigación radica no solo en la innovación algorítmica que representa la hibridación de modelos de densidad y partición, sino también en su aplicabilidad directa a la gestión de carteras institucionales en condiciones reales de mercado. Al mitigar el sesgo de inestabilidad de los centroides provocado por anomalías puntuales, el sistema propuesto ofrece una herramienta avanzada para la toma de decisiones que busca reconciliar la explotación del factor \gls{momentum} con un control estricto del riesgo de cola. En un entorno financiero global cada vez más expuesto a fenómenos de no estacionariedad y flash crashes, transicionar desde aproximaciones lineales estáticas hacia marcos dinámicos gestionados por riesgo constituye un paso fundamental para la evolución del \gls{trading} cuantitativo.
 	
 	\subsection{Estructura del trabajo}\label{estructura-del-trabajo}
