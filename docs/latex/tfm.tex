@@ -20,6 +20,9 @@
 \usepackage{adjustbox}
 
 \usepackage{siunitx}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{array}
 
 \newacronym{trading}{\textit{trading}}{compraventa de activos financieros}
 \newacronym{momentum}{\textit{momentum}}{estrategia basada en la persistencia de rendimientos}
@@ -46,7 +49,7 @@
 \newacronym{vix}{VIX}{\textit{Volatility Index} (índice de volatilidad del mercado)}
 \newacronym{zscore}{z-score}{estadístico de normalización tipificada}
 \newacronym{rollingzscore}{\textit{rolling Z-score}}{estandarización dinámica mediante ventana móvil}
-\newacronym{unsupervised-learling}{\textit{Unsupervised Learning}}{aprendizaje no supervisado}
+\newacronym{unsupervised-learning}{\textit{Unsupervised Learning}}{aprendizaje no supervisado}
 
 
 \ifPDFTeX
@@ -79,6 +82,7 @@
 	\KOMAoptions{parskip=half}}
 \makeatother
 \usepackage{longtable,booktabs,array}
+
 \newcounter{none} % for unnumbered tables
 \usepackage{calc} % for calculating minipage widths
 % Correct order of tables after \paragraph or \subparagraph
@@ -107,6 +111,7 @@
 % Set default figure placement to htbp
 \def\fps@figure{htbp}
 \usepackage{float}
+\usepackage{changepage}
 \makeatother
 \setlength{\emergencystretch}{3em} % prevent overfull lines
 \providecommand{\tightlist}{%
@@ -122,43 +127,80 @@
 \date{}
 
 \begin{document}
-	
-	\includegraphics[width=4.2031in,height=0.94625in]{media/image001.png}
-	
-	Universidad Internacional de La Rioja
-	
-	Escuela Superior de Ingeniería y Tecnología
-	
-	Máster Universitario en Ingeniería Matemática y Computación
-	
-	Sistema híbrido de detección de anomalías y Momentum Trading con
-	algoritmos de clustering (K-Means/DBSCAN)
-	
-	{\def\LTcaptype{none} % do not increment counter
-		\begin{longtable}[]{@{}
-				>{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4532}}
-				>{\raggedright\arraybackslash}p{(\linewidth - 2\tabcolsep) * \real{0.4864}}@{}}
-			\toprule\noalign{}
-			\begin{minipage}[b]{\linewidth}\raggedright
-				Trabajo fin de estudio presentado por:
-			\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
-				Espejo Cuenca, Marcel
-				
-				Gómez Hernández, Raúl
-				
-				Martínez Díez, Diego
-			\end{minipage} \\
-			\midrule\noalign{}
-			\endhead
-			\bottomrule\noalign{}
-			\endlastfoot
-			Tipo de trabajo: & Desarrollo Práctico \\
-			Director/a: & Martínez Cerdá, Juan Francisco \\
-			Fecha: & 15/04/2026 \\
-		\end{longtable}
-	}
+	\begin{titlepage}
+		
+		\begin{adjustwidth}{-2cm}{-2cm}
 
-	\newpage
+		\thispagestyle{empty}
+
+		\begin{center}
+
+		% Logo
+		\includegraphics[width=1\textwidth]{media/image001.png}
+
+		\vspace{1cm}
+
+		{\LARGE Universidad Internacional de La Rioja}
+
+		\vspace{0.3cm}
+
+		{\LARGE Escuela Superior de Ingeniería y Tecnología}
+
+		\vfill
+
+		{\LARGE Máster Universitario en Ingeniería Matemática y Computación}
+
+		\vspace{0.5cm}
+
+		{\Huge\color{cyan!70!blue}
+		Sistema híbrido de detección de anomalías y Momentum Trading\\[0.2cm]
+		con algoritmos de clustering (K-Means/DBSCAN)
+		}
+
+		\vfill
+
+		\end{center}
+
+		\begin{center}
+		\renewcommand{\arraystretch}{1.4}
+
+		\begin{tabular}{|p{0.3\textwidth}|p{0.42\textwidth}|}
+		\hline
+
+		Trabajo fin de estudio presentado por:
+		&
+		\begin{tabular}[t]{@{}l@{}}
+		Espejo Cuenca, Marcel\\
+		Gómez Hernández, Raúl\\
+		Martínez Díez, Diego
+		\end{tabular}
+		\\
+
+		\hline
+
+		Tipo de trabajo:
+		&
+		Desarrollo Práctico\\
+
+		\hline
+
+		Director/a:
+		&
+		Martínez Cerdá, Juan Francisco\\
+
+		\hline
+
+		Fecha:
+		&
+		17/06/2026\\
+
+		\hline
+
+		\end{tabular}
+		\end{center}
+
+		\end{adjustwidth}
+	\end{titlepage}
 	
 	\textbf{\Large Resumen}\\
 	
@@ -174,7 +216,7 @@
 	
 	\textbf{\Large Abstract}
 	
-	The purpose of this research is to address the inherent vulnerability of investment strategies based on the return persistence factor, or momentum, when facing drastic changes in economic regimes and sudden market crashes. To mitigate the negative impact of macroeconomic noise and individual outlierRendimientos de las carteras s in asset time series, a hybrid algorithmic architecture based on unsupervised Machine Learning is proposed and developed.
+	The purpose of this research is to address the inherent vulnerability of investment strategies based on the return persistence factor, or momentum, when facing drastic changes in economic regimes and sudden market crashes. To mitigate the negative impact of macroeconomic noise and individual outliers in asset time series, a hybrid algorithmic architecture based on unsupervised Machine Learning is proposed and developed.
 	
 	Methodologically, the system operates sequentially across two critical stages: first, the density-based clustering algorithm DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is implemented as a topological filter to identify, isolate, and purge statistical anomalies and market microstructure distortions. Second, utilizing the noise-cleansed feature space, the K-Means partitioning algorithm is applied to robustly segment the asset universe into stable collective risk-return regimes and automatically classify the so-called "bullish stocks."
 	
@@ -202,7 +244,7 @@
 	
 	\textbf{\Large Organización del trabajo en grupo}
 	
-	El desarrollo del proyecto se ha realizado de forma colaborativa entre los tres integrantes del equipo, estableciendo una distribución de responsabilidades orientada a facilitar la coordinación, aunque con participación transversal en todas las fases del proyecto.\\
+	El desarrollo del proyecto se ha realizado de forma colaborativa entre los tres integrantes del equipo, estableciendo una distribución de responsabilidades orientada a facilitar la coordinación, aunque con participación transversal en todas las fases del proyecto.
 	
 	\textbf{Partes que aborda el TFE}
 	
@@ -214,7 +256,7 @@
 		\item Martínez Díez, Diego: responsable del análisis exploratorio de los datos, la revisión del estado del arte y el estudio de la bibliografía científica relacionada con las estrategias de \gls{momentum}, el aprendizaje automático y la detección de anomalías en mercados financieros. Asimismo, participó en la interpretación de los resultados obtenidos durante la experimentación, la elaboración de figuras y tablas, y la redacción y revisión de los distintos capítulos de la memoria, garantizando la coherencia metodológica y la calidad científica del documento.
 	\end{itemize}
 	
-	Aunque esta distribución permitió organizar el trabajo y asignar responsabilidades principales, el desarrollo del proyecto se llevó a cabo de forma plenamente colaborativa. Los tres integrantes participaron activamente en la definición de los objetivos, la toma de decisiones metodológicas, la selección de las técnicas empleadas, la resolución de problemas surgidos durante la implementación y la validación de los resultados obtenidos. Del mismo modo, la revisión de la memoria, la discusión de los experimentos y la interpretación de las conclusiones fueron realizadas de manera conjunta, asegurando una visión global del proyecto y una participación equilibrada de todos los miembros del equipo.\\
+	Aunque esta distribución permitió organizar el trabajo y asignar responsabilidades principales, el desarrollo del proyecto se llevó a cabo de forma plenamente colaborativa. Los tres integrantes participaron activamente en la definición de los objetivos, la toma de decisiones metodológicas, la selección de las técnicas empleadas, la resolución de problemas surgidos durante la implementación y la validación de los resultados obtenidos. Del mismo modo, la revisión de la memoria, la discusión de los experimentos y la interpretación de las conclusiones fueron realizadas de manera conjunta, asegurando una visión global del proyecto y una participación equilibrada de todos los miembros del equipo.
 	
 	
 	\textbf{Distribución y estructura de la memoria}
@@ -241,7 +283,7 @@
 			Conclusiones & MEC, RGH \\ \bottomrule
 		\end{tabular}
 	\caption{Organización del trabajo en grupo. Fuente: Elaboración propia.}
-	\end{table}\\
+	\end{table}
 
 \textbf{Objetivo del TFE desde el punto de vista de la adquisición de conocimientos}
 
@@ -255,7 +297,7 @@ Asimismo, el trabajo permite profundizar en el proceso completo de desarrollo de
 
 Por otra parte, la realización del proyecto favorece el desarrollo de competencias en programación y experimentación científica mediante el uso de herramientas especializadas para el tratamiento de datos financieros y la implementación de algoritmos de Aprendizaje Automático (Machine Learning). Estas capacidades permiten transformar conceptos teóricos en soluciones reproducibles y evaluables bajo condiciones similares a las empleadas en entornos profesionales.
 
-En conjunto, este Trabajo Fin de Máster proporciona una formación multidisciplinar que integra conocimientos de finanzas, estadística, minería de datos, inteligencia artificial y programación aplicada. Esta visión holística dota al estudiante de competencias tanto académicas como profesionales, permitiéndole diseñar, desarrollar y evaluar sistemas cuantitativos de apoyo a la toma de decisiones financieras, con una metodología rigurosa y fácilmente extrapolable a proyectos reales dentro del ámbito de la ciencia de datos y la gestión de inversiones.\\
+En conjunto, este Trabajo Fin de Máster proporciona una formación multidisciplinar que integra conocimientos de finanzas, estadística, minería de datos, inteligencia artificial y programación aplicada. Esta visión holística dota al estudiante de competencias tanto académicas como profesionales, permitiéndole diseñar, desarrollar y evaluar sistemas cuantitativos de apoyo a la toma de decisiones financieras, con una metodología rigurosa y fácilmente extrapolable a proyectos reales dentro del ámbito de la ciencia de datos y la gestión de inversiones.
 
 
 \textbf{Mecanismos de coordinación empleados}
@@ -356,7 +398,6 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 			% Conexiones (Flechas)
 			\draw[-latex, thick] (in) -- (dbscan);
 			\draw[-latex, thick] (dbscan) -- (limpio);
-			\draw[-latex, thick] (dbscan) -- (regimenes);
 			\draw[-latex, thick] (limpio) -- (kmeans);
 			\draw[-latex, thick] (regimenes) -- (kmeans);
 			
@@ -595,7 +636,7 @@ En los Paneles A y B se ilustra la evolución acumulada de las carteras de ganad
 	
 	Para abordar la naturaleza no lineal y ruidosa de los mercados
 	financieros descrita en la sección anterior, esta investigación propone
-	un sistema híbrido basado en dos de los algoritmos de \gls{unsupervised-learling} más robustos: \gls{kmeans} y
+	un sistema híbrido basado en dos de los algoritmos de \gls{unsupervised-learning} más robustos: \gls{kmeans} y
 	\gls{dbscan} \parencite{bishop2006, hastie2009}. A diferencia del aprendizaje supervisado, estas técnicas no
 	requieren datos etiquetados previamente, lo cual es idóneo para el
 	descubrimiento de regímenes de mercado ocultos en series temporales
@@ -1332,7 +1373,7 @@ Esta evidencia visual resulta consistente con los resultados estadísticos obten
 \begin{figure}[H]
 \centering
 \includegraphics[width=\textwidth]{media/graficoQQ.png}
-\caption{Histograma de distribución de retornos de todos los tickers. Fuente: elaboración propia.}
+\caption{Gráfico Q-Q de los retornos frente a una distribución normal teórica. Fuente: elaboración propia.}
 \label{fig:distr_QQ}
 \end{figure}
 
