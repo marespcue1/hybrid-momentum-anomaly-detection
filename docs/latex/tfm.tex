@@ -312,7 +312,7 @@ El equipo mantiene un sistema de reuniones periódicas:
 Estas reuniones permiten revisar avances, resolver problemas técnicos y
 alinear decisiones metodológicas bajo el marco de \gls{crispdm}.
 
-Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo.
+Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo. El repositorio público del proyecto se detalla en el Anexo~\ref{anexo:codigo}.
 
 Estas herramientas han permitido gestionar el desarrollo de forma estructurada, mantener un historial de cambios y facilitar la integración de las distintas partes del sistema implementado.
 	
@@ -1994,6 +1994,32 @@ y estabilidad estadística.
 \input{cap4_3_resultados}
 
 \input{cap5_conclusiones.tex}
+
+\newpage
+\section*{Anexo: Código fuente}\label{anexo:codigo}
+\addcontentsline{toc}{section}{Anexo: Código fuente}
+
+El código fuente completo del modelo, incluyendo los
+cuadernos Jupyter Notebook con el desarrollo completo de procesamiento,
+modelado y evaluación, así como los módulos Python de la arquitectura (DBSCAN + K-Means), está disponible en el siguiente repositorio
+público:
+
+\vspace{0.5cm}
+\centerline{\url{https://github.com/marespcue1/hybrid-momentum-anomaly-detection.git}}
+\vspace{0.5cm}
+
+La estructura del repositorio se organiza en los siguientes directorios
+principales:
+
+\begin{itemize}
+    \item \texttt{notebooks/} --- Cuadernos Jupyter con el flujo
+    completo: descarga, EDA, DBSCAN y K-Means.
+    \item \texttt{src/} --- Módulos Python (features, backtest, análisis).
+    \item \texttt{data/} --- Datos brutos y procesados.
+    \item \texttt{results/} --- Resultados del grid search y figuras
+    generadas.
+    \item \texttt{docs/latex/} --- Memoria del TFM en \LaTeX.
+\end{itemize}
 
 \newpage
 \printbibliography
