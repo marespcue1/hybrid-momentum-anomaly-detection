@@ -109,16 +109,22 @@ Capítulo~\ref{metodologuxeda-del-trabajo}:
     riesgo del índice de referencia SPY, con una caída máxima del 
     4,05\% frente al 12,10\% del índice.
 
-    \item \textbf{Validación de la utilidad del modelo.} El análisis de 
-    robustez mediante bosque aleatorio (\textit{random forest}) reveló 
-    que los parámetros con 
-    mayor impacto en el rendimiento fuera de muestra son el tamaño de 
-    la cartera, el tamaño mínimo para permanecer invertido y la 
-    selección del clúster de mercado, que conjuntamente explican más 
-    del 70\% de la varianza. La práctica irrelevancia del parámetro de 
-    ventana de anomalías sugiere que la presencia del filtro DBSCAN es 
-    estructuralmente beneficiosa con independencia de su configuración 
-    concreta, lo que valida la arquitectura híbrida propuesta.
+    \item \textbf{Validación de la utilidad del modelo.} El análisis de
+    robustez mediante un modelo de bosque aleatorio (\textit{random forest})
+    mostró que el régimen de mercado identificado mediante K-Means
+    (\texttt{active\_cluster}) constituye el factor con mayor capacidad
+    explicativa sobre el rendimiento fuera de muestra, concentrando
+    aproximadamente el 46\% de la importancia total del modelo. La señal de
+    \textit{momentum} empleada (\texttt{momentum\_signal}) representa el
+    segundo factor más relevante, con cerca del 28\% de importancia
+    relativa. Por el contrario, parámetros como el horizonte temporal del
+    detector de anomalías (\texttt{anomaly\_lookback\_days}) muestran una
+    influencia prácticamente nula sobre los resultados. Estos hallazgos
+    sugieren que la correcta identificación de regímenes de mercado y la
+    selección de la señal de \textit{momentum} son los principales
+    determinantes del desempeño fuera de muestra, mientras que la
+    contribución del filtrado topológico mediante DBSCAN parece mantenerse
+    estable para un amplio rango de configuraciones.
 
 \end{enumerate}
 
@@ -157,14 +163,15 @@ las siguientes líneas de investigación futura:
     de evaluar la capacidad del sistema para generalizar a distintas 
     clases de activos y condiciones de liquidez.
 
-    \item \textbf{Incorporación de costes de transacción.} El 
-    backtesting realizado asume un entorno de ejecución sin fricciones. 
-    En un contexto de aplicación real, los costes de comisiones, el 
-    deslizamiento de precios y el impacto de mercado pueden erosionar 
-    significativamente los rendimientos. Una línea de trabajo futura 
-    consistiría en incorporar modelos realistas de costes de 
-    transacción y analizar la sensibilidad de la estrategia a distintos 
-    niveles de fricción.
+    \item \textbf{Incorporación de costes de transacción.} El protocolo de
+    backtesting utilizado no incorpora costes de ejecución, comisiones ni
+    deslizamiento de precios. Aunque la frecuencia de rebalanceo analizada
+    es relativamente moderada, la inclusión de estos costes permitiría
+    obtener una estimación más realista del rendimiento neto de la
+    estrategia. Como línea futura de investigación, sería interesante
+    analizar la sensibilidad de los resultados a distintos niveles de costes
+    de transacción y verificar si las configuraciones más robustas mantienen
+    su ventaja competitiva tras considerar dichas fricciones.
 
     \item \textbf{Exploración de señales de momentum alternativas.} El 
     presente trabajo ha evaluado únicamente señales basadas en retornos 
