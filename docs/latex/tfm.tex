@@ -206,7 +206,7 @@
 	
 	El propósito de la presente investigación es resolver la vulnerabilidad inherente de las estrategias de inversión basadas en el factor de persistencia de rendimientos o momentum ante los cambios drásticos de régimen económico y los colapsos repentinos de mercado (momentum crashes). Para mitigar el impacto negativo del ruido macroeconómico y los valores atípicos individuales en las series temporales de activos, se propone y desarrolla una arquitectura algorítmica híbrida fundamentada en el aprendizaje no supervisado (Machine Learning no supervisado).
 	
-	Metodológicamente, el sistema opera de forma secuencial en dos etapas críticas: en primer lugar, se implementa el algoritmo de agrupamiento basado en densidad DBSCAN (Density-Based Spatial Clustering of Applications with Noise) como un filtro topológico para identificar, aislar y purgar las anomalías estadísticas y las distorsiones de microestructura del mercado. En segundo lugar, utilizando el espacio de características ya depurado de ruido, se aplica el algoritmo de partición K-Means para segmentar de manera robusta el universo de activos en regímenes colectivos estables de riesgo-retorno y clasificar de forma automatizada las denominadas "acciones optimistas".
+	Metodológicamente, el sistema opera de forma secuencial en dos etapas críticas: en primer lugar, se implementa el algoritmo de agrupamiento basado en densidad DBSCAN (Density-Based Spatial Clustering of Applications with Noise) como un filtro topológico para identificar, aislar y purgar las anomalías estadísticas y las distorsiones de microestructura del mercado. En segundo lugar, utilizando el espacio de características ya depurado de ruido, se aplica el algoritmo de partición K-Means para segmentar de manera robusta el universo de activos en regímenes colectivos estables de riesgo-retorno y clasificar de forma automatizada las denominadas ``acciones optimistas''.
 	
 	Los resultados empíricos, obtenidos mediante pruebas de retroalimentación (backtesting) bajo ventanas estrictas de validación interna y externa (in-sample y out-of-sample), demuestran de forma concluyente que el modelo híbrido propuesto supera tanto al índice de referencia pasivo de mercado como a la estrategia tradicional basada en K-Means aislado. Como conclusión principal, se evidencia matemáticamente que la detección y el filtrado previo de anomalías geométricas reduce sustancialmente el riesgo de caída máxima (maximum drawdown) y optimiza de manera significativa el ratio de Sharpe de la cartera cuantitativa.
 	
@@ -218,7 +218,7 @@
 	
 	The purpose of this research is to address the inherent vulnerability of investment strategies based on the return persistence factor, or momentum, when facing drastic changes in economic regimes and sudden market crashes. To mitigate the negative impact of macroeconomic noise and individual outliers in asset time series, a hybrid algorithmic architecture based on unsupervised Machine Learning is proposed and developed.
 	
-	Methodologically, the system operates sequentially across two critical stages: first, the density-based clustering algorithm DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is implemented as a topological filter to identify, isolate, and purge statistical anomalies and market microstructure distortions. Second, utilizing the noise-cleansed feature space, the K-Means partitioning algorithm is applied to robustly segment the asset universe into stable collective risk-return regimes and automatically classify the so-called "bullish stocks."
+	Methodologically, the system operates sequentially across two critical stages: first, the density-based clustering algorithm DBSCAN (Density-Based Spatial Clustering of Applications with Noise) is implemented as a topological filter to identify, isolate, and purge statistical anomalies and market microstructure distortions. Second, utilizing the noise-cleansed feature space, the K-Means partitioning algorithm is applied to robustly segment the asset universe into stable collective risk-return regimes and automatically classify the so-called ``bullish stocks''.
 	
 	The empirical results, obtained through rigorous backtesting under strict in-sample and out-of-sample validation windows, conclusively demonstrate that the proposed hybrid model outperforms both the passive market benchmark and the traditional strategy based on isolated K-Means. As a main conclusion, it is mathematically evidenced that the geometric detection and prior filtering of anomalies substantially reduces the maximum drawdown and significantly optimizes the Sharpe ratio of the quantitative portfolio.
 	
@@ -326,7 +326,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	
 	En las últimas décadas, los mercados financieros han experimentado un crecimiento exponencial en la cantidad y complejidad de los datos disponibles, lo que ha impulsado el desarrollo de metodologías cuantitativas avanzadas para la toma de decisiones de inversión. En este contexto, la \gls{trading} se define como la actividad de comprar y vender instrumentos financieros —como acciones, bonos o derivados— con el objetivo de obtener beneficio económico. En su vertiente moderna, el \gls{trading} se apoya cada vez más en modelos matemáticos y computacionales, dando lugar al denominado \gls{trading} cuantitativo \parencite{lopezdeprado2018}.
 	
-	Dentro de este ámbito, una de las estrategias más relevantes es el impulso o inercia \gls{momentum}, que puede definirse como la persistencia temporal en los rendimientos de los activos financieros. Este fenómeno implica que los activos que han tenido buen comportamiento en el pasado tienden a seguir mostrando rendimientos positivos en el corto plazo, mientras que los activos con mal rendimiento tienden a continuar su tendencia negativa. Esta anomalía fue documentada empíricamente por \parencite{jegadeesh1993}, y posteriormente reinterpretada desde una perspectiva de riesgo dinámico por \parencite{daniel2016}, quienes destacan su relación con cambios en el estado del mercado y episodios de alta volatilidad.
+	Dentro de este ámbito, una de las estrategias más relevantes es el impulso o inercia \gls{momentum}, que puede definirse como la persistencia temporal en los rendimientos de los activos financieros. Este fenómeno implica que los activos que han tenido buen comportamiento en el pasado tienden a seguir mostrando rendimientos positivos en el corto plazo, mientras que los activos con mal rendimiento tienden a continuar su tendencia negativa. Esta anomalía fue documentada empíricamente por \textcite{jegadeesh1993}, y posteriormente reinterpretada desde una perspectiva de riesgo dinámico por \textcite{daniel2016}, quienes destacan su relación con cambios en el estado del mercado y episodios de alta volatilidad.
 	
 	La creciente interconexión entre mercados y la velocidad con la que se incorpora la información a los precios han incrementado la complejidad de los procesos de inversión. En este escenario, los modelos tradicionales basados exclusivamente en relaciones lineales presentan dificultades para capturar comportamientos no estacionarios, cambios de régimen y eventos extremos. Como consecuencia, ha surgido un creciente interés por el desarrollo de metodologías capaces de adaptarse dinámicamente a las características cambiantes del mercado, combinando herramientas procedentes de las finanzas cuantitativas con técnicas avanzadas de análisis de datos. Con el objetivo de clarificar la arquitectura de datos subyacente, en la Figura 1 se esquematiza el proceso secuencial de transformación al que se someten las series temporales de precios brutos antes de ser introducidas en los algoritmos de partición.
 	
@@ -345,19 +345,19 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 			\path [line] (features) -- (zscore);
 			\path [line] (zscore) -- (final);
 		\end{tikzpicture}
-		\caption{Flujo de transformación y homogeneización del espacio de características multidimensional para evitar sesgo de escala geométrica en el cálculo de distancias. Fuente: Elaboración propia.}
+		\caption{Flujo de transformación y homogeneización del espacio de características multidimensional para evitar sesgo de escala geométrica en el cálculo de distancias. OHLCV son las siglas de Open, High, Low, Close y Volume (apertura, máximo, mínimo, cierre y volumen). Fuente: Elaboración propia.}
 		\label{fig:procesamiento_caracteristicas}
 	\end{figure}
 	
 	Como se puede observar en el diagrama superior, la transformación mediante un Z-score móvil de 252 días resulta crítica para el éxito del sistema. Al proyectar variables de distinta naturaleza (como retornos porcentuales e indicadores técnicos acotados) en un espacio métrico homogéneo y adimensional, se anula el sesgo de escala geométrica, permitiendo que los cálculos de distancia euclídea posteriores reflejen verdaderas similitudes estructurales y no distorsiones por volatilidad.
 	
-	No obstante, las estrategias de \gls{momentum} presentan limitaciones importantes, especialmente en presencia de ruido estructural y valores atípicos \textit{(outliers)}. Como señala \parencite{lopezdeprado2018}, los datos financieros están altamente contaminados por fenómenos que no reflejan la dinámica real del mercado, lo que dificulta la identificación de patrones fiables. En este contexto, el uso de técnicas de aprendizaje automático \gls{machinelearning} se ha consolidado como una herramienta fundamental para el análisis de datos complejos.
+	No obstante, las estrategias de \gls{momentum} presentan limitaciones importantes, especialmente en presencia de ruido estructural y valores atípicos \textit{(outliers)}. Como señala \textcite{lopezdeprado2018}, los datos financieros están altamente contaminados por fenómenos que no reflejan la dinámica real del mercado, lo que dificulta la identificación de patrones fiables. En este contexto, el uso de técnicas de \gls{machinelearning} se ha consolidado como una herramienta fundamental para el análisis de datos complejos.
 	
 	En particular, el agrupamiento  \gls{clustering} es una técnica de aprendizaje no supervisado que consiste en organizar un conjunto de datos en grupos o clústeres, de forma que los elementos dentro de un mismo grupo sean más similares entre sí que con los de otros grupos. Este tipo de técnicas permite descubrir estructuras ocultas en los datos sin necesidad de información etiquetada previamente \parencite{bishop2006}.
 	
 	En los últimos años, las técnicas de aprendizaje automático han adquirido una importancia creciente en el ámbito financiero debido a su capacidad para procesar grandes volúmenes de información y descubrir relaciones complejas entre variables. En particular, los métodos de aprendizaje no supervisado permiten identificar estructuras ocultas en los datos sin necesidad de disponer de etiquetas previas, lo que resulta especialmente útil en mercados financieros, donde los regímenes de comportamiento suelen emerger de forma dinámica y difícilmente observable mediante técnicas estadísticas convencionales.
 	
-	Entre los algoritmos de agrupamiento \gls{clustering} más utilizados destaca K-Medias \gls{kmeans}, un método que divide un conjunto de datos en un número predefinido de grupos, asignando cada observación al clúster cuyo centroide (media) es más cercano. El objetivo del algoritmo es minimizar la varianza interna de los clústeres, es decir, la distancia entre los puntos y su centroide. Este método fue formalizado por \textcite{macqueen1967} y ha sido ampliamente utilizado en aplicaciones financieras, aunque presenta limitaciones importantes debido a su sensibilidad a valores atípicos.
+	Entre los algoritmos de agrupamiento \gls{clustering} más utilizados destaca \gls{kmeans}, un método que divide un conjunto de datos en un número predefinido de grupos, asignando cada observación al clúster cuyo centroide (media) es más cercano. El objetivo del algoritmo es minimizar la varianza interna de los clústeres, es decir, la distancia entre los puntos y su centroide. Este método fue formalizado por \textcite{macqueen1967} y ha sido ampliamente utilizado en aplicaciones financieras, aunque presenta limitaciones importantes debido a su sensibilidad a valores atípicos.
 	
 	Para abordar esta limitación, se emplean algoritmos más robustos como agrupamiento espacial basado en densidad con ruido (\gls{dbscan}). Este algoritmo, propuesto por \textcite{ester1996}, define los clústeres como regiones de alta densidad de puntos separadas por regiones de baja densidad, permitiendo además identificar automáticamente observaciones anómalas (ruido). A diferencia de \gls{kmeans}, \gls{dbscan} no requiere especificar el número de clústeres y es capaz de detectar estructuras de forma arbitraria, lo que lo hace especialmente adecuado para datos financieros complejos.
 	
@@ -410,7 +410,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	
 	\subsection{Planteamiento del problema}\label{planteamiento-del-problema}
 	
-	El objetivo principal de este trabajo es, por tanto, diseñar, implementar y evaluar un sistema híbrido que combine estrategias de compraventa de activos \gls{trading} basadas en inercia \gls{momentum} con algoritmos de agrupamiento \gls{clustering}, con el fin de identificar patrones de comportamiento en activos financieros y mejorar la estabilidad de las estrategias de inversión en entornos de alta volatilidad. Este enfoque se sitúa en la intersección entre las finanzas cuantitativas y el aprendizaje automático, contribuyendo al desarrollo de metodologías más robustas y adaptativas en el análisis de mercados.
+	El objetivo principal de este trabajo es, por tanto, diseñar, implementar y evaluar un sistema híbrido que combine estrategias de compraventa de activos (\gls{trading}) basadas en inercia (\gls{momentum}) con algoritmos de agrupamiento (\gls{clustering}), con el fin de identificar patrones de comportamiento en activos financieros y mejorar la estabilidad de las estrategias de inversión en entornos de alta volatilidad. Este enfoque se sitúa en la intersección entre las finanzas cuantitativas y el aprendizaje automático, contribuyendo al desarrollo de metodologías más robustas y adaptativas en el análisis de mercados.
 	
 	A pesar de la abundante literatura existente sobre estrategias de \gls{momentum} y sobre la aplicación de técnicas de aprendizaje automático en finanzas, continúa existiendo una limitación importante en la forma en que ambos enfoques se combinan. La mayor parte de los trabajos analizados emplean algoritmos de agrupamiento con el objetivo de clasificar activos o detectar regímenes de mercado, pero asumen implícitamente que los datos de entrada representan adecuadamente el comportamiento del mercado. Sin embargo, las series temporales financieras contienen con frecuencia observaciones anómalas derivadas de episodios de volatilidad extrema, errores de cotización, movimientos especulativos o acontecimientos extraordinarios que alteran significativamente la distribución de los datos.
 	
@@ -430,7 +430,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 				minimum height=0.8cm,
 				font=\small
 			},
-			arrow/.style={-{Latex}, thick}
+			arrow/.style={-{latex}, thick}
 			]
 			
 			\node[box] (data) {Datos financieros históricos};
@@ -489,7 +489,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 				minimum height=0.8cm,
 				font=\small
 			},
-			arrow/.style={-{Latex}, thick}
+			arrow/.style={-{latex}, thick}
 			]
 			
 			\node[box] (noise)
@@ -525,7 +525,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	
 	\subsection{Estructura del trabajo}\label{estructura-del-trabajo}
 	
-	Con el objetivo de abordar esta propuesta de manera sistemática y rigurosa, el presente documento se estructura en cinco capítulos claramente definidos. Tras esta introducción, el Capítulo 2 detalla el contexto y el estado del arte, profundizando en la fundamentación matemática del \gls{momentum}, los riesgos asimétricos de sus colapsos y los principios teóricos de los algoritmos \gls{kmeans} y \gls{dbscan}. El Capítulo 3 describe los objetivos concretos y el marco metodológico basado en el estándar \gls{crispdm}. Seguidamente, el Capítulo 4 expone el desarrollo específico de la contribución, detallando desde la selección del universo de activos y el análisis exploratorio avanzado, hasta la calibración dinámica de la arquitectura híbrida. Finalmente, el Capítulo 5 despliega la evaluación experimental y el protocolo de backtesting, discutiendo los resultados empíricos, la interpretación económica de los regímenes obtenidos y las implicaciones directas para la gestión profesional de carteras. A modo de mapa de ruta para facilitar la navegación a través de la presente investigación, la Figura 3 sintetiza gráficamente la estructura capitular de la memoria, mostrando la correspondencia y el avance secuencial de cada etapa del proyecto.
+	Con el objetivo de abordar esta propuesta de manera sistemática y rigurosa, el presente documento se estructura en cinco capítulos claramente definidos. Tras esta introducción, el Capítulo 2 detalla el contexto y el estado del arte, profundizando en la fundamentación matemática del \gls{momentum}, los riesgos asimétricos de sus colapsos y los principios teóricos de los algoritmos \gls{kmeans} y \gls{dbscan}. El Capítulo 3 describe los objetivos concretos y el marco metodológico basado en el estándar \gls{crispdm}. Seguidamente, el Capítulo 4 expone el desarrollo específico de la contribución, que abarca desde la identificación de requisitos y la descripción del sistema implementado hasta la evaluación experimental mediante backtesting. Finalmente, el Capítulo 5 recoge las conclusiones del trabajo y las líneas de investigación futura. A modo de mapa de ruta para facilitar la navegación a través de la presente investigación, la Figura 3 sintetiza gráficamente la estructura capitular de la memoria, mostrando la correspondencia y el avance secuencial de cada etapa del proyecto.	
 	
 	\begin{figure}[H]
 		\centering
@@ -537,7 +537,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 			\node [capitulo, below of=c1] (c2) {\textbf{Capítulo 2: Estado del Arte} \\ (Fundamentos Financieros y Machine Learning)};
 			\node [capitulo, below of=c2] (c3) {\textbf{Capítulo 3: Objetivos y Metodología} \\ (Alineación con el estándar CRISP-DM)};
 			\node [capitulo, below of=c3, fill=green!15] (c4) {\textbf{Capítulo 4: Desarrollo de la Contribución} \\ (Rolling Z-score, DBSCAN Adaptativo y K-Means)};
-			\node [capitulo, below of=c4, fill=cyan!15] (c5) {\textbf{Capítulo 5: Backtesting y Evaluación} \\ (Protocolo $T/T+1$, Análisis de Sharpe e Implicaciones)};
+			\node [capitulo, below of=c4, fill=cyan!15] (c5) {\textbf{Capítulo 5: Conclusiones y Trabajo Futuro} \\ (Síntesis de resultados y líneas de investigación abiertas)};
 			
 			\path [flecha] (c1) -- (c2);
 			\path [flecha] (c2) -- (c3);
@@ -548,8 +548,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 		\label{fig:mapa_ruta_capitulos}
 	\end{figure}
 
-	A través de esta organización capitular, el trabajo transiciona de manera natural desde la abstracción matemática del modelado no supervisado hasta la validación empírica en entornos de contratación reales. Este enfoque estructurado no solo busca validar las hipótesis científicas planteadas, sino también ofrecer un marco metodológico replicable para el desarrollo de sistemas de inversión cuantitativos robustos en la industria financiera actual.
-	
+	A través de esta organización capitular, el trabajo transiciona de manera natural desde la fundamentación teórica hasta el desarrollo práctico y la validación empírica, para finalizar con una reflexión crítica sobre los resultados obtenidos y las posibles extensiones del sistema.	
 	
 	\newpage
 	\section{Contexto y estado del arte}\label{contexto-y-estado-del-arte}
@@ -582,7 +581,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	El \gls{momentum} se fundamenta en la premisa de que los activos que
 	han obtenido un rendimiento superior en el pasado reciente continuarán
 	haciéndolo en el futuro cercano, mientras que aquellos con un
-	rendimiento deficiente seguirán una trayectoria bajista \parencite{jegadeesh1993, carhart1997}. La
+	rendimiento deficiente seguirán una trayectoria bajista \parencite{carhart1997}. La
 	formalización académica de esta estrategia fue establecida de forma
 	pionera por \textcite{jegadeesh1993}, quienes demostraron que comprar acciones
 	ganadoras y vender acciones perdedoras genera rendimientos anormales
@@ -590,12 +589,12 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	
 	La arquitectura matemática del modelo clásico de \textcite{jegadeesh1993} se
 	define mediante una estrategia de \(J\) meses de formación y \(K\) meses
-	de mantenimiento (estrategia \(J\text{/}K\) ). En el instante \(t\), el
+	de mantenimiento (estrategia \(J\text{/}K\)). En el instante \(t\), el
 	universo de activos se clasifica en orden ascendente en función de sus
 	rendimientos acumulados durante los pasados \(J\) meses. Basándose en
 	este ránking, se forman diez carteras (deciles) equiponderadas. El decil
-	superior se define como la cartera de ''Ganadores'' \emph{(Winners)} y el decil
-	inferior como la cartera de ''Perdedores'' \emph{(Losers)}.
+	superior se define como la cartera de ``Ganadores'' \emph{(Winners)} y el decil
+	inferior como la cartera de ``Perdedores'' \emph{(Losers)}.
 	
 	La estrategia consiste en construir una cartera de inversión de coste
 	cero (autofinanciada), tomando una posición larga en el decil de
@@ -639,7 +638,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	
 	Daniel y Moskowitz demuestran que estos colapsos no son
 	eventos aleatorios (saltos de Poisson), sino que son parcialmente
-	predecibles al concentrarse en ''estados de pánico'' del mercado; es
+	predecibles al concentrarse en ``estados de pánico'' del mercado; es
 	decir, tras caídas prolongadas \emph{(bear markets)} combinadas con picos
 	extremos de volatilidad esperada. La anatomía de una caída \emph{(crash)} tiene una
 	forma contraintuitiva: el colapso de la estrategia no ocurre cuando el
@@ -659,7 +658,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	ante cualquier rebote positivo.
 	
 	Dado que el algoritmo de \gls{momentum} obliga a mantener una posición corta
-	sobre estos perdedores, la estrategia se encuentra efectivamente ''corta
+	sobre estos perdedores, la estrategia se encuentra efectivamente ``corta
 	en una opción de compra'' sobre el índice del mercado. Cuando ocurre un
 	rebote (ej. marzo-mayo de 2009), la cartera de perdedores sube
 	destruyendo el margen de la posición corta, mientras que la cartera de
@@ -685,7 +684,7 @@ Para comprender visualmente la dinámica de este riesgo de cola asimétrico, la 
   episodio de pánico financiero y posterior rebote de la economía.
 
 En los Paneles A y B se ilustra la evolución acumulada de las carteras de ganadores y perdedores durante dos
- episodios históricos de ''momentum crashes'': el periodo posterior a la crisis financiera de 2008 (Panel A, 2009–2013)
+ episodios históricos de ``momentum crashes'': el periodo posterior a la crisis financiera de 2008 (Panel A, 2009–2013)
   y la recuperación tras la Gran Depresión (Panel B, 1932–1939). En ambos casos se observa que, contrariamente a lo
    que predice la intuición de continuación de tendencias, la cartera de perdedores experimenta un rendimiento superior
     sostenido frente a la cartera de ganadores. Este comportamiento refleja la reversión abrupta de las primas de riesgo 
@@ -738,7 +737,7 @@ En los Paneles A y B se ilustra la evolución acumulada de las carteras de ganad
 	robustos, garantizando que los centroides representen tendencias reales
 	y no se vean afectados por el ruido estructural del mercado.
 	
-	Este filtrado multidimensional basado en vecindades de densidad rompe con los enfoques paramétricos de la econometría tradicional, los cuales suelen basarse exclusivamente en métricas longitudinales como la distancia de Mahalanobis o el filtrado por desviaciones estándar (sigma-clipping). Estas últimas técnicas asumen implícitamente que el riesgo financiero se distribuye uniformemente sobre una topología elíptica, ignorando que las crisis contemporáneas provocan agrupamientos no lineales y de geometría arbitraria en el espacio de características. Al delegar la detección en \gls{dbscan}, la arquitectura se vuelve agnóstica a la distribución subyacente de la cola, permitiendo que la "señal de mercado" que recibe el subsiguiente módulo de partición represente con fidelidad los estados colectivos estables del universo invertible.
+	Este filtrado multidimensional basado en vecindades de densidad rompe con los enfoques paramétricos de la econometría tradicional, los cuales suelen basarse exclusivamente en métricas longitudinales como la distancia de Mahalanobis o el filtrado por desviaciones estándar (sigma-clipping). Estas últimas técnicas asumen implícitamente que el riesgo financiero se distribuye uniformemente sobre una topología elíptica, ignorando que las crisis contemporáneas provocan agrupamientos no lineales y de geometría arbitraria en el espacio de características. Al delegar la detección en \gls{dbscan}, la arquitectura se vuelve agnóstica a la distribución subyacente de la cola, permitiendo que la ``señal de mercado'' que recibe el subsiguiente módulo de partición represente con fidelidad los estados colectivos estables del universo invertible.
 	
 	\subsection{Fundamentos de Machine Learning no
 		supervisado}\label{fundamentos-de-machine-learning-no-supervisado}
@@ -1192,8 +1191,7 @@ software capaz de ejecutar una arquitectura híbrida de aprendizaje
 no supervisado para mejorar la robustez de estrategias de momentum 
 en mercados financieros. El sistema debe cubrir la totalidad del 
 flujo de trabajo: desde la adquisición y preprocesamiento de datos 
-históricos de mercado hasta la generación de señales de inversión y 
-su evaluación mediante backtesting.
+históricos de mercado hasta la generación de señales de inversión.
 
 El contexto de uso se sitúa en el ámbito de la inversión cuantitativa 
 y la gestión sistemática de carteras, donde la presencia de valores 
@@ -1576,7 +1574,7 @@ Matemáticamente, la transformación clásica para una observación $x$ se defin
 
 Esta transformación constituye un requisito fundamental en finanzas cuantitativas, especialmente en metodologías basadas en distancias. Al aplicar la estandarización Z-Score, se eliminan los efectos derivados de las distintas escalas y magnitudes originales de las variables, permitiendo que la distancia euclídea entre vectores capture diferencias relativas de comportamiento y no magnitudes absolutas.
 
-\paragraph{El problema del Sesgo de Información Futura}
+\paragraph{El problema del sesgo de información futura}
 
 A pesar de su utilidad, la normalización tradicional aplicada directamente sobre series temporales introduce un problema metodológico crítico conocido como sesgo de información futura. 
 
@@ -1616,13 +1614,13 @@ En este caso, el estadístico representado corresponde específicamente al Z-Sco
 \end{figure}
 
 
-\subsubsection{Filtrado Topológico de Anomalías: DBSCAN}
+\subsubsection{Filtrado topológico de anomalías: DBSCAN}
 \label{sec:dbscan_logic}
 
 Una vez estandarizadas las variables mediante el estadístico \gls{rollingzscore} (Sección \ref{sec:rolling_zscore}), se tiene una matriz de datos estacionaria donde las distancias Euclídeas entre vectores de activos que son directamente comparables al encontrarse las variables expresadas en una escala homogénea. El siguiente paso en la arquitectura del sistema consiste en la identificación y filtrado del ruido mediante el algoritmo de agrupamiento basado en densidad, \gls{dbscan}.
 %\cite{ester1996}.
 
-\paragraph{Limitaciones del Análisis Longitudinal y Propuesta Cross-Sectional}
+\paragraph{Limitaciones del análisis longitudinal y propuesta Cross-Sectional}
 
 En la literatura convencional de \textit{Machine Learning}, el filtrado de valores atípicos suele ejecutarse de forma longitudinal, alimentando al algoritmo con la matriz que contiene la serie temporal completa. Sin embargo, en el mundo de las finanzas, este enfoque contiene un defecto a destacar: la incapacidad de distinguir entre una anomalía local y un cambio de régimen de mercado. 
 
@@ -1679,7 +1677,7 @@ Esta formulación permite que el radio de análisis se adapte al estado del merc
 \end{figure}
 
 
-\subsubsection{Resultados Empíricos del Filtrado de Anomalías}
+\subsubsection{Resultados empíricos del filtrado de anomalías}
 \label{sec:resultados_purga}
 
 La implementación del modelo topológico descrito en la sección anterior se ha ejecutado sobre el conjunto de variables previamente estandarizado. El procedimiento recorre el dataset de forma secuencial, analizando cada fecha de manera independiente. Para cada instante $t$, el algoritmo asigna a cada activo una etiqueta en función de su comportamiento relativo dentro de esa sesión.
