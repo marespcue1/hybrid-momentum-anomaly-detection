@@ -312,7 +312,7 @@ El equipo mantiene un sistema de reuniones periódicas:
 Estas reuniones permiten revisar avances, resolver problemas técnicos y
 alinear decisiones metodológicas bajo el marco de \gls{crispdm}.
 
-Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo. El repositorio público del proyecto se detalla en el Anexo~\ref{anexo:codigo}.
+Para la coordinación del desarrollo del proyecto se ha utilizado \emph{Git}, un sistema de control de versiones que permite registrar y gestionar los cambios realizados sobre el código a lo largo del tiempo. Como repositorio central se ha empleado \emph{GitHub}, una plataforma en línea que facilita el trabajo colaborativo, el almacenamiento del código y la sincronización entre los distintos miembros del equipo. El repositorio público del proyecto se detalla en el \hyperlink{anex:codigo}{Anexo~A}.
 
 Estas herramientas han permitido gestionar el desarrollo de forma estructurada, mantener un historial de cambios y facilitar la integración de las distintas partes del sistema implementado.
 	
@@ -368,7 +368,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	\begin{figure}[H]
 		\centering
 		% Asegúrate de tener \usetikzlibrary{positioning} en el preámbulo de tu documento
-		\begin{tikzpicture}[scale=0.8, every node/.style={transform shape}, node distance=1.2cm and 1.5cm]
+		\begin{tikzpicture}[scale=0.85, every node/.style={transform shape}, node distance=1.2cm and 1.5cm]
 			
 			% Bloque inicial (Entrada)
 			\node (in) [draw, rectangle, fill=gray!10, minimum height=0.8cm] {Espacio $Z_{i,t}$};
@@ -421,6 +421,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 	\begin{figure}[H]
 		\centering
 		\begin{tikzpicture}[
+			scale=1.1,
 			node distance=0.9cm,
 			box/.style={
 				draw,
@@ -480,6 +481,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
 		\centering
 		
 		\begin{tikzpicture}[
+			scale=1.1,
 			node distance=1cm,
 			box/.style={
 				draw,
@@ -680,7 +682,7 @@ Estas herramientas han permitido gestionar el desarrollo de forma estructurada, 
   \end{figure}
 
 Para comprender visualmente la dinámica de este riesgo de cola asimétrico, la Figura~\ref{fig:asimetria_crash}
- detalla conceptualmente el comportamiento divergente entre las patas de la estrategia cuantitativa durante un
+ detalla conceptualmente el comportamiento divergente entre los componentes (largo y corto) de la estrategia cuantitativa durante un
   episodio de pánico financiero y posterior rebote de la economía.
 
 En los Paneles A y B se ilustra la evolución acumulada de las carteras de ganadores y perdedores durante dos
@@ -693,7 +695,7 @@ En los Paneles A y B se ilustra la evolución acumulada de las carteras de ganad
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.85\textwidth]{media/momentum_crash_asymmetry}
-	\caption{Esquema conceptual del comportamiento asimétrico de las carteras de Momentum durante un rebote de pánico. El incremento súbito en la opción implícita de los activos degradados (perdedores) provoca una pérdida geométrica en la pata corta de la estrategia cuantitativa. Fuente: Elaboración propia.}
+	\caption{Esquema conceptual del comportamiento asimétrico de las carteras de Momentum durante un rebote de pánico. El incremento súbito en la opción implícita de los activos degradados (perdedores) provoca una pérdida geométrica en la posición corta de la estrategia cuantitativa. Fuente: Elaboración propia.}
 	\label{fig:asimetria_crash}
 \end{figure}
 
@@ -1264,6 +1266,7 @@ En la Tabla~\ref{tab:assets} se presenta el universo de activos financieros util
 
 \begin{table}[H]
 \centering
+\small
 \begin{tabular}{lll}
 \toprule
 \textbf{Ticker} & \textbf{Activo} & \textbf{Categoría} \\
@@ -1990,7 +1993,6 @@ La configuración $K=5$ se selecciona como solución final por
 proporcionar un equilibrio adecuado entre interpretabilidad económica 
 y estabilidad estadística.
 
-\newpage
 \input{cap4_3_resultados}
 
 \input{cap5_conclusiones.tex}
