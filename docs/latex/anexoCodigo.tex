@@ -1,0 +1,121 @@
+\newpage
+\section*{Anexo A. Estructura del repositorio de código}
+\addcontentsline{toc}{section}{Anexo A. Estructura del repositorio de código}
+
+El sistema desarrollado en el presente Trabajo Fin de Máster se materializa en un conjunto de seis cuadernos de Python que recorren de forma secuencial todas las fases de la metodología CRISP-DM descrita en el Capítulo~\ref{metodologuxeda-del-trabajo}. Cada cuaderno aborda una etapa diferenciada del flujo de trabajo, desde la adquisición de datos hasta la evaluación experimental, y genera los resultados intermedios que alimentan al cuaderno siguiente. Esta organización modular refleja el proceso de desarrollo seguido por el equipo y facilita la reproducibilidad completa de los resultados presentados en la memoria.
+
+El código fuente completo del modelo, incluyendo los cuadernos Jupyter Notebook con el desarrollo completo de procesamiento, modelado y evaluación, así como los módulos Python auxiliares que implementan la arquitectura híbrida (DBSCAN + K-Means), el motor de backtesting y las rutinas de visualización, está disponible en el siguiente repositorio público:
+
+\vspace{0.3cm}
+\centerline{\url{https://github.com/marespcue1/hybrid-momentum-anomaly-detection.git}}
+\vspace{0.3cm}
+
+\subsection*{A.1. Descripción de los cuadernos}
+
+A continuación se detalla el propósito de cada cuaderno, las tareas que realiza y los productos que genera, siguiendo el orden en que fueron ejecutados durante el desarrollo del proyecto.
+
+\paragraph{\texttt{01\_obtencion\_datos.ipynb} --- Adquisición de datos}
+
+Este cuaderno constituye el punto de partida del flujo de trabajo. Su función es establecer la conexión con la API de Yahoo Finance a través de la librería \texttt{yfinance} para descargar el histórico de precios de los 30 activos que componen el universo de inversión: seis acciones del IBEX 35, nueve acciones del mercado estadounidense y quince ETFs sectoriales, factoriales y de renta fija. Los datos brutos incluyen, para cada activo y para cada sesión bursátil, el precio de apertura, el precio máximo, el precio mínimo, el precio de cierre ajustado y el volumen negociado.
+
+Una vez descargados, los datos se transforman desde un formato matricial a un formato largo mediante \texttt{pandas}, donde cada fila representa una combinación única de fecha y activo. Esta estructura facilita todas las operaciones posteriores de filtrado, agrupación y modelado. Finalmente, se aplica una limpieza inicial que elimina las sesiones con volumen de negociación nulo, habitualmente correspondientes a días festivos, para evitar que estos registros introduzcan distorsiones en los cálculos posteriores de indicadores técnicos y medidas de volatilidad.
+
+\begin{itemize}
+    \item \textbf{Entradas}: lista de identificadores bursátiles definida en el propio cuaderno.
+    \item \textbf{Salidas}: conjunto de datos brutos en formato panel, almacenado en la carpeta \texttt{data/}.
+\end{itemize}
+
+\paragraph{\texttt{02\_EDA.ipynb} --- Análisis exploratorio de datos}
+
+Una vez construido el conjunto de datos, este cuaderno lleva a cabo el análisis exploratorio completo descrito en la Sección~\ref{desarollo-especi} de la memoria. El objetivo es comprender la estructura del universo de inversión antes de aplicar cualquier transformación o modelo, validando que los datos son adecuados para el análisis cuantitativo propuesto.
+
+El cuaderno comienza justificando la ventana temporal seleccionada (enero de 2017 a mayo de 2026), que permite capturar ciclos de mercado completos incluyendo la crisis del COVID-19, el periodo inflacionario posterior a 2021 y distintas fases de recuperación. A continuación, se calculan los retornos diarios de cada activo y se analizan sus propiedades estadísticas fundamentales: media, desviación estándar, asimetría y curtosis. Los resultados confirman que las distribuciones de retornos no siguen una distribución normal, sino que presentan colas pesadas compatibles con una mayor frecuencia de eventos extremos de la esperada bajo hipótesis gaussianas.
+
+El análisis incluye la generación de todas las figuras del Capítulo~\ref{desarollo-especi}: histogramas de retornos agregados, gráficos Q-Q frente a la distribución normal teórica, series temporales de precios normalizados, matrices de correlación entre activos y diagramas de dispersión. Estas visualizaciones permiten identificar patrones relevantes como la concentración del crecimiento en el sector tecnológico, el impacto sistémico de la crisis del COVID-19 y las estructuras de dependencia diferenciadas entre grupos de activos.
+
+\begin{itemize}
+    \item \textbf{Entradas}: conjunto de datos brutos generado por el cuaderno anterior.
+    \item \textbf{Salidas}: figuras en \texttt{media/} y conjunto de datos validado para la etapa de ingeniería de características.
+\end{itemize}
+
+\paragraph{\texttt{03\_ingenieria\_caracteristicas\_DBSCAN.ipynb} --- Construcción de variables y filtrado de anomalías}
+
+Este cuaderno implementa el núcleo de la arquitectura híbrida propuesta y constituye la contribución técnica central del trabajo. Su ejecución se organiza en dos bloques diferenciados que se corresponden con las Secciones~\ref{sec:rolling_zscore}, \ref{sec:dbscan_logic} y \ref{sec:resultados_purga} de la memoria.
+
+En el primer bloque se construye el espacio de características financieras. A partir de los precios y volúmenes se calculan indicadores técnicos como el RSI (índice de fuerza relativa), el MACD (convergencia-divergencia de medias móviles), el ATR (rango verdadero medio) y medidas de momentum a múltiples escalas temporales (largo, medio y corto plazo). También se incorporan variables de volatilidad anualizada y de actividad relativa basada en el volumen de negociación. Todas estas variables, que presentan escalas y unidades heterogéneas, se someten a un proceso de estandarización dinámica mediante el estadístico \textit{rolling Z-score} con una ventana móvil de 252 sesiones, equivalente a un año bursátil. Esta transformación, descrita en detalle en la Ecuación~\ref{eq:zscore_rolling} de la memoria, garantiza la comparabilidad geométrica entre variables respetando estrictamente la causalidad temporal y eliminando el sesgo de información futura.
+
+En el segundo bloque se aplica el filtro topológico de anomalías mediante el algoritmo DBSCAN. La implementación recorre el conjunto de datos día a día de forma transversal, aplicando DBSCAN en cada sesión de mercado de manera independiente. Los hiperparámetros del algoritmo se calibran dinámicamente en cada fecha: el número mínimo de puntos por grupo se fija como el 10\% del universo de activos disponible, y el radio de vecindad se ajusta automáticamente al percentil 90 de las distancias al tercer vecino más cercano. Esta estrategia de calibración adaptativa, formalizada en las Ecuaciones~\ref{eq:minsamples} y \ref{eq:eps_dinamico}, permite que el filtro distinga correctamente entre anomalías idiosincráticas individuales y movimientos sistémicos del mercado, como se validó en la sesión del 16 de marzo de 2020.
+
+El cuaderno genera las visualizaciones de validación del filtrado: proyecciones PCA del espacio de características en sesiones de estrés sistémico y en sesiones normales con anomalías detectadas, la evolución temporal del radio de vecindad adaptativo y la distribución de anomalías a lo largo del periodo de estudio.
+
+\begin{itemize}
+    \item \textbf{Entradas}: conjunto de datos validado procedente del cuaderno anterior.
+    \item \textbf{Salidas}: conjunto de datos depurado con las observaciones anómalas eliminadas (3,34\% del total) y figuras en \texttt{media/}.
+\end{itemize}
+
+\paragraph{\texttt{04\_k-means\_clustering.ipynb} --- Segmentación en regímenes de mercado}
+
+Con el espacio de características ya depurado, este cuaderno aplica el algoritmo K-Means++ para segmentar el mercado en regímenes discretos de comportamiento financiero, según lo desarrollado en la Sección~\ref{sec:kmeans} de la memoria. La finalidad de esta etapa no es predecir precios futuros, sino identificar estructuras internas que permitan caracterizar el estado del mercado en cada momento.
+
+El cuaderno comienza evaluando la calidad de las particiones para distintos valores de $K$ mediante dos metodologías complementarias: el método del codo, que analiza la evolución de la inercia intra-clúster, y el coeficiente de silueta, que mide simultáneamente la cohesión interna y la separación entre grupos. Los resultados de ambas métricas, junto con una comparativa visual de las particiones mediante proyecciones PCA para $K=3$, $K=4$, $K=5$ y $K=6$, conducen a la selección de $K=5$ como la configuración que ofrece el mejor equilibrio entre estabilidad estadística e interpretabilidad económica.
+
+A continuación se extraen y analizan los centroides de los cinco clústeres, que representan el perfil promedio de cada régimen en el espacio de características estandarizado. La interpretación económica de estos perfiles permite identificar cinco estados de mercado diferenciados: régimen bajista moderado (clúster 0), rebote en mercado bajista (clúster 1), régimen alcista estable (clúster 2), retroceso en tendencia alcista (clúster 3) y régimen de estrés o capitulación (clúster 4). El cuaderno genera el gráfico de radar que muestra de forma conjunta los perfiles de los cinco regímenes, evidenciando visualmente que no existe solapamiento estructural entre ellos.
+
+\begin{itemize}
+    \item \textbf{Entradas}: conjunto de datos depurado procedente del cuaderno anterior.
+    \item \textbf{Salidas}: conjunto de datos con etiquetas de clúster asignadas a cada observación y figuras en \texttt{media/}.
+\end{itemize}
+
+\paragraph{\texttt{05\_walkforward\_analysis.ipynb} --- Evaluación del rendimiento de la estrategia}
+
+Este cuaderno se dedica a la evaluación del desempeño de la estrategia de momentum bajo el marco de regímenes de mercado generado por el modelo. No realiza nuevas simulaciones, sino que carga los resultados del backtesting ejecutado previamente y los transforma en visualizaciones que permiten analizar el comportamiento del sistema en un entorno dinámico con estricta separación temporal entre los periodos de entrenamiento y prueba.
+
+Las salidas de este cuaderno incluyen la curva de capital diaria de la mejor configuración frente al índice de referencia SPY, el diagrama de dispersión que relaciona el ratio de Sharpe en entrenamiento con el ratio de Sharpe en prueba para todas las configuraciones evaluadas, y las barras comparativas que ilustran la degradación del rendimiento al pasar de la muestra de entrenamiento a la muestra de prueba. Estas visualizaciones, incluidas en la Sección 4.3 de la memoria, permiten apreciar tanto la presencia de sobreajuste en las configuraciones con mejor rendimiento aparente como la existencia de un subconjunto de estrategias con capacidad real de generalización.
+
+\begin{itemize}
+    \item \textbf{Entradas}: resultados del backtesting y datos históricos de precios.
+    \item \textbf{Salidas}: figuras en \texttt{media/} (curvas de capital, dispersión Sharpe, barras de degradación).
+\end{itemize}
+
+\paragraph{\texttt{06\_estudio\_parametros.ipynb} --- Análisis de robustez e importancia de hiperparámetros}
+
+El cuaderno que cierra el flujo de trabajo aborda la cuestión fundamental de qué factores determinan el éxito de la estrategia fuera de muestra. Para ello, ejecuta una búsqueda en malla sobre 6.400 combinaciones de hiperparámetros y analiza los resultados mediante un modelo de bosque aleatorio (\textit{Random Forest}) que mide la importancia relativa de cada parámetro en la predicción del ratio de Sharpe en prueba.
+
+Los resultados, recogidos en la Sección 4.3.4 de la memoria, revelan que los tres parámetros con mayor impacto son el tamaño de la cartera, el tamaño mínimo para permanecer invertido y el régimen de mercado seleccionado, que conjuntamente explican más del 70\% de la varianza del rendimiento fuera de muestra. El cuaderno también genera las curvas de capital medias agrupadas por cada valor de hiperparámetro, permitiendo aislar visualmente el efecto marginal de cada variable sobre el rendimiento conjunto. Un hallazgo destacable es la contribución prácticamente nula del parámetro de ventana de anomalías, lo que sugiere que la presencia del filtro DBSCAN es estructuralmente beneficiosa con independencia de su configuración concreta.
+
+\begin{itemize}
+    \item \textbf{Entradas}: resultados completos del grid search.
+    \item \textbf{Salidas}: figuras en \texttt{media/} (importancia de parámetros, curvas de sensibilidad) y tablas de resultados incluidas en la memoria.
+\end{itemize}
+
+\subsection*{A.2. Orden de ejecución}
+
+Los seis cuadernos están diseñados para ser ejecutados de forma secuencial, ya que cada uno consume los datos generados por el anterior. El orden de ejecución es el siguiente:
+
+\begin{enumerate}
+    \item \texttt{01\_obtencion\_datos.ipynb}
+    \item \texttt{02\_EDA.ipynb}
+    \item \texttt{03\_ingenieria\_caracteristicas\_DBSCAN.ipynb}
+    \item \texttt{04\_k-means\_clustering.ipynb}
+    \item \texttt{05\_walkforward\_analysis.ipynb}
+    \item \texttt{06\_estudio\_parametros.ipynb}
+\end{enumerate}
+
+Los cuadernos 05 y 06 pueden ejecutarse en cualquier orden una vez completado el cuarto, ya que ambos consumen el conjunto de datos con etiquetas de clúster pero no dependen entre sí.
+
+\subsection*{A.3. Requisitos de ejecución}
+
+El sistema ha sido desarrollado en Python 3.12.10. Las dependencias necesarias incluyen las librerías \texttt{yfinance} para la descarga de datos financieros, \texttt{pandas} y \texttt{numpy} para la manipulación y el cálculo numérico, \texttt{scikit-learn} para los algoritmos de aprendizaje automático (DBSCAN, K-Means++, PCA y Random Forest), y \texttt{matplotlib} y \texttt{seaborn} para la generación de gráficos. A estas se suman un conjunto de módulos Python auxiliares ubicados en la carpeta \texttt{src/} que encapsulan las funciones de procesamiento de características, el motor de backtesting y las rutinas de visualización. Se recomienda el uso de un entorno virtual de Python para garantizar la reproducibilidad de los resultados.
+
+\subsection*{A.4. Estructura del repositorio}
+
+El repositorio se organiza en los siguientes directorios principales:
+
+\begin{itemize}
+    \item \texttt{notebooks/} --- Cuadernos Jupyter con el flujo completo de trabajo descrito en este anexo.
+    \item \texttt{src/} --- Módulos Python auxiliares que encapsulan la lógica de procesamiento de características, el motor de backtesting, las funciones de visualización y la configuración global del sistema.
+    \item \texttt{data/} --- Datos brutos descargados desde Yahoo Finance y datos procesados con las etiquetas de clúster generadas por K-Means.
+    \item \texttt{results/} --- Resultados del grid search y del walk-forward analysis, almacenados en formato CSV, así como las figuras generadas durante la evaluación experimental.
+    \item \texttt{media/} --- Figuras generadas durante el análisis exploratorio y el modelado.
+    \item \texttt{docs/latex/} --- Código fuente de la presente memoria en \LaTeX.
+\end{itemize}
