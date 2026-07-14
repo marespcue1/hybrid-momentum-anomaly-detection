@@ -797,7 +797,7 @@ def plot_hyperparameter_distribution(
         ensure_dirs()
         salida = os.path.join(DIR_FIGURES, filename)
         plt.savefig(salida, dpi=150, bbox_inches="tight")
-        print(f"  [visualization] Guardado -> {salida}  ({fuente_label}, N={n_elite})")
+        #print(f"  [visualization] Guardado -> {salida}  ({fuente_label}, N={n_elite})")
     plt.show()
 
 
