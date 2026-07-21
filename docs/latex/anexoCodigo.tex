@@ -1,6 +1,7 @@
 \newpage
 \section*{Anexo A. Estructura del repositorio de código}
 \hypertarget{anex:codigo}{}
+\label{anex:codigo}
 \addcontentsline{toc}{section}{Anexo A. Estructura del repositorio de código}
 
 El sistema desarrollado en el presente Trabajo Fin de Máster se materializa en un conjunto de seis cuadernos de Python que recorren de forma secuencial todas las fases de la metodología CRISP-DM descrita en el Capítulo~\ref{metodologuxeda-del-trabajo}. Cada cuaderno aborda una etapa diferenciada del flujo de trabajo, desde la adquisición de datos hasta la evaluación experimental, y genera los resultados intermedios que alimentan al cuaderno siguiente. Esta organización modular refleja el proceso de desarrollo seguido por el equipo y facilita la reproducibilidad completa de los resultados presentados en la memoria.
@@ -15,7 +16,7 @@ El código fuente completo del modelo, incluyendo los cuadernos Jupyter Notebook
 
 A continuación se detalla el propósito de cada cuaderno, las tareas que realiza y los productos que genera, siguiendo el orden en que fueron ejecutados durante el desarrollo del proyecto.
 
-\paragraph{\texttt{01\_obtencion\_datos.ipynb} --- Adquisición de datos}
+\textbf{\texttt{01\_obtencion\_datos.ipynb} --- Adquisición de datos}
 
 Este cuaderno constituye el punto de partida del flujo de trabajo. Su función es establecer la conexión con la API de Yahoo Finance a través de la librería \texttt{yfinance} para descargar el histórico de precios de los 30 activos que componen el universo de inversión: seis acciones del IBEX 35, nueve acciones del mercado estadounidense y quince ETFs sectoriales, factoriales y de renta fija. Los datos brutos incluyen, para cada activo y para cada sesión bursátil, el precio de apertura, el precio máximo, el precio mínimo, el precio de cierre ajustado y el volumen negociado.
 
@@ -26,7 +27,7 @@ Una vez descargados, los datos se transforman desde un formato matricial a un fo
     \item \textbf{Salidas}: conjunto de datos brutos en formato panel, almacenado en la carpeta \texttt{data/}.
 \end{itemize}
 
-\paragraph{\texttt{02\_EDA.ipynb} --- Análisis exploratorio de datos}
+\textbf{\texttt{02\_EDA.ipynb} --- Análisis exploratorio de datos}
 
 Una vez construido el conjunto de datos, este cuaderno lleva a cabo el análisis exploratorio completo descrito en la Sección~\ref{desarollo-especi} de la memoria. El objetivo es comprender la estructura del universo de inversión antes de aplicar cualquier transformación o modelo, validando que los datos son adecuados para el análisis cuantitativo propuesto.
 
@@ -39,7 +40,7 @@ El análisis incluye la generación de todas las figuras del Capítulo~\ref{desa
     \item \textbf{Salidas}: figuras en \texttt{media/} y conjunto de datos validado para la etapa de ingeniería de características.
 \end{itemize}
 
-\paragraph{\texttt{03\_ingenieria\_caracteristicas\_DBSCAN.ipynb} --- Construcción de variables y filtrado de anomalías}
+\textbf{\texttt{03\_ingenieria\_caracteristicas\_DBSCAN.ipynb} --- Construcción de variables y filtrado de anomalías}
 
 Este cuaderno implementa el núcleo de la arquitectura híbrida propuesta y constituye la contribución técnica central del trabajo. Su ejecución se organiza en dos bloques diferenciados que se corresponden con las Secciones~\ref{sec:rolling_zscore}, \ref{sec:dbscan_logic} y \ref{sec:resultados_purga} de la memoria.
 
@@ -54,7 +55,7 @@ El cuaderno genera las visualizaciones de validación del filtrado: proyecciones
     \item \textbf{Salidas}: conjunto de datos depurado con las observaciones anómalas eliminadas (3,34\% del total) y figuras en \texttt{media/}.
 \end{itemize}
 
-\paragraph{\texttt{04\_k-means\_clustering.ipynb} --- Segmentación en regímenes de mercado}
+\textbf{\texttt{04\_k-means\_clustering.ipynb} --- Segmentación en regímenes de mercado}
 
 Con el espacio de características ya depurado, este cuaderno aplica el algoritmo K-Means++ para segmentar el mercado en regímenes discretos de comportamiento financiero, según lo desarrollado en la Sección~\ref{sec:kmeans} de la memoria. La finalidad de esta etapa no es predecir precios futuros, sino identificar estructuras internas que permitan caracterizar el estado del mercado en cada momento.
 
@@ -67,7 +68,7 @@ A continuación se extraen y analizan los centroides de los cinco clústeres, qu
     \item \textbf{Salidas}: conjunto de datos con etiquetas de clúster asignadas a cada observación y figuras en \texttt{media/}.
 \end{itemize}
 
-\paragraph{\texttt{05\_walkforward\_analysis.ipynb} --- Evaluación del rendimiento de la estrategia}
+\textbf{\texttt{05\_walkforward\_analysis.ipynb} --- Evaluación del rendimiento de la estrategia}
 
 Este cuaderno se dedica a la evaluación del desempeño de la estrategia de momentum bajo el marco de regímenes de mercado generado por el modelo. No realiza nuevas simulaciones, sino que carga los resultados del backtesting ejecutado previamente y los transforma en visualizaciones que permiten analizar el comportamiento del sistema en un entorno dinámico con estricta separación temporal entre los periodos de entrenamiento y prueba.
 
@@ -78,7 +79,7 @@ Las salidas de este cuaderno incluyen la curva de capital diaria de la mejor con
     \item \textbf{Salidas}: figuras en \texttt{media/} (curvas de capital, dispersión Sharpe, barras de degradación).
 \end{itemize}
 
-\paragraph{\texttt{06\_estudio\_parametros.ipynb} --- Análisis de robustez e importancia de hiperparámetros}
+\textbf{\texttt{06\_estudio\_parametros.ipynb} --- Análisis de robustez e importancia de hiperparámetros}
 
 El cuaderno que cierra el flujo de trabajo aborda la cuestión fundamental de qué factores determinan el éxito de la estrategia fuera de muestra. Para ello, ejecuta una búsqueda en malla sobre 6.400 combinaciones de hiperparámetros y analiza los resultados mediante un modelo de bosque aleatorio (\textit{Random Forest}) que mide la importancia relativa de cada parámetro en la predicción del ratio de Sharpe en prueba.
 
